@@ -1,0 +1,42 @@
+name: "${project.artifactId}"
+main: "${project.groupId}.${project.artifactId}"
+version: "${project.version}"
+description: "${project.artifactId} plugin will provide additional tools and weapons."
+author: "DwD_MadMac"
+website: "www.pl3x.net"
+api-version: "1.14"
+softdepend: []
+
+commands:
+  urextras:
+    description: Reload configs.
+    usage: /<command> (reload)
+    aliases:
+      - ure
+      - ue
+  urextrasportal:
+    description: Opens custom inventory with custom tool and weapons.
+    usage: /<command>
+    aliases:
+      - uep
+      - urextras
+      - uportal
+      - ueportal
+      - extrasportal
+
+permissions:
+  command.urextras.reload:
+    description: Allows you to reload the configs.
+    default: op
+
+  command.urextras.portal:
+    description: Allows you to open the extras portal.
+    default: op
+
+  ## Open Tree List Inventory
+  command.urextras.portal.treeespawnertool:
+    description: Allows you to open the tree spawner tool custom inventory.
+    default: op
+
+
+

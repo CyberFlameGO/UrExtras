@@ -1,0 +1,11 @@
+# Enable debug info in console
+debug-mode: true
+
+# Enable colors in console output
+color-logs: true
+
+# Enable misc logging alerts in console output
+logging: true
+
+# Language file (for translations)
+language-file: lang-en.yml
