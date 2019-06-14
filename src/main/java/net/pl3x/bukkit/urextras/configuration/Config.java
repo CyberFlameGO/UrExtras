@@ -19,6 +19,7 @@ public class Config {
     public static int GLOBAL_COOLDOWN;
 
     public static boolean TREEE_SPAWNER_TOOL_CLICK;
+    public static boolean TREEE_LIST_ACACIA;
 
     private static void init() {
         DEBUG_MODE = getBoolean("debug_mode",true);
@@ -26,9 +27,10 @@ public class Config {
         LOGGING = getBoolean("logging", true);
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
 
-        GLOBAL_COOLDOWN = getInt("cooldown.global", 300); //300 = 5 minutes
+        GLOBAL_COOLDOWN = getInt("cooldown.global", 300);
 
         TREEE_SPAWNER_TOOL_CLICK = getBoolean("treee-spawner-tool-click", true);
+        TREEE_LIST_ACACIA = getBoolean("treee-list.acacia",true);
     }
 
 

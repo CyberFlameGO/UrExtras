@@ -10,5 +10,17 @@ logging: true
 # Language file (for translations)
 language-file: lang-en.yml
 
+# Cooldowns
+#
+# Customize your cooldowns for each feature available
+#
+# 300 = 5 minutes
+cooldown:
+  global: 300
+
 # Enables/Disabled Treee Spawner Tool
 treee-spawner-tool-click: true
+
+# Enables/Disables Spawnable Tree Types
+treee-list:
+  acacia: true

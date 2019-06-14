@@ -109,33 +109,40 @@ public class TreeeListPortalClickListener implements Listener {
              *   - Add permissions for each tree type
              *   - Make Lang variable for each tree type
              */
-            ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
-            ItemMeta treeOneMeta = treeOne.getItemMeta();
-            treeOneMeta.setDisplayName(Lang.colorize("&aAcacia Tree"));
-            treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeOneLore = new ArrayList<>();
-            treeOneLore.add(Lang.colorize("&8Click to spawn your treee"));
-            treeOneMeta.setLore(treeOneLore);
-            treeOne.setItemMeta(treeOneMeta);
-            treeListInventory.setItem(0, treeOne);
 
-            // TODO: Add next tree
-            //   - Tree: Regular tree, no branches
-            //   - Big Tree: regular tre, extra tall with branches
-            //   - Redwood: shaped like a pine tree
-            //   - Tall Redwood: Just a few leaves at the top
-            //   - Birch:
-            //   - Jungle: Standard jungle tree; 4 blocks wide and tall
-            //   - Small Jungle: Smaller jungle tree; 1 block wide
-            //   - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
-            //   - Jungle Bush: Small bush that grow in the jungle
-            //   - Red Mushroom: Big Red Mushroom; Short and fat
-            //   - Brown Mushroom: Big brown mushroom; tall and unbrella-like
-            //   - Swamp: Swamp tree (Regular with vines on the side)
-            //   - Dark Oak: Dark oak tree
-            //   - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
-            //   - Tall Birch: Tall birch tree
-            //   - Chorus Plant: Large plant native to the End
+                ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
+                ItemMeta treeOneMeta = treeOne.getItemMeta();
+                treeOneMeta.setDisplayName((Config.TREEE_LIST_ACACIA) ? Lang.colorize("&aAcacia Treee") : Lang.colorize("&4Acacia Treee"));
+                treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+                ArrayList<String> treeOneLore = new ArrayList<>();
+                if (Config.TREEE_LIST_ACACIA) {
+                    treeOneLore.add(Lang.colorize("&8Click to spawn your treee"));
+                } else {
+                    treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}","&4Acacia Treee")));
+                }
+                treeOneMeta.setLore(treeOneLore);
+                treeOne.setItemMeta(treeOneMeta);
+                treeListInventory.setItem(0, treeOne);
+
+
+            /* TODO: Add next tree
+             *  - Tree: Regular tree, no branches
+             *  - Big Tree: regular tre, extra tall with branches
+             *  - Redwood: shaped like a pine tree
+             *  - Tall Redwood: Just a few leaves at the top
+             *  - Birch:
+             *  - Jungle: Standard jungle tree; 4 blocks wide and tall
+             *  - Small Jungle: Smaller jungle tree; 1 block wide
+             *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
+             *  - Jungle Bush: Small bush that grow in the jungle
+             *  - Red Mushroom: Big Red Mushroom; Short and fat
+             *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
+             *  - Swamp: Swamp tree (Regular with vines on the side)
+             *  - Dark Oak: Dark oak tree
+             *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
+             *  - Tall Birch: Tall birch tree
+             *  - Chorus Plant: Large plant native to the End
+             */
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
@@ -205,6 +212,13 @@ public class TreeeListPortalClickListener implements Listener {
         if (clicked.getType() == Material.ACACIA_LOG
                 && clicked.getItemMeta().getDisplayName().startsWith("Acacia", 2)
                 && inventoryClickEvent.getSlot() == 0) {
+            if (!Config.TREEE_LIST_ACACIA){
+                Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
+                Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
+                target.closeInventory();
+                return;
+            }
+
             Logger.debug("onTreeeCreate | " + target.getDisplayName() + " clicked Acacia Log.");
 
             TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
