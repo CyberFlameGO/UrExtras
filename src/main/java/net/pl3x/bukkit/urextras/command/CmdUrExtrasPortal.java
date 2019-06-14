@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
+import net.pl3x.bukkit.urextras.configuration.Config;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -67,27 +68,41 @@ public class CmdUrExtrasPortal implements TabExecutor {
         /* NOTICE: Treee Spawner Tool | Diamond Axe */
         ItemStack itemOneIcon = new ItemStack(Material.DIAMOND_AXE, 1);
         ItemMeta itemOneMeta = itemOneIcon.getItemMeta();
-        itemOneMeta.setDisplayName(!target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.colorize(Lang.NO_TREEE) : Lang.colorize(Lang.TREEE) );
+        itemOneMeta.setDisplayName(
+
+                    (
+                            Config.TREEE_SPAWNER_TOOL_CLICK ?
+                                !target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.colorize(Lang.NO_TREEE) : Lang.colorize(Lang.TREEE)
+                            :
+                                Lang.colorize(Lang.NO_TREEE)
+                    )
+                );
         itemOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         ArrayList<String> itemOneLore = new ArrayList<String>();
         itemOneLore.add(Lang.colorize("&8Click to receive your Tool."));
         itemOneLore.add(Lang.colorize(""));
-        if (!target.hasPermission("command.urextras.portal.treeespawnertool")){
-            itemOneLore.add(Lang.colorize("&cYou do not have permission to"));
-            itemOneLore.add(Lang.colorize("&cuse this feature."));
-            itemOneLore.add(Lang.colorize(""));
-            itemOneLore.add(Lang.colorize("&7More information coming soon."));
-            Logger.debug("onCommand | No permission to treepawnertool, returned");
+
+        if (Config.TREEE_SPAWNER_TOOL_CLICK) {
+            if (!target.hasPermission("command.urextras.portal.treeespawnertool")) {
+                itemOneLore.add(Lang.colorize("&cYou do not have permission to"));
+                itemOneLore.add(Lang.colorize("&cuse this feature."));
+                itemOneLore.add(Lang.colorize(""));
+                itemOneLore.add(Lang.colorize("&7More information coming soon."));
+                Logger.debug("onCommand | No permission to treepawnertool, returned");
+            } else {
+                itemOneLore.add(Lang.colorize("&7When you click on a block with"));
+                itemOneLore.add(Lang.colorize("&7the tool given, a custom tree list"));
+                itemOneLore.add(Lang.colorize("&7inventory will appear for selection."));
+                itemOneLore.add(Lang.colorize(""));
+                itemOneLore.add(Lang.colorize("&7Once you select/click a treee of"));
+                itemOneLore.add(Lang.colorize("&7choice, it will then spawn on the"));
+                itemOneLore.add(Lang.colorize("&7block you just clicked."));
+                Logger.debug("onCommand | Target was given a Tree Spawner Tool.");
+            }
         } else {
-            itemOneLore.add(Lang.colorize("&7When you click on a block with"));
-            itemOneLore.add(Lang.colorize("&7the tool given, a custom tree list"));
-            itemOneLore.add(Lang.colorize("&7inventory will appear for selection."));
-            itemOneLore.add(Lang.colorize(""));
-            itemOneLore.add(Lang.colorize("&7Once you select/click a treee of"));
-            itemOneLore.add(Lang.colorize("&7choice, it will then spawn on the"));
-            itemOneLore.add(Lang.colorize("&7block you just clicked."));
-            Logger.debug("onCommand | Target was given a Tree Spawner Tool.");
+            itemOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.NO_TREEE)));
         }
+
         itemOneMeta.setLore(itemOneLore);
         itemOneIcon.setItemMeta(itemOneMeta);
         urExtrasPortalInventory.setItem(19, itemOneIcon);

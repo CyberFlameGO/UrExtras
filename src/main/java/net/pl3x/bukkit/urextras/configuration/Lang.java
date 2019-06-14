@@ -16,6 +16,7 @@ public class Lang {
     public static String COMMAND_NO_PERMISSION ;
     public static String COMMAND_NO_PERMISSION_PORTAL;
     public static String PLAYER_COMMAND;
+    public static String DISABLED;
 
     public static String UREXTRAS_PORTAL_INVENTORY_TITLE;
     public static String UREXTRAS_PORTAL_INVENTORY_CLOSED;
@@ -34,6 +35,7 @@ public class Lang {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
         COMMAND_NO_PERMISSION_PORTAL = getString("command-no-permission-portal", "&cYou do not have permission to use the&4 {getClicked}&c!");
         PLAYER_COMMAND = getString("player-command", "&4This command is only available to players!");
+        DISABLED = getString("disabled","&cThe {getDisabledName} &cis disabled.");
 
         UREXTRAS_PORTAL_INVENTORY_TITLE = getString("urextras-portal-inventory-title", "UrExtras Portal");
         UREXTRAS_PORTAL_INVENTORY_CLOSED = getString("urextras-portal-inventory-closed","&7You closed &4{getInventoryName}&7.");

@@ -95,11 +95,19 @@ public class UrExtrasPortalClickListener implements Listener {
         /*
          * NOTICE: TREEE SPAWNER TOOL
          *
-         * NOTICE: Check if the player click Treee Spawner Tool (Diamond Axe)
+         * INFO: Check if the player click Treee Spawner Tool (Diamond Axe)
          */
         if (clicked.getType() == Material.DIAMOND_AXE
                 && clicked.getItemMeta().getDisplayName().startsWith("Treee", 2)
                 && inventoryClickEvent.getSlot() == 19 ){
+
+            if (!Config.TREEE_SPAWNER_TOOL_CLICK){
+                Logger.debug("onUrExtrasPortalInventoryClick | " + target.getDisplayName() + " clicked Treee Spawner Tool, however it is disabled in configs");
+                Lang.send(target, "&7Sorry the " + clicked.getItemMeta().getDisplayName() + " &7is currently disabled.");
+                target.closeInventory();
+                return;
+            }
+
             Logger.debug("onUrExtrasPortalInventoryClick | " + target.getDisplayName() + " clicked Diamond Axe" + (!target.hasPermission("command.urextras.portal.treeespawnertool") ? "but, does not have permission to use the " + clicked.getItemMeta().getDisplayName() : "" ) );
 
             if (Config.DEBUG_MODE) {

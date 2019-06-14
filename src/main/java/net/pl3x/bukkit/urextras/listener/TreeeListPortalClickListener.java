@@ -3,6 +3,7 @@ package net.pl3x.bukkit.urextras.listener;
 import com.destroystokyo.paper.block.TargetBlockInfo;
 import java.util.ArrayList;
 import net.pl3x.bukkit.urextras.Logger;
+import net.pl3x.bukkit.urextras.configuration.Config;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -56,6 +57,12 @@ public class TreeeListPortalClickListener implements Listener {
 
         Player target = clickEvent.getPlayer();
         ItemStack itemInHand = target.getInventory().getItemInMainHand();
+
+        if (!Config.TREEE_SPAWNER_TOOL_CLICK){
+            Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " tried to use the " + itemInHand.getItemMeta().getDisplayName() + " but it is currently disabled.");
+            Lang.send(target, "&7Sorry, the " + itemInHand.getItemMeta().getDisplayName() + " &7is currently disabled");
+            return;
+        }
 
         /* NOTICE: Check for null */
         if (clickEvent == null){

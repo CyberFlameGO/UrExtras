@@ -1,6 +1,7 @@
 command-no-permission: "&4You do not have permission for that command!"
 command-no-permission-portal: "&4You do not have permission to use the&c {getClicked}&4!"
 player-command: "&4This command is only available to players!"
+disabled: "&cThe {getDisabledNamed} &cis disabled."
 
 urextras-portal-inventory-title: "UrExtras Portal"
 urextras-portal-inventory-closed: ""
