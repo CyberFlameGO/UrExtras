@@ -50,10 +50,10 @@ public class CmdUrExtrasPortal implements TabExecutor {
 
         Player target = (Player) sender;
 
-        /* Notice: Make UrExtras Portal Inventory */
+        /* NOTICE: Make UrExtras Portal Inventory */
         Inventory urExtrasPortalInventory = Bukkit.createInventory(null, InventoryType.BARREL, Lang.UREXTRAS_PORTAL_INVENTORY_TITLE);
 
-        /* Notice: Close Inventory | Apple */
+        /* NOTICE: Close Inventory | Apple */
         ItemStack appleIcon = new ItemStack(Material.APPLE, 1);
         ItemMeta appleIconMeta = appleIcon.getItemMeta();
         appleIconMeta.setDisplayName(Lang.colorize("&4Close Inventory") );
@@ -64,7 +64,7 @@ public class CmdUrExtrasPortal implements TabExecutor {
         appleIcon.setItemMeta(appleIconMeta);
         urExtrasPortalInventory.setItem(0, appleIcon);
 
-        /* Notice: Treee Spawner Tool | Diamond Axe */
+        /* NOTICE: Treee Spawner Tool | Diamond Axe */
         ItemStack itemOneIcon = new ItemStack(Material.DIAMOND_AXE, 1);
         ItemMeta itemOneMeta = itemOneIcon.getItemMeta();
         itemOneMeta.setDisplayName(!target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.colorize(Lang.NO_TREEE) : Lang.colorize(Lang.TREEE) );
@@ -93,10 +93,11 @@ public class CmdUrExtrasPortal implements TabExecutor {
         urExtrasPortalInventory.setItem(19, itemOneIcon);
 
         // TODO: Create additional custom tools / weapons
-        /* Notice:  */
+        //   -
+        /* NOTICE:  */
 
 
-        /* Notice: Create Inventory */
+        /* NOTICE: Create Inventory */
         target.openInventory(urExtrasPortalInventory);
         /** ==== EFFECTS INVENTORY END ==== **/
 

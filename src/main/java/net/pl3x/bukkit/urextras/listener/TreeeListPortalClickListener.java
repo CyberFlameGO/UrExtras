@@ -20,10 +20,6 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-/*
- * TODO: Add per tree permission
- *
- */
 public class TreeeListPortalClickListener implements Listener {
     /**
      * Checks whether or not the proper block was clicked.
@@ -33,24 +29,25 @@ public class TreeeListPortalClickListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL)
     public void onTreeeBlockSlected(PlayerInteractEvent clickEvent){
+        /* NOTICE: Check for Diamond Axe */
         if (clickEvent.getPlayer().getInventory().getItemInMainHand().getType() != Material.DIAMOND_AXE){
             Logger.debug("onTreeeBlockSelect | No Diamond Axe is hand, clickEvent cancelled");
             return;
         }
 
-        /* Notice: Cancel Player Interact Event */
+        /* NOTICE: Cancel Player Interact Event */
         clickEvent.setCancelled(true);
 
-        /* Notice: Check for a identifier (Custom Model Data)*/
+        /* NOTICE: Check for a identifier (Custom Model Data) */
         if (!clickEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
             Logger.debug("onTreeeBlockSelect | Item does not have custom model data, clickEvent cancelled");
             return;
         }
 
-        /* Notice: Get the Identified (Custom Model Data) */
+        /* NOTICE: Get the Identified (Custom Model Data) */
         Integer itemInHandCustomModelData = clickEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
 
-        /* Notice: Check for correct Custom Model Data */
+        /* NOTICE: Check for correct Custom Model Data */
         if (!itemInHandCustomModelData.equals(0001)){
             Logger.debug("onTreeeBlockSelect | Item in hand does not equal to Tree Tool Custom Data");
             Logger.debug("onTreeeBlockSelect | Diamond Axe is has no lore which is in main hand, clickEvent cancelled");
@@ -60,13 +57,13 @@ public class TreeeListPortalClickListener implements Listener {
         Player target = clickEvent.getPlayer();
         ItemStack itemInHand = target.getInventory().getItemInMainHand();
 
-        /* Notice: Check for null */
+        /* NOTICE: Check for null */
         if (clickEvent == null){
             Logger.debug("onTreeeBlockSelect | click event is null");
             return;
         }
 
-        /* Notice: Only spawn on blocks */
+        /* NOTICE: Only spawn on blocks */
         if (!clickEvent.getClickedBlock().getType().isBlock()){
             Logger.debug("onTreeeBlockSelect | clicked block is not a block");
             return;
@@ -78,11 +75,11 @@ public class TreeeListPortalClickListener implements Listener {
             Logger.debug("onTreeeBlockSelect | Clicked block is null");
             return;
         }
-        /* Notice: End of null check */
+        /* NOTICE: End of null check */
 
 
         /*
-        * Notice: Approve only certain blocks to spawn on
+        * NOTICE: Approve only certain blocks to spawn on
         *
         * TODO: Make clicked block configurable
         * */
@@ -90,14 +87,21 @@ public class TreeeListPortalClickListener implements Listener {
                 || clickedBlock.equals(Material.GRASS_BLOCK)
                 || clickedBlock.equals(Material.GRASS)
                 || clickedBlock.equals(Material.COARSE_DIRT)
-                || clickedBlock.equals(Material.GRASS_PATH)
+                || clickedBlock.equals(Material.GRASS_PATH) /* ERROR: Does not spawn Acacia Tree */
                 || clickedBlock.equals(Material.PODZOL)
-                || clickedBlock.equals(Material.FARMLAND) ){
+                || clickedBlock.equals(Material.FARMLAND) /* ERROR: Does not spawn Acacia Tree */ ){
 
-            /* Notice: Create Treee List Inventory */
+            /* NOTICE: Create Treee List Inventory */
             Inventory treeListInventory = Bukkit.createInventory(null, InventoryType.BARREL, Lang.TREEE_LIST_INVENTORY_TITLE);
 
-            // Notice: Acacia Tree
+            /*
+             * NOTICE: Acacia Tree
+             *
+             * TODO:
+             *   - Make tree meta oop
+             *   - Add permissions for each tree type
+             *   - Make Lang variable for each tree type
+             */
             ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
             ItemMeta treeOneMeta = treeOne.getItemMeta();
             treeOneMeta.setDisplayName(Lang.colorize("&aAcacia Tree"));
@@ -109,6 +113,22 @@ public class TreeeListPortalClickListener implements Listener {
             treeListInventory.setItem(0, treeOne);
 
             // TODO: Add next tree
+            //   - Tree: Regular tree, no branches
+            //   - Big Tree: regular tre, extra tall with branches
+            //   - Redwood: shaped like a pine tree
+            //   - Tall Redwood: Just a few leaves at the top
+            //   - Birch:
+            //   - Jungle: Standard jungle tree; 4 blocks wide and tall
+            //   - Small Jungle: Smaller jungle tree; 1 block wide
+            //   - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
+            //   - Jungle Bush: Small bush that grow in the jungle
+            //   - Red Mushroom: Big Red Mushroom; Short and fat
+            //   - Brown Mushroom: Big brown mushroom; tall and unbrella-like
+            //   - Swamp: Swamp tree (Regular with vines on the side)
+            //   - Dark Oak: Dark oak tree
+            //   - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
+            //   - Tall Birch: Tall birch tree
+            //   - Chorus Plant: Large plant native to the End
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
@@ -139,13 +159,13 @@ public class TreeeListPortalClickListener implements Listener {
         ItemStack cursor = inventoryClickEvent.getCursor(); // Item/Block Placed
         ItemStack clicked = inventoryClickEvent.getCurrentItem();
 
-        // Notice: Stopping all clickable events
+        // NOTICE: Stopping all clickable events
         if (inventoryName.startsWith("Treee")){
             inventoryClickEvent.setCancelled(true);
             Logger.debug("onTreeeCreate | Cancelling inventory click for Treee List Portal");
         }
 
-        /* Notice: NULL CHECK START **/
+        /* NOTICE: NULL CHECK START **/
         if (cursor == null){
             Logger.debug("onTreeeCreate | Cursor went null onTreeeCreate");
             inventoryClickEvent.setCancelled(true);
@@ -169,11 +189,11 @@ public class TreeeListPortalClickListener implements Listener {
             inventoryClickEvent.setCancelled(true);
             return;
         }
-        /* Notice: NULL CHECK END **/
+        /* NOTICE: NULL CHECK END **/
 
 
         /*
-         * Notice: Check if player click ACACIA LOG
+         * NOTICE: Check if player click ACACIA LOG
          */
         if (clicked.getType() == Material.ACACIA_LOG
                 && clicked.getItemMeta().getDisplayName().startsWith("Acacia", 2)
@@ -183,14 +203,20 @@ public class TreeeListPortalClickListener implements Listener {
             TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
             Location relativeBlock = blockInfo.getRelativeBlock().getLocation();
 
-            target.getWorld().generateTree(relativeBlock, TreeType.ACACIA);
+            boolean hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA);
 
             target.closeInventory();
+
+            if (!hasTreeGenerated){
+                Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not spawn on the block/item they clicked.");
+                Lang.send(target, "&7Sorry, you cannot spawn a " + clicked.getItemMeta().getDisplayName() + " &7here. Please try again.");
+                return;
+            }
 
             Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
             Lang.send(target,Lang.TREEE_SPAWNER_ACACIA.replace("{getToolName}", clicked.getItemMeta().getDisplayName()));
 
-            /* Notice: Remove Treee Spawner Tool from inventory */
+            /* NOTICE: Remove Treee Spawner Tool from inventory */
             target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
             return;

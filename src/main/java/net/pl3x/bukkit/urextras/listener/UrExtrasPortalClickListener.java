@@ -18,18 +18,19 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * TODO: Add cooldowns to each feature
  *
- * INFO: Check inventory Name
- * INFO: Check Item has meta
- * INFO: Check item type is <ItemType>
- * INFO: Check current item type byte is ##
- *
- * INFO: if (sender instanceof Player && Bukkit.getPluginManager().isPluginEnabled("CmdCD")) {
- *              net.pl3x.bukkit.cmdcd.CmdCD.addCooldown(command, ((Player) sender).getUniqueId(), Config.ME_COOLDOWN);
- *       }
- *
- * INFO: inventoryClickEvent.getRawSlot() > inventoryClickEvent.getInventory().getSize()
- * INFO: Tells you when the players inventory was clicked
- * INFO: Applying < will tell you when a player clicks the custom number inventory
+ * INFO:
+ *   | Check inventory Name
+ *   | Check Item has meta
+ *   | Check item type is <ItemType>
+ *   | Check current item type byte is ##
+ *   |
+ *   | if (sender instanceof Player && Bukkit.getPluginManager().isPluginEnabled("CmdCD")) {
+ *   |          net.pl3x.bukkit.cmdcd.CmdCD.addCooldown(command, ((Player) sender).getUniqueId(), Config.ME_COOLDOWN);
+ *   | }
+ *   |
+ *   | inventoryClickEvent.getRawSlot() > inventoryClickEvent.getInventory().getSize()
+ *   | Tells you when the players inventory was clicked
+ *   | Applying < will tell you when a player clicks the custom number inventory
  */
 
 public class UrExtrasPortalClickListener implements Listener {
@@ -47,7 +48,7 @@ public class UrExtrasPortalClickListener implements Listener {
             return;
         }
 
-        /* Notice: Stopping all clickable events */
+        /* NOTICE: Stopping all clickable events */
         inventoryClickEvent.setCancelled(true);
         Logger.debug("onUrExtrasPortalInventoryClick | Click Event was cancelled for the UrExtras Portal Inventory");
 
@@ -56,7 +57,7 @@ public class UrExtrasPortalClickListener implements Listener {
         ItemStack clicked = inventoryClickEvent.getCurrentItem(); // Slot/Item/Block Clicked
 
         /*
-         * Notice: NULL CHECK START
+         * NOTICE: NULL CHECK START
          */
         if (cursor == null){
             Logger.debug("onUrExtrasPortalInventoryClick | Cursor is equal to null");
@@ -77,10 +78,10 @@ public class UrExtrasPortalClickListener implements Listener {
             Logger.debug("onUrExtrasPortalInventoryClick | Target is equal to null");
             return;
         }
-        /* Notice: NULL CHECK END */
+        /* NOTICE: NULL CHECK END */
 
         /*
-         * Notice: Check if player closed custom inventory (Icon: Apple)
+         * NOTICE: Check if player closed custom inventory (Icon: Apple)
          */
         if (clicked.getType() == Material.APPLE
                 && clicked.getItemMeta().getDisplayName().startsWith("Close", 2)) {
@@ -92,9 +93,9 @@ public class UrExtrasPortalClickListener implements Listener {
         }
 
         /*
-         * Notice: TREEE SPAWNER TOOL
+         * NOTICE: TREEE SPAWNER TOOL
          *
-         * Notice: Check if the player click Treee Spawner Tool (Diamond Axe)
+         * NOTICE: Check if the player click Treee Spawner Tool (Diamond Axe)
          */
         if (clicked.getType() == Material.DIAMOND_AXE
                 && clicked.getItemMeta().getDisplayName().startsWith("Treee", 2)
@@ -134,7 +135,7 @@ public class UrExtrasPortalClickListener implements Listener {
             treeSpawnerToolMeta.setLore(treeSpawnerToolLore);
             treeSpawnerTool.setItemMeta(treeSpawnerToolMeta);
 
-            /* Notice: Set Treee Spawner Tool in targets main hand */
+            /* NOTICE: Set Treee Spawner Tool in targets main hand */
             target.getInventory().setItemInMainHand(treeSpawnerTool);
             Lang.send(target, Lang.colorize(Lang.GIVE_TREEE_SPAWNER_TOOL.replace("{getToolName}", treeSpawnerTool.getItemMeta().getDisplayName() )) );
 

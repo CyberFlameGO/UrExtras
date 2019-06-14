@@ -48,7 +48,7 @@ public class Lang {
                                                                                     "&7You cannot use the &4{getToolName} &7here.\n" +
                                                                                     "\n" +
                                                                                     "&7Please click on one of the following materials:\n" +
-                                                                                    "  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dGrass Path&6, &dPodzol&6, &dFarmland&6." +
+                                                                                    "  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6." +
                                                                                     "\n&5=====================================================\n");
         TREEE_LIST_INVENTORY_TITLE = getString("treee-list-inventory-title","Treee List");
         TREEE_SPAWNER_ACACIA = getString("treee-spawner-acacia","&7You spawned a {getToolName}&7.");

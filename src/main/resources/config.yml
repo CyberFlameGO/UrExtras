@@ -9,3 +9,6 @@ logging: true
 
 # Language file (for translations)
 language-file: lang-en.yml
+
+#
+treee-spawner-tool-click: true
