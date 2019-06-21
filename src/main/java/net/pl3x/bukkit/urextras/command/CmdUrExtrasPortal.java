@@ -79,12 +79,11 @@ public class CmdUrExtrasPortal implements TabExecutor {
         ItemStack itemOneIcon = new ItemStack(Material.DIAMOND_AXE, 1);
         ItemMeta itemOneMeta = itemOneIcon.getItemMeta();
         itemOneMeta.setDisplayName(
-
                     (
                             Config.TREEE_SPAWNER_TOOL_CLICK ?
-                                !target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.colorize(Lang.NO_TREEE) : Lang.colorize(Lang.TREEE)
+                                !target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.colorize(Lang.NO_TREEE_SPAWNER_TOOL) : Lang.colorize(Lang.TREEE_SPAWNER_TOOL)
                             :
-                                Lang.colorize(Lang.NO_TREEE)
+                                Lang.colorize(Lang.NO_TREEE_SPAWNER_TOOL)
                     )
                 );
         itemOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
@@ -110,7 +109,7 @@ public class CmdUrExtrasPortal implements TabExecutor {
                 Logger.debug("onCommand | Target was given a Tree Spawner Tool.");
             }
         } else {
-            itemOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.NO_TREEE)));
+            itemOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.NO_TREEE_SPAWNER_TOOL)));
         }
 
         itemOneMeta.setLore(itemOneLore);

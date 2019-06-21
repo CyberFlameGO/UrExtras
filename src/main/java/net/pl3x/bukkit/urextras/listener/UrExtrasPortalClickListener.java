@@ -1,7 +1,6 @@
 package net.pl3x.bukkit.urextras.listener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
@@ -154,7 +153,7 @@ public class UrExtrasPortalClickListener implements Listener {
             /* NOTICE: Create Treee Spawner Tool */
             ItemStack treeSpawnerTool = new ItemStack(Material.DIAMOND_AXE, 1);
             ItemMeta treeSpawnerToolMeta = treeSpawnerTool.getItemMeta();
-            treeSpawnerToolMeta.setDisplayName(Lang.colorize(Lang.TREEE));
+            treeSpawnerToolMeta.setDisplayName(Lang.colorize(Lang.TREEE_SPAWNER_TOOL));
             treeSpawnerToolMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             treeSpawnerToolMeta.setCustomModelData((int) 069001F); // TODO: Add as config option
             ArrayList<String> treeSpawnerToolLore = new ArrayList<>();
@@ -165,7 +164,7 @@ public class UrExtrasPortalClickListener implements Listener {
 
             /* NOTICE: Set Treee Spawner Tool in targets main hand */
             target.getInventory().setItemInMainHand(treeSpawnerTool);
-            Lang.send(target, Lang.colorize(Lang.GIVE_TREEE_SPAWNER_TOOL.replace("{getToolName}", treeSpawnerTool.getItemMeta().getDisplayName() )) );
+            Lang.send(target, Lang.colorize(Lang.GIVE_TOOL.replace("{getToolName}", treeSpawnerTool.getItemMeta().getDisplayName() )) );
 
             /*
              * TODO:

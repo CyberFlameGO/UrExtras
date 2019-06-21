@@ -20,9 +20,10 @@ public class Config {
 
     public static boolean TREEE_SPAWNER_TOOL_CLICK;
     public static boolean TREEE_LIST_ACACIA;
+    public static boolean TREEE_LIST_BIRCH;
 
     private static void init() {
-        DEBUG_MODE = getBoolean("debug_mode",true);
+        DEBUG_MODE = getBoolean("debug_mode",false);
         COLOR_LOGS = getBoolean("color-logs",true);
         LOGGING = getBoolean("logging", true);
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
@@ -31,6 +32,7 @@ public class Config {
 
         TREEE_SPAWNER_TOOL_CLICK = getBoolean("treee-spawner-tool-click", true);
         TREEE_LIST_ACACIA = getBoolean("treee-list.acacia",true);
+        TREEE_LIST_BIRCH = getBoolean("treee-list.birch",true);
     }
 
 

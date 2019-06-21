@@ -1,5 +1,5 @@
 # Enable debug info in console
-debug-mode: true
+debug-mode: false
 
 # Enable colors in console output
 color-logs: true
@@ -24,3 +24,4 @@ treee-spawner-tool-click: true
 # Enables/Disables Spawnable Tree Types
 treee-list:
   acacia: true
+  birch: true

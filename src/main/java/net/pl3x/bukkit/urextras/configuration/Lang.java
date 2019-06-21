@@ -20,13 +20,13 @@ public class Lang {
 
     public static String UREXTRAS_PORTAL_INVENTORY_TITLE;
     public static String UREXTRAS_PORTAL_INVENTORY_CLOSED;
-    public static String NO_TREEE;
-    public static String TREEE;
     public static String HAND_NOT_EMPTY;
-    public static String GIVE_TREEE_SPAWNER_TOOL;
+    public static String GIVE_TOOL;
 
-    public static String SET_DIAMOND_AXE_TITLE;
-    public static String SET_DIAMOND_AXE_INFO;
+    public static String NO_TREEE_SPAWNER_TOOL;
+    public static String TREEE_SPAWNER_TOOL;
+    public static String SET_TREE_SPAWNER_TOOL_INFO;
+
     public static String TREEE_LIST_INVENTORY_TITLE;
     public static String CANNOT_SPAWN_TREEE_HERE;
     public static String TREEE_SPAWNER_ACACIA;
@@ -39,13 +39,12 @@ public class Lang {
 
         UREXTRAS_PORTAL_INVENTORY_TITLE = getString("urextras-portal-inventory-title", "UrExtras Portal");
         UREXTRAS_PORTAL_INVENTORY_CLOSED = getString("urextras-portal-inventory-closed","&7You closed &4{getInventoryName}&7.");
-        NO_TREEE = getString("no-treee","&4Treee Spawner Tool");
-        TREEE = getString("treee","&2Treee Spawner Tool");
         HAND_NOT_EMPTY = getString("hand-not-empty","&dPlease empty your hand before clicking the &7{getClicked}&d again.");
-        GIVE_TREEE_SPAWNER_TOOL = getString("give-treee-spawner-tool","&7You received a &2{getToolName}&7.");
+        GIVE_TOOL = getString("give-tool","&7You received a &2{getToolName}&7.");
 
-        SET_DIAMOND_AXE_TITLE = getString("set-diamond-axe-title", "Treee Spawner Tool");
-        SET_DIAMOND_AXE_INFO = getString("set-diamond-axe-info","&7Spawn Any treee.");
+        NO_TREEE_SPAWNER_TOOL = getString("no-treee-spawner-tool","&4Treee Spawner Tool");
+        TREEE_SPAWNER_TOOL = getString("treee-spawner-tool","&2Treee Spawner Tool");
+        SET_TREE_SPAWNER_TOOL_INFO = getString("set-treee-spawner-tool-info","&7Spawn Any treee.");
         CANNOT_SPAWN_TREEE_HERE = getString("cannot-spawn-treee-here","&5=====================================================\n" +
                                                                                     "&7You cannot use the &4{getToolName} &7here.\n" +
                                                                                     "\n" +

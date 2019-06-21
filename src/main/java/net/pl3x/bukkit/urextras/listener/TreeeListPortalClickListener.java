@@ -130,20 +130,19 @@ public class TreeeListPortalClickListener implements Listener {
              *   - Add permissions for each tree type
              *   - Make Lang variable for each tree type
              */
-
-                ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
-                ItemMeta treeOneMeta = treeOne.getItemMeta();
-                treeOneMeta.setDisplayName((Config.TREEE_LIST_ACACIA) ? Lang.colorize("&aAcacia Treee") : Lang.colorize("&4Acacia Treee"));
-                treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-                ArrayList<String> treeOneLore = new ArrayList<>();
-                if (Config.TREEE_LIST_ACACIA) {
-                    treeOneLore.add(Lang.colorize("&8Click to spawn your treee"));
-                } else {
-                    treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}","&4Acacia Treee")));
-                }
-                treeOneMeta.setLore(treeOneLore);
-                treeOne.setItemMeta(treeOneMeta);
-                treeListInventory.setItem(0, treeOne);
+            ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
+            ItemMeta treeOneMeta = treeOne.getItemMeta();
+            treeOneMeta.setDisplayName((Config.TREEE_LIST_ACACIA) ? Lang.colorize("&aAcacia Treee") : Lang.colorize("&4Acacia Treee"));
+            treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeOneLore = new ArrayList<>();
+            if (Config.TREEE_LIST_ACACIA) {
+                treeOneLore.add(Lang.colorize("&8Click to spawn your treee"));
+            } else {
+                treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}","&4Acacia Treee")));
+            }
+            treeOneMeta.setLore(treeOneLore);
+            treeOne.setItemMeta(treeOneMeta);
+            treeListInventory.setItem(0, treeOne);
 
 
             /* TODO: Add next tree
@@ -164,6 +163,13 @@ public class TreeeListPortalClickListener implements Listener {
              *  - Tall Birch: Tall birch tree
              *  - Chorus Plant: Large plant native to the End
              */
+
+            /*
+             * NOTICE: Birch Tree
+             */
+            ItemStack treeTwo = new ItemStack(Material.BIRCH_LOG, 1);
+            ItemMeta treeTwoMeta = treeTwo.getItemMeta();
+            treeTwoMeta.setDisplayName((!Config.TREEE_LIST_BIRCH) ? "" : "");
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
