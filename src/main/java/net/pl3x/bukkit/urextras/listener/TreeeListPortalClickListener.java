@@ -510,7 +510,7 @@ public class TreeeListPortalClickListener implements Listener {
         /* NOTICE: Remove Treee Spawner Tool from inventory */
         target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
-        Logger.debug("onPlayerQuitToolInHand | Player Tool was removed since the quit server");
+        Logger.debug("onPlayerQuitToolInHand | Player Tool was removed since the player quit server");
         return;
     }
 
@@ -524,11 +524,45 @@ public class TreeeListPortalClickListener implements Listener {
     public void onPlayerKickToolInHand(PlayerKickEvent playerKickEventToolInHand){
         /*
          * ERROR:
-         *   - When player leaves server and rejoin with item, the taskToCancel BukkitTask give NPE because effect does not reapply
+         *   - When player leaves server and rejoin with item, the taskToCancel BukkitTask
+         *     give NPE because effect does not reapply
          *
          * TODO:
          *   - Remove Tool if player is kicked from server
          */
+        Player target = playerKickEventToolInHand.getPlayer();
+        ItemStack itemInHand = target.getInventory().getItemInMainHand();
+
+        if(itemInHand.getType().isEmpty()){
+            Logger.debug("onPlayerKickToolInHand | Item in hand is null, return.");
+            return;
+        }
+
+        /* NOTICE: Check for a identifier (Custom Model Data) */
+        if (!target.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+            Logger.debug("onPlayerKickToolInHand | The item in players hand, a" + target.getInventory().getItemInMainHand().getType().name().replace("_", " ").toLowerCase() + ", has no 'Custom Model Data', return.");
+            return;
+        }
+
+        /* NOTICE: Get the Identified (Custom Model Data) */
+        Integer itemInHandCustomModelData = target.getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
+
+        /* NOTICE: NPE check */
+        if (itemInHandCustomModelData == null){
+            return;
+        }
+
+        /* NOTICE: Check for correct Custom Model Data */
+        if (target.getInventory().getItemInMainHand().getType() != Material.DIAMOND_AXE && !itemInHandCustomModelData.equals((int) 069001F)){
+            Logger.debug("onPlayerKickToolInHand | Item in hand does not equal to Tool Custom Data");
+            return;
+        }
+
+        /* NOTICE: Remove Treee Spawner Tool from inventory */
+        target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
+
+        Logger.debug("onPlayerKickToolInHand | Player Tool was removed since the player was kicked from server");
+        return;
     }
 
 
