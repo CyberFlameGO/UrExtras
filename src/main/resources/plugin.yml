@@ -47,6 +47,3 @@ permissions:
   command.urextras.tester:
     description: Allows you to use the tester command
     default: op
-
-
-

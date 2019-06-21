@@ -1,6 +1,7 @@
 package net.pl3x.bukkit.urextras.listener;
 
 import com.destroystokyo.paper.block.TargetBlockInfo;
+import java.rmi.MarshalException;
 import java.util.ArrayList;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
@@ -161,10 +162,26 @@ public class TreeeListPortalClickListener implements Listener {
             treeTwo.setItemMeta(treeTwoMeta);
             treeListInventory.setItem(1, treeTwo);
 
+            /*
+             * NOTICE: RedWood Tree (Spruce Tree)
+             */
+            ItemStack treeThree = new ItemStack(Material.SPRUCE_LOG, 1);
+            ItemMeta treeThreeMeta = treeThree.getItemMeta();
+            treeThreeMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_SPRUCE ? Lang.TREEE_SPAWNED_SPRUCE : Lang.TREEE_SPAWNED_SPRUCENO));
+            treeThreeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeThreeLore = new ArrayList<>();
+            if (Config.TREEE_LIST_SPRUCE){
+                treeThreeLore.add(Lang.colorize(""));
+            } else {
+                treeThreeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SPRUCENO)));
+            }
+            treeThreeMeta.setLore(treeThreeLore);
+            treeThree.setItemMeta(treeThreeMeta);
+            treeListInventory.setItem(2, treeThree);
+
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
              *  - Big Tree: regular tre, extra tall with branches
-             *  - Redwood: shaped like a pine tree
              *  - Tall Redwood: Just a few leaves at the top
              *  - Jungle: Standard jungle tree; 4 blocks wide and tall
              *  - Small Jungle: Smaller jungle tree; 1 block wide
@@ -254,9 +271,14 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 0
                 || clicked.getType() == Material.BIRCH_LOG
                 && itemDisplayName.startsWith("Birch", 2)
-                && inventoryClickEvent.getSlot() == 1) {
+                && inventoryClickEvent.getSlot() == 1
+                || clicked.getType() == Material.SPRUCE_LOG
+                && itemDisplayName.startsWith("Spruce", 2)
+                && inventoryClickEvent.getSlot() == 2
+                ) {
             if (!Config.TREEE_LIST_ACACIA
-                    || !Config.TREEE_LIST_BIRCH){
+                    || !Config.TREEE_LIST_BIRCH
+                    || !Config.TREEE_LIST_SPRUCE){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
                 target.closeInventory();
@@ -273,6 +295,9 @@ public class TreeeListPortalClickListener implements Listener {
             }
             if (clicked.getType() == Material.BIRCH_LOG) {
                 hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIRCH); // TODO: Add oop check for clicked option
+            }
+            if (clicked.getType() == Material.SPRUCE_LOG) {
+                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.REDWOOD); // TODO: Add oop check for clicked option
             }
 
             /*

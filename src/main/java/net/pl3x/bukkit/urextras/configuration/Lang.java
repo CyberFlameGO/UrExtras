@@ -46,6 +46,8 @@ public class Lang {
     public static String TREEE_SPAWNED_ACACIANO;
     public static String TREEE_SPAWNED_BIRCH;
     public static String TREEE_SPAWNED_BIRCHNO;
+    public static String TREEE_SPAWNED_SPRUCE;
+    public static String TREEE_SPAWNED_SPRUCENO;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -74,6 +76,8 @@ public class Lang {
         TREEE_SPAWNED_ACACIANO = getString("treee-spawned.acaciaNo","&4Acacia Treee");
         TREEE_SPAWNED_BIRCH = getString("treee-spawned.birch","&aBirch Treee");
         TREEE_SPAWNED_BIRCHNO = getString("treee-spawned.birchNo","&4Birch Treee");
+        TREEE_SPAWNED_SPRUCE = getString("treee-spawned.spruce","&aSpruce Treee");
+        TREEE_SPAWNED_SPRUCENO = getString("treee-spawned.spruceNo","&4&Spruce Treee");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################
