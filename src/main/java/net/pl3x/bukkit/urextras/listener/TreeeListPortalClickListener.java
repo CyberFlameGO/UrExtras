@@ -55,14 +55,6 @@ public class TreeeListPortalClickListener implements Listener {
             return;
         }
 
-        /*
-         * NOTICE: Cancel Player Interact Event
-         *
-         * ERROR:
-         *   - Move down two notice's to fix error where no other axe can be used
-         */
-        clickEvent.setCancelled(true);
-
         /* NOTICE: Check for a identifier (Custom Model Data) */
         if (!clickEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
             Logger.debug("onTreeeBlockSelect | Item does not have custom model data, clickEvent cancelled");
@@ -78,6 +70,11 @@ public class TreeeListPortalClickListener implements Listener {
             Logger.debug("onTreeeBlockSelect | Diamond Axe is has no lore which is in main hand, clickEvent cancelled");
             return;
         }
+
+        /*
+         * NOTICE: Cancel Player Interact Event
+         */
+        clickEvent.setCancelled(true);
 
         Player target = clickEvent.getPlayer();
         ItemStack itemInHand = target.getInventory().getItemInMainHand();
