@@ -33,6 +33,7 @@ public class Config {
     public static boolean TREEE_LIST_BIRCH;
     public static boolean TREEE_LIST_SPRUCE;
     public static boolean TREEE_LIST_JUNGLE;
+    public static boolean TREEE_LIST_JUNGLE_SMALL;
     public static boolean TREEE_LIST_OAK;
     public static boolean TREEE_LIST_DARK_OAK;
 
@@ -49,6 +50,7 @@ public class Config {
         TREEE_LIST_BIRCH = getBoolean("treee-list.birch",true);
         TREEE_LIST_SPRUCE = getBoolean("treee-list.spruce", true);
         TREEE_LIST_JUNGLE = getBoolean("treee-list.jungle",true);
+        TREEE_LIST_JUNGLE_SMALL = getBoolean("treee-list.jungleSmall",true);
         TREEE_LIST_OAK = getBoolean("treee-list.oak", true);
         TREEE_LIST_DARK_OAK = getBoolean("treee-list.darkOak",true);
     }

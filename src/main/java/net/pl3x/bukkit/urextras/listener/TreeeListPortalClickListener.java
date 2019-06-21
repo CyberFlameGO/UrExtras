@@ -273,17 +273,39 @@ public class TreeeListPortalClickListener implements Listener {
             treeSix.setItemMeta(treeSixMeta);
             treeListInventory.setItem(5, treeSix);
 
+            /*
+             * NOTICE: Jungle Small Tree
+             */
+            ItemStack treeSeven = new ItemStack(Material.STRIPPED_JUNGLE_LOG, 1);
+            ItemMeta treeSevenMeta = treeSeven.getItemMeta();
+            treeSevenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_JUNGLE_SMALL ? Lang.TREEE_SPAWNED_JUNGLE_SMALL : Lang.TREEE_SPAWNED_JUNGLE_SMALLNO));
+            treeSevenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeSevenLore = new ArrayList<>();
+            if (Config.TREEE_LIST_JUNGLE_SMALL){
+                if (Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL.split(";");
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeSevenLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeSevenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL));
+                }
+            } else {
+                treeSevenLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLE_SMALLNO)));
+            }
+            treeSevenMeta.setLore(treeSevenLore);
+            treeSeven.setItemMeta(treeSevenMeta);
+            treeListInventory.setItem(6, treeSeven);
+
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
              *  - Big Tree: regular tre, extra tall with branches
              *  - Tall Redwood: Just a few leaves at the top
-             *  - Small Jungle: Smaller jungle tree; 1 block wide
              *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
              *  - Jungle Bush: Small bush that grow in the jungle
              *  - Red Mushroom: Big Red Mushroom; Short and fat
              *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
              *  - Swamp: Swamp tree (Regular with vines on the side)
-             *  - Dark Oak: Dark oak tree
              *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
              *  - Tall Birch: Tall birch tree
              *  - Chorus Plant: Large plant native to the End
@@ -369,6 +391,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 4
                 || clicked.getType() == Material.DARK_OAK_LOG
                 && inventoryClickEvent.getSlot() == 5
+                || clicked.getType() == Material.STRIPPED_JUNGLE_LOG
+                && inventoryClickEvent.getSlot() == 6
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -376,6 +400,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_JUNGLE
                     || !Config.TREEE_LIST_OAK
                     || !Config.TREEE_LIST_DARK_OAK
+                    || !Config.TREEE_LIST_JUNGLE_SMALL
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -402,6 +427,8 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.TREE);
         } else if (clicked.getType() == Material.DARK_OAK_LOG) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.DARK_OAK);
+        } else if (clicked.getType() == Material.STRIPPED_JUNGLE_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.SMALL_JUNGLE);
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;

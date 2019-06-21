@@ -53,6 +53,8 @@ public class Lang {
     public static String TREEE_SPAWNED_SPRUCENO;
     public static String TREEE_SPAWNED_JUNGLE;
     public static String TREEE_SPAWNED_JUNGLENO;
+    public static String TREEE_SPAWNED_JUNGLE_SMALL;
+    public static String TREEE_SPAWNED_JUNGLE_SMALLNO;
     public static String TREEE_SPAWNED_OAK;
     public static String TREEE_SPAWNED_OAKNO;
     public static String TREEE_SPAWNED_DARK_OAK;
@@ -62,6 +64,7 @@ public class Lang {
     public static String TREEE_SPAWNED_LORE_BIRCH;
     public static String TREEE_SPAWNED_LORE_SPRUCE;
     public static String TREEE_SPAWNED_LORE_JUNGLE;
+    public static String TREEE_SPAWNED_LORE_JUNGLE_SMALL;
     public static String TREEE_SPAWNED_LORE_OAK;
     public static String TREEE_SPAWNED_LORE_DARK_OAK;
 
@@ -96,6 +99,8 @@ public class Lang {
         TREEE_SPAWNED_SPRUCENO = getString("treee-spawned.spruceNo","&4Spruce Treee");
         TREEE_SPAWNED_JUNGLE = getString("treee-spawned.jungle","&aJungle Treee");
         TREEE_SPAWNED_JUNGLENO = getString("treee-spawned.jungleNo","&4Jungle Treee");
+        TREEE_SPAWNED_JUNGLE_SMALL = getString("treee-spawned.jungleSmall","&aJungle Small Treee");
+        TREEE_SPAWNED_JUNGLE_SMALLNO = getString("treee-spawned.jungleSmallNo","&4Jungle Small Treee");
         TREEE_SPAWNED_OAK = getString("treee-spawned.oak","&aOak Treee");
         TREEE_SPAWNED_OAKNO = getString("treee-spawned.oakNo","&4Oak Treee");
         TREEE_SPAWNED_DARK_OAK = getString("treee-spawned.dark-oak","&aDark Oak Treee");

@@ -27,5 +27,6 @@ treee-list:
   birch: true
   spruce: true
   jungle: true
+  jungleSmall: true
   oak: true
   darkOak: true
