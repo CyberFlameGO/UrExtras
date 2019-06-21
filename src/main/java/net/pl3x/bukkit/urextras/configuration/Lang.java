@@ -42,6 +42,8 @@ public class Lang {
     public static String CANNOT_SPAWN_TREEE_HERE;
 
     public static String TREEE_SPAWNED_PLAYERMSG;
+    public static String TREEE_SPAWNED_ACACIA;
+    public static String TREEE_SPAWNED_ACACIANO;
     public static String TREEE_SPAWNED_BIRCH;
     public static String TREEE_SPAWNED_BIRCHNO;
 
@@ -68,6 +70,8 @@ public class Lang {
                                                                                     "  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6." +
                                                                                     "\n&5=====================================================\n");
         TREEE_SPAWNED_PLAYERMSG = getString("treee-spawned.playerMsg","&7You spawned a {getSpawnedName}&7.");
+        TREEE_SPAWNED_ACACIA = getString("treee-spawned.acacia","&aAcacia Treee");
+        TREEE_SPAWNED_ACACIANO = getString("treee-spawned.acaciaNo","&4Acacia Treee");
         TREEE_SPAWNED_BIRCH = getString("treee-spawned.birch","&aBirch Treee");
         TREEE_SPAWNED_BIRCHNO = getString("treee-spawned.birchNo","&4Birch Treee");
     }

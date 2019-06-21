@@ -132,7 +132,7 @@ public class TreeeListPortalClickListener implements Listener {
              */
             ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
             ItemMeta treeOneMeta = treeOne.getItemMeta();
-            treeOneMeta.setDisplayName((Config.TREEE_LIST_ACACIA) ? Lang.colorize("&aAcacia Treee") : Lang.colorize("&4Acacia Treee"));
+            treeOneMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_ACACIA ? Lang.TREEE_SPAWNED_ACACIA : Lang.TREEE_SPAWNED_ACACIANO));
             treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             ArrayList<String> treeOneLore = new ArrayList<>();
             if (Config.TREEE_LIST_ACACIA) {
@@ -143,26 +143,6 @@ public class TreeeListPortalClickListener implements Listener {
             treeOneMeta.setLore(treeOneLore);
             treeOne.setItemMeta(treeOneMeta);
             treeListInventory.setItem(0, treeOne);
-
-
-            /* TODO: Add next tree
-             *  - Tree: Regular tree, no branches
-             *  - Big Tree: regular tre, extra tall with branches
-             *  - Redwood: shaped like a pine tree
-             *  - Tall Redwood: Just a few leaves at the top
-             *  - Birch:
-             *  - Jungle: Standard jungle tree; 4 blocks wide and tall
-             *  - Small Jungle: Smaller jungle tree; 1 block wide
-             *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
-             *  - Jungle Bush: Small bush that grow in the jungle
-             *  - Red Mushroom: Big Red Mushroom; Short and fat
-             *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
-             *  - Swamp: Swamp tree (Regular with vines on the side)
-             *  - Dark Oak: Dark oak tree
-             *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
-             *  - Tall Birch: Tall birch tree
-             *  - Chorus Plant: Large plant native to the End
-             */
 
             /*
              * NOTICE: Birch Tree
@@ -180,6 +160,24 @@ public class TreeeListPortalClickListener implements Listener {
             treeTwoMeta.setLore(treeTwoLore);
             treeTwo.setItemMeta(treeTwoMeta);
             treeListInventory.setItem(1, treeTwo);
+
+            /* TODO: Add next tree
+             *  - Tree: Regular tree, no branches
+             *  - Big Tree: regular tre, extra tall with branches
+             *  - Redwood: shaped like a pine tree
+             *  - Tall Redwood: Just a few leaves at the top
+             *  - Jungle: Standard jungle tree; 4 blocks wide and tall
+             *  - Small Jungle: Smaller jungle tree; 1 block wide
+             *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
+             *  - Jungle Bush: Small bush that grow in the jungle
+             *  - Red Mushroom: Big Red Mushroom; Short and fat
+             *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
+             *  - Swamp: Swamp tree (Regular with vines on the side)
+             *  - Dark Oak: Dark oak tree
+             *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
+             *  - Tall Birch: Tall birch tree
+             *  - Chorus Plant: Large plant native to the End
+             */
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
