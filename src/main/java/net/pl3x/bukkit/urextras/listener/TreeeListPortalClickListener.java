@@ -371,15 +371,15 @@ public class TreeeListPortalClickListener implements Listener {
 
             if (clicked.getType() == Material.ACACIA_LOG) {
                 hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA); // TODO: Add oop check for clicked option
-            }
-            if (clicked.getType() == Material.BIRCH_LOG) {
+            } else if (clicked.getType() == Material.BIRCH_LOG) {
                 hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIRCH); // TODO: Add oop check for clicked option
-            }
-            if (clicked.getType() == Material.SPRUCE_LOG) {
+            } else if (clicked.getType() == Material.SPRUCE_LOG) {
                 hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.REDWOOD); // TODO: Add oop check for clicked option
-            }
-            if (clicked.getType() == Material.JUNGLE_LOG) {
+            } else if (clicked.getType() == Material.JUNGLE_LOG) {
                 hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.JUNGLE); // TODO: Add oop check for clicked option
+            } else {
+                Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
+                return;
             }
 
             /*
