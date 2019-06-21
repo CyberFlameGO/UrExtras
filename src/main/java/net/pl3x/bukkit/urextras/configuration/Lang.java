@@ -25,11 +25,14 @@ public class Lang {
 
     public static String NO_TREEE_SPAWNER_TOOL;
     public static String TREEE_SPAWNER_TOOL;
-    public static String SET_TREE_SPAWNER_TOOL_INFO;
+    public static String SET_TREEE_SPAWNER_TOOL_INFO;
 
     public static String TREEE_LIST_INVENTORY_TITLE;
     public static String CANNOT_SPAWN_TREEE_HERE;
-    public static String TREEE_SPAWNER_ACACIA;
+
+    public static String TREEE_SPAWNED_PLAYERMSG;
+    public static String TREEE_SPAWNED_BIRCH;
+    public static String TREEE_SPAWNED_BIRCHNO;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -44,15 +47,18 @@ public class Lang {
 
         NO_TREEE_SPAWNER_TOOL = getString("no-treee-spawner-tool","&4Treee Spawner Tool");
         TREEE_SPAWNER_TOOL = getString("treee-spawner-tool","&2Treee Spawner Tool");
-        SET_TREE_SPAWNER_TOOL_INFO = getString("set-treee-spawner-tool-info","&7Spawn Any treee.");
+        SET_TREEE_SPAWNER_TOOL_INFO = getString("set-treee-spawner-tool-info","&7Spawn Any treee.");
+
+        TREEE_LIST_INVENTORY_TITLE = getString("treee-list-inventory-title","Treee List");
         CANNOT_SPAWN_TREEE_HERE = getString("cannot-spawn-treee-here","&5=====================================================\n" +
                                                                                     "&7You cannot use the &4{getToolName} &7here.\n" +
                                                                                     "\n" +
                                                                                     "&7Please click on one of the following materials:\n" +
                                                                                     "  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6." +
                                                                                     "\n&5=====================================================\n");
-        TREEE_LIST_INVENTORY_TITLE = getString("treee-list-inventory-title","Treee List");
-        TREEE_SPAWNER_ACACIA = getString("treee-spawner-acacia","&7You spawned a {getToolName}&7.");
+        TREEE_SPAWNED_PLAYERMSG = getString("treee-spawned.playerMsg","&7You spawned a {getSpawnedName}&7.");
+        TREEE_SPAWNED_BIRCH = getString("treee-spawned.birch","&aBirch Treee");
+        TREEE_SPAWNED_BIRCHNO = getString("treee-spawned.birchNo","&4Birch Treee");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################

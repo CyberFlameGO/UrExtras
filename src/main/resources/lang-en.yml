@@ -1,16 +1,34 @@
+##
+# General/Misc Lang
+##
 command-no-permission: "&4You do not have permission for that command!"
 command-no-permission-portal: "&4You do not have permission to use the&c {getClicked}&4!"
 player-command: "&4This command is only available to players!"
 disabled: "&cThe {getDisabledNamed} &cis disabled."
 
+##
+# UrExtras Portal Lang
+##
 urextras-portal-inventory-title: "UrExtras Portal"
 urextras-portal-inventory-closed: "&7You closed &4{getInventoryName}&7."
 hand-not-empty: "&dPlease empty your hand before clicking the &7{getClicked}&d again."
 give-tool: "&7You received a &2{getToolName}&7."
 
+##
+# UrExtras Portal Tools & Weapons Lang
+##
+#### Treee Spawner Tool
 no-treee-spawner-tool: "&4Treee Spawner Tool"
 treee-spawner-tool: "&2Treee Spawner Tool"
 set-treee-spawner-tool-info: "&7Spawn Any treee."
-cannot-spawn-treee-here: "&5=====================================================\n&7You cannot use the &4{getToolName} &7here.\n\n&7Please click on one of the following materials:\n  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6.\n&5=====================================================\n"
+#### More Tools & Weapons Coming Soon!
+
+##
+# Treee Spawner Tool Lang
+##
 treee-list-inventory-title: "Treee List"
-treee-spawner-acacia: "&7You spawned a {getToolName}&7."
+cannot-spawn-treee-here: "&5=====================================================\n&7You cannot use the &4{getToolName} &7here.\n\n&7Please click on one of the following materials:\n  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6.\n&5=====================================================\n"
+treee-spawned:
+  playerMsg: "&7You spawned a {getSpawnedName}&7."
+  birch: "&aBirch Treee"
+  birchNo: "&4Birch Treee"

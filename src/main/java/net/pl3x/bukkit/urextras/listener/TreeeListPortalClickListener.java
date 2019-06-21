@@ -169,7 +169,17 @@ public class TreeeListPortalClickListener implements Listener {
              */
             ItemStack treeTwo = new ItemStack(Material.BIRCH_LOG, 1);
             ItemMeta treeTwoMeta = treeTwo.getItemMeta();
-            treeTwoMeta.setDisplayName((!Config.TREEE_LIST_BIRCH) ? "" : "");
+            treeTwoMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_BIRCH ? Lang.TREEE_SPAWNED_BIRCH : Lang.TREEE_SPAWNED_BIRCHNO));
+            treeTwoMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeTwoLore = new ArrayList<>();
+            if (Config.TREEE_LIST_BIRCH){
+                treeTwoLore.add(Lang.colorize("&8Click to spawn your treee"));
+            } else {
+                treeTwoLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_BIRCHNO)));
+            }
+            treeTwoMeta.setLore(treeTwoLore);
+            treeTwo.setItemMeta(treeTwoMeta);
+            treeListInventory.setItem(1, treeTwo);
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
@@ -236,26 +246,36 @@ public class TreeeListPortalClickListener implements Listener {
         }
         /* NOTICE: NULL CHECK END **/
 
+        String itemDisplayName = clicked.getItemMeta().getDisplayName();
 
         /*
          * NOTICE: Check if player click ACACIA LOG
          */
         if (clicked.getType() == Material.ACACIA_LOG
-                && clicked.getItemMeta().getDisplayName().startsWith("Acacia", 2)
-                && inventoryClickEvent.getSlot() == 0) {
-            if (!Config.TREEE_LIST_ACACIA){
+                && itemDisplayName.startsWith("Acacia", 2)
+                && inventoryClickEvent.getSlot() == 0
+                || clicked.getType() == Material.BIRCH_LOG
+                && itemDisplayName.startsWith("Birch", 2)
+                && inventoryClickEvent.getSlot() == 1) {
+            if (!Config.TREEE_LIST_ACACIA
+                    || !Config.TREEE_LIST_BIRCH){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
                 target.closeInventory();
                 return;
             }
 
-            Logger.debug("onTreeeCreate | " + target.getDisplayName() + " clicked Acacia Log.");
+            Logger.debug("onTreeeCreate | " + target.getDisplayName() + " clicked " + clicked.getItemMeta().getDisplayName() + ".");
 
             TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
             Location relativeBlock = blockInfo.getRelativeBlock().getLocation();
 
-            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA); // TODO: Add oop check for clicked option
+            if (clicked.getType() == Material.ACACIA_LOG) {
+                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA); // TODO: Add oop check for clicked option
+            }
+            if (clicked.getType() == Material.BIRCH_LOG) {
+                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIRCH); // TODO: Add oop check for clicked option
+            }
 
             /*
              * INFO: Adds an extra particle effect when the tree is spawned
@@ -291,7 +311,7 @@ public class TreeeListPortalClickListener implements Listener {
             }
 
             Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
-            Lang.send(target,Lang.TREEE_SPAWNER_ACACIA.replace("{getToolName}", clicked.getItemMeta().getDisplayName()));
+            Lang.send(target,Lang.TREEE_SPAWNED_PLAYERMSG.replace("{getSpawnedName}", clicked.getItemMeta().getDisplayName()));
 
             /* NOTICE: Remove Treee Spawner Tool from inventory */
             target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
