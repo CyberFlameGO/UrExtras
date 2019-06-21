@@ -23,6 +23,11 @@ commands:
       - uportal
       - ueportal
       - extrasportal
+  tester:
+    description: Testing command.
+    usage: /<command> [time] (player)
+    aliases:
+      - test
 
 permissions:
   command.urextras.reload:
@@ -36,6 +41,11 @@ permissions:
   ## Open Tree List Inventory
   command.urextras.portal.treeespawnertool:
     description: Allows you to open the tree spawner tool custom inventory.
+    default: op
+
+  ## Tester perrmision nodes
+  command.urextras.tester:
+    description: Allows you to use the tester command
     default: op
 
 

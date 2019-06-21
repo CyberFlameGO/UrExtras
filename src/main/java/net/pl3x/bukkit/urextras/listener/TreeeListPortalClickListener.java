@@ -3,11 +3,13 @@ package net.pl3x.bukkit.urextras.listener;
 import com.destroystokyo.paper.block.TargetBlockInfo;
 import java.util.ArrayList;
 import net.pl3x.bukkit.urextras.Logger;
+import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.TreeType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -15,20 +17,37 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.scheduler.BukkitTask;
 
+/*
+ * TODO:
+ *   - Add quitEvent check and remove item from inventory
+ */
 public class TreeeListPortalClickListener implements Listener {
+    private UrExtras plugin;
+    private BukkitTask taskToCancel;
+    private boolean isRunning;
+    private boolean hasTreeGenerated;
+
+    public TreeeListPortalClickListener(UrExtras plugin) {
+        this.plugin = plugin;
+    }
+
     /**
      * Checks whether or not the proper block was clicked.
      * If the the block can not spawn a tree type event will cancel.
      *
      * @param clickEvent
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onTreeeBlockSlected(PlayerInteractEvent clickEvent){
         /* NOTICE: Check for Diamond Axe */
         if (clickEvent.getPlayer().getInventory().getItemInMainHand().getType() != Material.DIAMOND_AXE){
@@ -36,7 +55,12 @@ public class TreeeListPortalClickListener implements Listener {
             return;
         }
 
-        /* NOTICE: Cancel Player Interact Event */
+        /*
+         * NOTICE: Cancel Player Interact Event
+         *
+         * ERROR:
+         *   - Move down two notice's to fix error where no other axe can be used
+         */
         clickEvent.setCancelled(true);
 
         /* NOTICE: Check for a identifier (Custom Model Data) */
@@ -49,7 +73,7 @@ public class TreeeListPortalClickListener implements Listener {
         Integer itemInHandCustomModelData = clickEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
 
         /* NOTICE: Check for correct Custom Model Data */
-        if (!itemInHandCustomModelData.equals(0001)){
+        if (!itemInHandCustomModelData.equals((int) 069001F)){
             Logger.debug("onTreeeBlockSelect | Item in hand does not equal to Tree Tool Custom Data");
             Logger.debug("onTreeeBlockSelect | Diamond Axe is has no lore which is in main hand, clickEvent cancelled");
             return;
@@ -161,7 +185,7 @@ public class TreeeListPortalClickListener implements Listener {
      *
      * @param inventoryClickEvent get clicked inventory.
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onTreeeCreate(InventoryClickEvent inventoryClickEvent){
         String inventoryName = inventoryClickEvent.getWhoClicked().getOpenInventory().getTitle();
         if (inventoryName != Lang.TREEE_LIST_INVENTORY_TITLE){
@@ -224,7 +248,32 @@ public class TreeeListPortalClickListener implements Listener {
             TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
             Location relativeBlock = blockInfo.getRelativeBlock().getLocation();
 
-            boolean hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA);
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA); // TODO: Add oop check for clicked option
+
+            /*
+             * INFO: Adds an extra particle effect when the tree is spawned
+             *
+             * TODO:
+             *   - Make apply to all selection, instead of applying it to all selections
+             */
+            TREEE_SPAWNED_PARTICLE:
+                for (int particleSpawnTimer = 0; particleSpawnTimer < 4 ; particleSpawnTimer++) {
+                    for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                        double radius = Math.sin(i);
+                        double y = Math.cos(i);
+                        for (double a = 0; a < Math.PI * 2; a += Math.PI / 2) {
+                            double x = Math.cos(a) * radius;
+                            double z = Math.sin(a) * radius;
+                            Location playerLoc = target.getLocation().add(x, y, z);
+                            target.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, playerLoc, 1);
+                            target.getLocation().subtract(x, y, z);
+                            if (particleSpawnTimer >= 4) {
+                                Logger.debug("onTreeeCreate | Tree Spawned Particle 'ForLoop' removed");
+                                break TREEE_SPAWNED_PARTICLE;
+                            }
+                        }
+                    }
+                }
 
             target.closeInventory();
 
@@ -240,7 +289,92 @@ public class TreeeListPortalClickListener implements Listener {
             /* NOTICE: Remove Treee Spawner Tool from inventory */
             target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
+        } // NOTICE: End of check for Acacia Log
+
+
+        /* NOTICE: Remove particle */
+        taskToCancel = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+
+            if (hasTreeGenerated == true){
+                isRunning = false;
+            } else {
+                isRunning = true;
+            }
+
+            if (!target.isOnline() || !isRunning){
+                UrExtrasPortalClickListener.treeeSpawnerEffects.cancel();
+                Logger.debug("onTreeeCreate | Removed Treee Spawner Particle.");
+                taskToCancel.cancel();
+                isRunning = false;
+                // TODO: Add cooldown here
+            }
+        }, 0L, 20L);
+
+        return; // INFO: Remove particle for any selection
+    }
+
+
+    /**
+     * TODO:
+     *   - Remove Tool if player quits server
+     *
+     * @param inventoryClickEvent
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerQuitToolInHand(PlayerQuitEvent inventoryClickEvent){
+        Player target = inventoryClickEvent.getPlayer();
+
+        /* NOTICE: Check for a identifier (Custom Model Data) */
+        if (!target.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
+            Logger.debug("onPlayerQuitToolInHand | The item in players hand, a" + target.getInventory().getItemInMainHand().getType().name().replace("_", " ").toLowerCase() + ", has no 'Custom Model Data', return.");
             return;
         }
+
+        /* NOTICE: Get the Identified (Custom Model Data) */
+        Integer itemInHandCustomModelData = target.getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
+
+        /* NOTICE: NPE check */
+        if (itemInHandCustomModelData == null){
+            return;
+        }
+
+        /* NOTICE: Check for correct Custom Model Data */
+        if (target.getInventory().getItemInMainHand().getType() != Material.DIAMOND_AXE && !itemInHandCustomModelData.equals((int) 069001F)){
+            Logger.debug("onPlayerQuitToolInHand | Item in hand does not equal to Tool Custom Data");
+            return;
+        }
+
+        /* NOTICE: Remove Treee Spawner Tool from inventory */
+        target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
+
+        Logger.debug("onPlayerQuitToolInHand | Player Tool was removed since the quit server");
+    }
+
+
+    /**
+     *
+     * ERROR:
+     *   - When player leaves server and rejoin with item, the taskToCancel BukkitTask give NPE because effect does not reapply
+     *
+     * TODO:
+     *   - Remove Tool if player is kicked from server
+     *
+     * @param inventoryClickEvent
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerKickToolInHand(PlayerKickEvent inventoryClickEvent){
+
+    }
+
+
+    /**
+     * TODO:
+     *   - Remove Tool if players gamemode is changed from survival
+     *
+     * @param inventoryClickEvent
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayergamdemodeChangeToolInHand(PlayerGameModeChangeEvent inventoryClickEvent){
+
     }
 }

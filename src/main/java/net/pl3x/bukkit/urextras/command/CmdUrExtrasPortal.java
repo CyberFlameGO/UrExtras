@@ -37,6 +37,16 @@ public class CmdUrExtrasPortal implements TabExecutor {
         return null;
     }
 
+    /**
+     * TODO:
+     *   - Add check for players gamemode
+     *
+     * @param sender
+     * @param command
+     * @param label
+     * @param args
+     * @return
+     */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)){

@@ -1,5 +1,6 @@
 package net.pl3x.bukkit.urextras;
 
+import net.pl3x.bukkit.urextras.command.CmdTester;
 import net.pl3x.bukkit.urextras.listener.TreeeListPortalClickListener;
 import net.pl3x.bukkit.urextras.command.CmdUrExtrasPortal;
 import net.pl3x.bukkit.urextras.command.CmdReload;
@@ -23,11 +24,12 @@ public class UrExtras extends JavaPlugin {
         Config.reload();
         Lang.reload();
 
-        getServer().getPluginManager().registerEvents(new TreeeListPortalClickListener(),this);
-        getServer().getPluginManager().registerEvents(new UrExtrasPortalClickListener(), this);
+        getServer().getPluginManager().registerEvents(new TreeeListPortalClickListener(this),this);
+        getServer().getPluginManager().registerEvents(new UrExtrasPortalClickListener(this), this);
 
         getCommand("urextras").setExecutor(new CmdReload(this));
         getCommand("urextrasportal").setExecutor(new CmdUrExtrasPortal(this));
+        getCommand("tester").setExecutor(new CmdTester(this));
 
         Logger.info(getName() + " v" + getServer().getVersion() + " enabled!");
     }
