@@ -148,7 +148,7 @@ public class TreeeListPortalClickListener implements Listener {
                     treeOneLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
                 }
             } else {
-                treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}","&4Acacia Treee")));
+                treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_ACACIANO)));
             }
             treeOneMeta.setLore(treeOneLore);
             treeOne.setItemMeta(treeOneMeta);
