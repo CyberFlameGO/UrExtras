@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 public class Lang {
-    private static final String HEADER = "This is the main Language file for UrExtras.\n"
+    private static final String HEADER = "This is the main language file for UrExtras.\n"
             + "As you can see, there's tons to configure. Some options may impact gameplay, so edit\n"
             + "with caution, and make sure you know what each string does/displays/answers/provides\n"
             + "before configuring.\n"
