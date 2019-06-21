@@ -178,7 +178,11 @@ public class TreeeListPortalClickListener implements Listener {
 
 
     /**
-     * Checks what was clicked inside the UrExtras Portal Inventory
+     * Checks what was clicked inside the UrExtras Portal Inventory.
+     * <p>
+     * Verifies that the Tool is the 'Treee Spawner Tool'. Once the Tool is
+     * verified, it will then be placed inside the players inventory so that
+     * they may select a block to place the selected option.
      *
      * @param inventoryClickEvent get clicked inventory.
      */
@@ -312,14 +316,14 @@ public class TreeeListPortalClickListener implements Listener {
 
 
     /**
-     * TODO:
-     *   - Remove Tool if player quits server
+     * This will make sure that the player does not have a custom tool inside their inventory when they rejoin.
+     * If the player rejoins with the custom tool, a few errors with output in console.
      *
-     * @param inventoryClickEvent
+     * @param playerQuitEventToolInHand
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onPlayerQuitToolInHand(PlayerQuitEvent inventoryClickEvent){
-        Player target = inventoryClickEvent.getPlayer();
+    public void onPlayerQuitToolInHand(PlayerQuitEvent playerQuitEventToolInHand){
+        Player target = playerQuitEventToolInHand.getPlayer();
 
         /* NOTICE: Check for a identifier (Custom Model Data) */
         if (!target.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
@@ -345,33 +349,37 @@ public class TreeeListPortalClickListener implements Listener {
         target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
         Logger.debug("onPlayerQuitToolInHand | Player Tool was removed since the quit server");
+        return;
     }
 
 
     /**
+     * If a player is kicked from the server, let's make sure their custom tool is removed.
      *
-     * ERROR:
-     *   - When player leaves server and rejoin with item, the taskToCancel BukkitTask give NPE because effect does not reapply
-     *
-     * TODO:
-     *   - Remove Tool if player is kicked from server
-     *
-     * @param inventoryClickEvent
+     * @param playerKickEventToolInHand
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onPlayerKickToolInHand(PlayerKickEvent inventoryClickEvent){
-
+    public void onPlayerKickToolInHand(PlayerKickEvent playerKickEventToolInHand){
+        /*
+         * ERROR:
+         *   - When player leaves server and rejoin with item, the taskToCancel BukkitTask give NPE because effect does not reapply
+         *
+         * TODO:
+         *   - Remove Tool if player is kicked from server
+         */
     }
 
 
     /**
-     * TODO:
-     *   - Remove Tool if players gamemode is changed from survival
+     * Make sure players custom tool is remove if their inventory is changed from survival.
      *
-     * @param inventoryClickEvent
+     * @param playerGameModeChangeEventToolInHand
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-    public void onPlayergamdemodeChangeToolInHand(PlayerGameModeChangeEvent inventoryClickEvent){
-
+    public void onPlayerGameModeChangeToolInHand(PlayerGameModeChangeEvent playerGameModeChangeEventToolInHand){
+        /*
+         * TODO:
+         *   - Remove Tool if players gamemode is changed from survival
+         */
     }
 }
