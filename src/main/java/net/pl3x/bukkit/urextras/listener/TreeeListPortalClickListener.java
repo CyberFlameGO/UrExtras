@@ -297,6 +297,30 @@ public class TreeeListPortalClickListener implements Listener {
             treeSeven.setItemMeta(treeSevenMeta);
             treeListInventory.setItem(6, treeSeven);
 
+            /*
+             * NOTICE: Birch Tall Tree
+             */
+            ItemStack treeEight = new ItemStack(Material.STRIPPED_BIRCH_LOG);
+            ItemMeta treeEightMeta = treeEight.getItemMeta();
+            treeEightMeta.setDisplayName("");
+            treeEightMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
+            ArrayList<String> treeEightLore = new ArrayList<>();
+            if (Config.TREEE_LIST_BIRCH_TALL){
+                if (Lang.TREEE_SPAWNED_LORE_BIRCH_TALL.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_BIRCH_TALL.split(";");
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeEightLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeEightLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIRCH_TALL));
+                }
+            } else {
+                treeEightLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIRCH_TALLNO)));
+            }
+            treeEightMeta.setLore(treeEightLore);
+            treeEight.setItemMeta(treeEightMeta);
+            treeListInventory.setItem(7, treeEight);
+
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
              *  - Big Tree: regular tre, extra tall with branches
@@ -307,7 +331,6 @@ public class TreeeListPortalClickListener implements Listener {
              *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
              *  - Swamp: Swamp tree (Regular with vines on the side)
              *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
-             *  - Tall Birch: Tall birch tree
              *  - Chorus Plant: Large plant native to the End
              */
 
@@ -321,8 +344,7 @@ public class TreeeListPortalClickListener implements Listener {
         Lang.send(target, Lang.colorize(Lang.CANNOT_SPAWN_TREEE_HERE.replace("{getToolName}", target.getInventory().getItemInMainHand().getItemMeta().getDisplayName() )) );
         return;
     }
-
-
+    
     /**
      * Checks what was clicked inside the UrExtras Portal Inventory.
      * <p>
@@ -378,6 +400,8 @@ public class TreeeListPortalClickListener implements Listener {
 
         /*
          * NOTICE: Check if player click option
+         * TODO:
+         *   - Make slot configure
          */
         if (clicked.getType() == Material.ACACIA_LOG
                 && inventoryClickEvent.getSlot() == 0
@@ -393,6 +417,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 5
                 || clicked.getType() == Material.STRIPPED_JUNGLE_LOG
                 && inventoryClickEvent.getSlot() == 6
+                || clicked.getType() == Material.STRIPPED_BIRCH_LOG
+                && inventoryClickEvent.getSlot() == 7
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -401,6 +427,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_OAK
                     || !Config.TREEE_LIST_DARK_OAK
                     || !Config.TREEE_LIST_JUNGLE_SMALL
+                    || !Config.TREEE_LIST_BIRCH_TALL
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -429,10 +456,23 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.DARK_OAK);
         } else if (clicked.getType() == Material.STRIPPED_JUNGLE_LOG) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.SMALL_JUNGLE);
+        } else if (clicked.getType() == Material.STRIPPED_JUNGLE_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.TALL_BIRCH);
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;
         }
+
+/* ################################################################################################################################
+ * ################################################################################################################################
+ * ################################################################################################################################
+ * ################################################################################################################################
+ * ######################################### ADDING OPTION CONFIG ENDS HERE########################################################
+ * ################################################################################################################################
+ * ################################################################################################################################
+ * ################################################################################################################################
+ * ################################################################################################################################
+  */
 
         /*
          * INFO: Adds an extra particle effect when the tree is spawned

@@ -51,6 +51,8 @@ treee-spawned:
   oakNo: "&4Oak Treee"
   dark-oak: "&aDark Oak Treee"
   dark-oakNo: "&4Dark Oak Treee"
+  birchTall: "&aBirch Tall Treee"
+  birchTallNo: "&4Birch Tall Treee"
 ##
 # Customize the description of each spawnable tree in the 'Treee List' inventory.
 ##
@@ -59,6 +61,7 @@ treee-spawned-lore:
   birch: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   spruce: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   jungle: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
-  jungleSmall: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   oak: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   darkOak: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
+  jungleSmall: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
+  birchTall: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
