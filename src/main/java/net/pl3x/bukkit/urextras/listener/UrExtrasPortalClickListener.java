@@ -182,7 +182,8 @@ public class UrExtrasPortalClickListener implements Listener {
                                 //target.spawnParticle(Particle.FIREWORKS_SPARK, playerLoc.add(0, 1, 0), 1); // TODO: Apply this to the tree bottom log when spawned
                                 //target.spawnParticle(Particle.NOTE, playerLoc.add(0, 1, 0), 1); // INFO: 'forloop' setting 4 applies circle around player
                                 //target.spawnParticle(Particle.DAMAGE_INDICATOR, playerLoc.add(0, 1, 0), 1); // INFO: Dark Red Hearts spitting up from feet
-                                target.spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1); // INFO: Need to change 'forloop' back to 60  NOTICE: This one is the one
+                                //target.spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1); // INFO: Need to change 'forloop' back to 60  NOTICE: This one is the one
+                                target.getWorld().spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1);
                                 //target.spawnParticle(Particle.FLASH, playerLoc.add(0, 1, 0), 1); // INFO: To bright, cant see anything
                                 //target.spawnParticle(Particle.SPIT, playerLoc.add(0, 1, 0), 1); // INFO: Very Laggy!
                                 //target.spawnParticle(Particle.FLAME, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design

@@ -11,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.TreeType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -318,7 +317,7 @@ public class TreeeListPortalClickListener implements Listener {
             }
         }, 0L, 20L);
 
-        return; // INFO: Remove particle for any selection
+        return; // INFO: This, Removes particle for any selection
     }
 
 
