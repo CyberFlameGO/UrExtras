@@ -139,10 +139,10 @@ public class TreeeListPortalClickListener implements Listener {
             ArrayList<String> treeOneLore = new ArrayList<>();
             if (Config.TREEE_LIST_ACACIA) {
                 if (Lang.TREEE_SPAWNED_LORE_ACACIA.contains(";")) {
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_ACACIA.replace(";", "").split(";");
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_ACACIA.split(";") ;
 
                     for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
-                        treeOneLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
+                        treeOneLore.add(Lang.colorize(newLine[newLineLore]) );
                     }
                 } else {
                     treeOneLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
@@ -163,7 +163,15 @@ public class TreeeListPortalClickListener implements Listener {
             treeTwoMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             ArrayList<String> treeTwoLore = new ArrayList<>();
             if (Config.TREEE_LIST_BIRCH){
-                treeTwoLore.add(Lang.colorize("&8Click to spawn your treee"));
+                if (Lang.TREEE_SPAWNED_LORE_BIRCH.contains(";")) {
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_BIRCH.split(";") ;
+
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                        treeTwoLore.add(Lang.colorize(newLine[newLineLore]) );
+                    }
+                } else {
+                    treeTwoLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIRCH));
+                }
             } else {
                 treeTwoLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_BIRCHNO)));
             }
@@ -180,7 +188,15 @@ public class TreeeListPortalClickListener implements Listener {
             treeThreeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             ArrayList<String> treeThreeLore = new ArrayList<>();
             if (Config.TREEE_LIST_SPRUCE){
-                treeThreeLore.add(Lang.colorize(""));
+                if (Lang.TREEE_SPAWNED_LORE_SPRUCE.contains(";")) {
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_SPRUCE.split(";") ;
+
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                        treeThreeLore.add(Lang.colorize(newLine[newLineLore]) );
+                    }
+                } else {
+                    treeThreeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SPRUCE));
+                }
             } else {
                 treeThreeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SPRUCENO)));
             }
@@ -213,10 +229,21 @@ public class TreeeListPortalClickListener implements Listener {
             treeFourMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             ArrayList<String> treeFourLore = new ArrayList<>();
             if (Config.TREEE_LIST_JUNGLE){
-                treeFourLore.add(Lang.colorize(""));
+                if (Lang.TREEE_SPAWNED_LORE_JUNGLE.contains(";")) {
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE.split(";") ;
+
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                        treeFourLore.add(Lang.colorize(newLine[newLineLore]) );
+                    }
+                } else {
+                    treeFourLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE));
+                }
             } else {
                 treeFourLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLENO)));
             }
+            treeFourMeta.setLore(treeFourLore);
+            treeFour.setItemMeta(treeFourMeta);
+            treeListInventory.setItem(3, treeFour);
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
@@ -297,10 +324,15 @@ public class TreeeListPortalClickListener implements Listener {
                 || clicked.getType() == Material.SPRUCE_LOG
                 && itemDisplayName.startsWith("Spruce", 2)
                 && inventoryClickEvent.getSlot() == 2
+                || clicked.getType() == Material.JUNGLE_LOG
+                && itemDisplayName.startsWith("Jungle", 2)
+                && inventoryClickEvent.getSlot() == 3
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
-                    || !Config.TREEE_LIST_SPRUCE){
+                    || !Config.TREEE_LIST_SPRUCE
+                    || !Config.TREEE_LIST_JUNGLE
+                    ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
                 target.closeInventory();
@@ -320,6 +352,9 @@ public class TreeeListPortalClickListener implements Listener {
             }
             if (clicked.getType() == Material.SPRUCE_LOG) {
                 hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.REDWOOD); // TODO: Add oop check for clicked option
+            }
+            if (clicked.getType() == Material.JUNGLE_LOG) {
+                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.JUNGLE); // TODO: Add oop check for clicked option
             }
 
             /*

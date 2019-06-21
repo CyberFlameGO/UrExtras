@@ -55,8 +55,10 @@ public class Lang {
     public static String TREEE_SPAWNED_JUNGLE;
     public static String TREEE_SPAWNED_JUNGLENO;
 
-
     public static String TREEE_SPAWNED_LORE_ACACIA;
+    public static String TREEE_SPAWNED_LORE_BIRCH;
+    public static String TREEE_SPAWNED_LORE_SPRUCE;
+    public static String TREEE_SPAWNED_LORE_JUNGLE;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -91,9 +93,10 @@ public class Lang {
         TREEE_SPAWNED_JUNGLENO = getString("treee-spawned.jungle","&4Jungle Treee");
 
 
-        TREEE_SPAWNED_LORE_ACACIA = getString("tree-spawned-lore.acacia","This is test line one;" +
-                "This is test line two;" +
-                "This is test line three");
+        TREEE_SPAWNED_LORE_ACACIA = getString("tree-spawned-lore.acacia","Click here to spawn;the tree type.;;After the tree is;spawned your effects;will be removed.");
+        TREEE_SPAWNED_LORE_BIRCH = getString("tree-spawned-lore.birch", "Click here to spawn;the tree type.;;After the tree is;spawned your effects;will be removed.");
+        TREEE_SPAWNED_LORE_SPRUCE = getString("tree-spawned-lore.spruce", "Click here to spawn;the tree type.;;After the tree is;spawned your effects;will be removed.");
+        TREEE_SPAWNED_LORE_JUNGLE = getString("tree-spawned-lore.jungle", "Click here to spawn;the tree type.;;After the tree is;spawned your effects;will be removed.");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################

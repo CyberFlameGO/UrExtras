@@ -39,4 +39,7 @@ treee-spawned:
   jungle: "&aJungle Treee"
   jungleNo: "&4Jungle Treee"
 treee-spawned-lore:
-  acacia: "This is test line one;This is test line two;This is test line three"
+  acacia: "Click here to spawn;the tree type;;After the tree is;spawned your effects;will be removed"
+  birch: "Click here to spawn;the tree type;;After the tree is;spawned your effects;will be removed"
+  spruce: "Click here to spawn;the tree type;;After the tree is;spawned your effects;will be removed"
+  jungle: "Click here to spawn;the tree type;;After the tree is;spawned your effects;will be removed"
