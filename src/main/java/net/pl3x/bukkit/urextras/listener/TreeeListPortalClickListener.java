@@ -204,22 +204,6 @@ public class TreeeListPortalClickListener implements Listener {
             treeThree.setItemMeta(treeThreeMeta);
             treeListInventory.setItem(2, treeThree);
 
-            /* TODO: Add next tree
-             *  - Tree: Regular tree, no branches
-             *  - Big Tree: regular tre, extra tall with branches
-             *  - Tall Redwood: Just a few leaves at the top
-             *  - Jungle: Standard jungle tree; 4 blocks wide and tall
-             *  - Small Jungle: Smaller jungle tree; 1 block wide
-             *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
-             *  - Jungle Bush: Small bush that grow in the jungle
-             *  - Red Mushroom: Big Red Mushroom; Short and fat
-             *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
-             *  - Swamp: Swamp tree (Regular with vines on the side)
-             *  - Dark Oak: Dark oak tree
-             *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
-             *  - Tall Birch: Tall birch tree
-             *  - Chorus Plant: Large plant native to the End
-             */
             /*
              * NOTICE: Jungle Tree
              */
@@ -244,6 +228,47 @@ public class TreeeListPortalClickListener implements Listener {
             treeFourMeta.setLore(treeFourLore);
             treeFour.setItemMeta(treeFourMeta);
             treeListInventory.setItem(3, treeFour);
+
+            /*
+             * NOTICE: Oak Tree
+             */
+            ItemStack treeFive = new ItemStack(Material.OAK_LOG);
+            ItemMeta treeFiveMeta = treeFive.getItemMeta();
+            treeFiveMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_OAK ? Lang.TREEE_SPAWNED_OAK : Lang.TREEE_SPAWNED_OAKNO));
+            treeFiveMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeFiveLore = new ArrayList<>();
+            if (Config.TREEE_LIST_OAK){
+                if (Lang.TREEE_SPAWNED_LORE_OAK.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_OAK.split(";");
+
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeFiveLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeFiveLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_OAK));
+                }
+            } else {
+                treeFiveLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_OAKNO)));
+            }
+            treeFiveMeta.setLore(treeFiveLore);
+            treeFive.setItemMeta(treeFiveMeta);
+            treeListInventory.setItem(4, treeFive);
+
+            /* TODO: Add next tree
+             *  - Tree: Regular tree, no branches
+             *  - Big Tree: regular tre, extra tall with branches
+             *  - Tall Redwood: Just a few leaves at the top
+             *  - Small Jungle: Smaller jungle tree; 1 block wide
+             *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
+             *  - Jungle Bush: Small bush that grow in the jungle
+             *  - Red Mushroom: Big Red Mushroom; Short and fat
+             *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
+             *  - Swamp: Swamp tree (Regular with vines on the side)
+             *  - Dark Oak: Dark oak tree
+             *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
+             *  - Tall Birch: Tall birch tree
+             *  - Chorus Plant: Large plant native to the End
+             */
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
