@@ -34,9 +34,10 @@ public class Config {
     public static boolean TREEE_LIST_SPRUCE;
     public static boolean TREEE_LIST_JUNGLE;
     public static boolean TREEE_LIST_OAK;
+    public static boolean TREEE_LIST_DARK_OAK;
 
     private static void init() {
-        DEBUG_MODE = getBoolean("debug-mode",false);
+        DEBUG_MODE = getBoolean("debug-mode",true);
         COLOR_LOGS = getBoolean("color-logs",true);
         LOGGING = getBoolean("logging", true);
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
@@ -49,6 +50,7 @@ public class Config {
         TREEE_LIST_SPRUCE = getBoolean("treee-list.spruce", true);
         TREEE_LIST_JUNGLE = getBoolean("treee-list.jungle",true);
         TREEE_LIST_OAK = getBoolean("treee-list.oak", true);
+        TREEE_LIST_DARK_OAK = getBoolean("treee-list.darkOak",true);
     }
 
 

@@ -56,7 +56,7 @@ public class UrExtrasPortalClickListener implements Listener {
      *
      * @param inventoryClickEvent get clicked inventory.
      */
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onUrExtrasPortalInventoryClick(InventoryClickEvent inventoryClickEvent) {
         String inventoryName = inventoryClickEvent.getWhoClicked().getOpenInventory().getTitle();
         if (inventoryName != Lang.UREXTRAS_PORTAL_INVENTORY_TITLE){

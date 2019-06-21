@@ -44,7 +44,6 @@ public class Lang {
 
     public static String TREEE_LIST_INVENTORY_TITLE;
     public static String CANNOT_SPAWN_TREEE_HERE;
-
     public static String TREEE_SPAWNED_PLAYERMSG;
     public static String TREEE_SPAWNED_ACACIA;
     public static String TREEE_SPAWNED_ACACIANO;
@@ -56,12 +55,15 @@ public class Lang {
     public static String TREEE_SPAWNED_JUNGLENO;
     public static String TREEE_SPAWNED_OAK;
     public static String TREEE_SPAWNED_OAKNO;
+    public static String TREEE_SPAWNED_DARK_OAK;
+    public static String TREEE_SPAWNED_DARK_OAKNO;
 
     public static String TREEE_SPAWNED_LORE_ACACIA;
     public static String TREEE_SPAWNED_LORE_BIRCH;
     public static String TREEE_SPAWNED_LORE_SPRUCE;
     public static String TREEE_SPAWNED_LORE_JUNGLE;
     public static String TREEE_SPAWNED_LORE_OAK;
+    public static String TREEE_SPAWNED_LORE_DARK_OAK;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -91,18 +93,20 @@ public class Lang {
         TREEE_SPAWNED_BIRCH = getString("treee-spawned.birch","&aBirch Treee");
         TREEE_SPAWNED_BIRCHNO = getString("treee-spawned.birchNo","&4Birch Treee");
         TREEE_SPAWNED_SPRUCE = getString("treee-spawned.spruce","&aSpruce Treee");
-        TREEE_SPAWNED_SPRUCENO = getString("treee-spawned.spruceNo","&4&Spruce Treee");
+        TREEE_SPAWNED_SPRUCENO = getString("treee-spawned.spruceNo","&4Spruce Treee");
         TREEE_SPAWNED_JUNGLE = getString("treee-spawned.jungle","&aJungle Treee");
-        TREEE_SPAWNED_JUNGLENO = getString("treee-spawned.jungle","&4Jungle Treee");
+        TREEE_SPAWNED_JUNGLENO = getString("treee-spawned.jungleNo","&4Jungle Treee");
         TREEE_SPAWNED_OAK = getString("treee-spawned.oak","&aOak Treee");
         TREEE_SPAWNED_OAKNO = getString("treee-spawned.oakNo","&4Oak Treee");
-
+        TREEE_SPAWNED_DARK_OAK = getString("treee-spawned.dark-oak","&aDark Oak Treee");
+        TREEE_SPAWNED_DARK_OAKNO = getString("treee-spawned.dark-oakNo","&4Dark Oak Treee");
 
         TREEE_SPAWNED_LORE_ACACIA = getString("treee-spawned-lore.acacia","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_BIRCH = getString("treee-spawned-lore.birch", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_SPRUCE = getString("treee-spawned-lore.spruce", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_JUNGLE = getString("treee-spawned-lore.jungle", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_OAK = getString("treee-spawned-lore.oak","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
+        TREEE_SPAWNED_LORE_DARK_OAK = getString("treee-spawned-lore.darkOak","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################
