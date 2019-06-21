@@ -354,10 +354,8 @@ public class TreeeListPortalClickListener implements Listener {
         }
         /* NOTICE: NULL CHECK END **/
 
-        String itemDisplayName = clicked.getItemMeta().getDisplayName();
-
         /*
-         * NOTICE: Check if player click ACACIA LOG
+         * NOTICE: Check if player click option
          */
         if (clicked.getType() == Material.ACACIA_LOG
                 && inventoryClickEvent.getSlot() == 0
@@ -384,70 +382,69 @@ public class TreeeListPortalClickListener implements Listener {
                 target.closeInventory();
                 return;
             }
+        }
 
-            Logger.debug("onTreeeCreate | " + target.getDisplayName() + " clicked " + clicked.getItemMeta().getDisplayName() + ".");
+        Logger.debug("onTreeeCreate | " + target.getDisplayName() + " clicked " + clicked.getItemMeta().getDisplayName() + ".");
 
-            TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
-            Location relativeBlock = blockInfo.getRelativeBlock().getLocation();
+        TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
+        Location relativeBlock = blockInfo.getRelativeBlock().getLocation();
 
-            if (clicked.getType() == Material.ACACIA_LOG) {
-                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA); // TODO: Add oop check for clicked option
-            } else if (clicked.getType() == Material.BIRCH_LOG) {
-                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIRCH); // TODO: Add oop check for clicked option
-            } else if (clicked.getType() == Material.SPRUCE_LOG) {
-                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.REDWOOD); // TODO: Add oop check for clicked option
-            } else if (clicked.getType() == Material.JUNGLE_LOG) {
-                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.JUNGLE); // TODO: Add oop check for clicked option
-            } else if (clicked.getType() == Material.OAK_LOG) {
-                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.TREE);
-            } else if (clicked.getType() == Material.DARK_OAK_LOG) {
-                hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.DARK_OAK);
-            } else {
-                Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
-                return;
-            }
+        /* TODO: Add oop check for clicked option */
+        if (clicked.getType() == Material.ACACIA_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA);
+        } else if (clicked.getType() == Material.BIRCH_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIRCH);
+        } else if (clicked.getType() == Material.SPRUCE_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.REDWOOD);
+        } else if (clicked.getType() == Material.JUNGLE_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.JUNGLE);
+        } else if (clicked.getType() == Material.OAK_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.TREE);
+        } else if (clicked.getType() == Material.DARK_OAK_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.DARK_OAK);
+        } else {
+            Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
+            return;
+        }
 
-            /*
-             * INFO: Adds an extra particle effect when the tree is spawned
-             *
-             * TODO:
-             *   - Make apply to all selection, instead of applying it to all selections
-             */
-            TREEE_SPAWNED_PARTICLE:
-                for (int particleSpawnTimer = 0; particleSpawnTimer < 4 ; particleSpawnTimer++) {
-                    for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-                        double radius = Math.sin(i);
-                        double y = Math.cos(i);
-                        for (double a = 0; a < Math.PI * 2; a += Math.PI / 2) {
-                            double x = Math.cos(a) * radius;
-                            double z = Math.sin(a) * radius;
-                            Location playerLoc = target.getLocation().add(x, y, z);
-                            target.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, playerLoc, 1);
-                            target.getLocation().subtract(x, y, z);
-                            if (particleSpawnTimer >= 4) {
-                                Logger.debug("onTreeeCreate | Tree Spawned Particle 'ForLoop' removed");
-                                break TREEE_SPAWNED_PARTICLE;
-                            }
+        /*
+         * INFO: Adds an extra particle effect when the tree is spawned
+         *
+         * TODO:
+         *   - Make apply to all selection, instead of applying it to all selections
+         */
+        TREEE_SPAWNED_PARTICLE:
+            for (int particleSpawnTimer = 0; particleSpawnTimer < 4 ; particleSpawnTimer++) {
+                for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                    double radius = Math.sin(i);
+                    double y = Math.cos(i);
+                    for (double a = 0; a < Math.PI * 2; a += Math.PI / 2) {
+                        double x = Math.cos(a) * radius;
+                        double z = Math.sin(a) * radius;
+                        Location playerLoc = target.getLocation().add(x, y, z);
+                        target.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, playerLoc, 1);
+                        target.getLocation().subtract(x, y, z);
+                        if (particleSpawnTimer >= 4) {
+                            Logger.debug("onTreeeCreate | Tree Spawned Particle 'ForLoop' removed");
+                            break TREEE_SPAWNED_PARTICLE;
                         }
                     }
                 }
-
-            target.closeInventory();
-
-            if (!hasTreeGenerated){
-                Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not spawn on the block/item they clicked.");
-                Lang.send(target, "&7Sorry, you cannot spawn a " + clicked.getItemMeta().getDisplayName() + " &7here. Please try again.");
-                return;
             }
 
-            Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
-            Lang.send(target,Lang.TREEE_SPAWNED_PLAYERMSG.replace("{getSpawnedName}", clicked.getItemMeta().getDisplayName()));
+        target.closeInventory();
 
-            /* NOTICE: Remove Treee Spawner Tool from inventory */
-            target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
+        if (!hasTreeGenerated){
+            Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not spawn on the block/item they clicked.");
+            Lang.send(target, "&7Sorry, you cannot spawn a " + clicked.getItemMeta().getDisplayName() + " &7here. Please try again.");
+            return;
+        }
 
-        } // NOTICE: End of check for Acacia Log
+        Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
+        Lang.send(target,Lang.TREEE_SPAWNED_PLAYERMSG.replace("{getSpawnedName}", clicked.getItemMeta().getDisplayName()));
 
+        /* NOTICE: Remove Treee Spawner Tool from inventory */
+        target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
         /* NOTICE: Remove particle */
         taskToCancel = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
