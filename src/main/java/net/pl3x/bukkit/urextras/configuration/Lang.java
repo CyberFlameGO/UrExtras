@@ -13,6 +13,17 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 public class Lang {
+    private static final String HEADER = "This is the main Language file for UrExtras.\n"
+            + "As you can see, there's tons to configure. Some options may impact gameplay, so edit\n"
+            + "with caution, and make sure you know what each string does/displays/answers/provides\n"
+            + "before configuring.\n"
+            + "\n"
+            + "If you need help with the configuration or have any questions related to UrExtras,\n"
+            + "join us in our Discord.\n"
+            + "\n"
+            + "Discord: https://discord.gg/c4WTKms\n"
+            + "Website: https://pl3x.net/ \n"
+            + "Docs: https://pl3x.net/forum/view/7-urextras/ \n";
     public static String COMMAND_NO_PERMISSION ;
     public static String COMMAND_NO_PERMISSION_PORTAL;
     public static String PLAYER_COMMAND;
@@ -74,11 +85,13 @@ public class Lang {
         try {
             config.load(configFile);
         } catch (IOException ignore) {
+            ignore.printStackTrace();
         } catch (InvalidConfigurationException ex) {
+            ex.printStackTrace();
             Bukkit.getLogger().log(Level.SEVERE, "Could not load " + Config.LANGUAGE_FILE + ", please correct your syntax errors", ex);
             throw Throwables.propagate(ex);
         }
-        config.options().header("This is the main language file for " + plugin.getName());
+        config.options().header(HEADER);
         config.options().copyDefaults(true);
 
         Lang.init();

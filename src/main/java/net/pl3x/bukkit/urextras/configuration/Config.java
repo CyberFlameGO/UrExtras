@@ -11,6 +11,16 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 public class Config {
+    private static final String HEADER = "This is the main configuration file for UrExtras.\n"
+            + "As you can see, there's tons to configure. Some options may impact gameplay, so use\n"
+            + "with caution, and make sure you know what each option does before configuring.\n"
+            + "\n"
+            + "If you need help with the configuration or have any questions related to UrExtras,\n"
+            + "join us in our Discord.\n"
+            + "\n"
+            + "Discord: https://discord.gg/c4WTKms\n"
+            + "Website: https://pl3x.net/ \n"
+            + "Docs: https://pl3x.net/forum/view/7-urextras/ \n";
     public static boolean DEBUG_MODE;
     public static boolean COLOR_LOGS;
     public static boolean LOGGING;
@@ -23,7 +33,7 @@ public class Config {
     public static boolean TREEE_LIST_BIRCH;
 
     private static void init() {
-        DEBUG_MODE = getBoolean("debug_mode",false);
+        DEBUG_MODE = getBoolean("debug-mode",false);
         COLOR_LOGS = getBoolean("color-logs",true);
         LOGGING = getBoolean("logging", true);
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
@@ -50,11 +60,13 @@ public class Config {
         try {
             config.load(configFile);
         } catch (IOException ignore) {
+            ignore.printStackTrace();
         } catch (InvalidConfigurationException ex) {
+            ex.printStackTrace();
             Bukkit.getLogger().log(Level.SEVERE, "Could not load config.yml, please correct your syntax errors", ex);
             throw Throwables.propagate(ex);
         }
-        config.options().header("This is the configuration file for " + plugin.getName());
+        config.options().header(HEADER);
         config.options().copyDefaults(true);
 
         Config.init();
