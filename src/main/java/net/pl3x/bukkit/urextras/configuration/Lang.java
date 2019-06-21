@@ -1,6 +1,7 @@
 package net.pl3x.bukkit.urextras.configuration;
 
 import com.google.common.base.Throwables;
+import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,6 +14,9 @@ import java.io.IOException;
 import java.util.logging.Level;
 
 public class Lang {
+    private static File configFile;
+    private static YamlConfiguration config;
+
     private static final String HEADER = "This is the main language file for UrExtras.\n"
             + "As you can see, there's tons to configure. Some options may impact gameplay, so edit\n"
             + "with caution, and make sure you know what each string does/displays/answers/provides\n"
@@ -48,6 +52,11 @@ public class Lang {
     public static String TREEE_SPAWNED_BIRCHNO;
     public static String TREEE_SPAWNED_SPRUCE;
     public static String TREEE_SPAWNED_SPRUCENO;
+    public static String TREEE_SPAWNED_JUNGLE;
+    public static String TREEE_SPAWNED_JUNGLENO;
+
+
+    public static String TREEE_SPAWNED_LORE_ACACIA;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -78,6 +87,13 @@ public class Lang {
         TREEE_SPAWNED_BIRCHNO = getString("treee-spawned.birchNo","&4Birch Treee");
         TREEE_SPAWNED_SPRUCE = getString("treee-spawned.spruce","&aSpruce Treee");
         TREEE_SPAWNED_SPRUCENO = getString("treee-spawned.spruceNo","&4&Spruce Treee");
+        TREEE_SPAWNED_JUNGLE = getString("treee-spawned.jungle","&aJungle Treee");
+        TREEE_SPAWNED_JUNGLENO = getString("treee-spawned.jungle","&4Jungle Treee");
+
+
+        TREEE_SPAWNED_LORE_ACACIA = getString("tree-spawned-lore.acacia","This is test line one;" +
+                "This is test line two;" +
+                "This is test line three");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################
@@ -88,14 +104,24 @@ public class Lang {
     @SuppressWarnings("deprecation")
     public static void reload() {
         UrExtras plugin = UrExtras.getInstance();
-        File configFile = new File(plugin.getDataFolder(), Config.LANGUAGE_FILE);
+        if (configFile == null) {
+            configFile = new File(plugin.getDataFolder(), Config.LANGUAGE_FILE);
+        }
+
         config = new YamlConfiguration();
+
         try {
             config.load(configFile);
         } catch (IOException ignore) {
-            ignore.printStackTrace();
+            if (Config.DEBUG_MODE) {
+                Logger.debug("onLangReload | IOException occurred, printStackTrace() below.");
+                ignore.printStackTrace();
+            }
         } catch (InvalidConfigurationException ex) {
-            ex.printStackTrace();
+            if (Config.DEBUG_MODE) {
+                Logger.debug("onLangReload | InvalidConfigurationException occurred, printStackTrace() below.");
+                ex.printStackTrace();
+            }
             Bukkit.getLogger().log(Level.SEVERE, "Could not load " + Config.LANGUAGE_FILE + ", please correct your syntax errors", ex);
             throw Throwables.propagate(ex);
         }
@@ -110,8 +136,6 @@ public class Lang {
             Bukkit.getLogger().log(Level.SEVERE, "Could not save " + configFile, ex);
         }
     }
-
-    private static YamlConfiguration config;
 
     private static String getString(String path, String def) {
         config.addDefault(path, def);

@@ -31,7 +31,7 @@ public class UrExtras extends JavaPlugin {
         getCommand("urextrasportal").setExecutor(new CmdUrExtrasPortal(this));
         getCommand("tester").setExecutor(new CmdTester(this));
 
-        Logger.info(getName() + " v" + getServer().getVersion() + " enabled!");
+        Logger.info(getName() + " v" + UrExtras.getInstance().getDescription().getVersion() + " enabled!");
     }
 
     @Override

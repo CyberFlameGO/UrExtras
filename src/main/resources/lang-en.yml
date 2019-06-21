@@ -36,3 +36,7 @@ treee-spawned:
   birchNo: "&4Birch Treee"
   spruce: "&aSpruce Treee"
   spruceNo: "&4Spruce Treee"
+  jungle: "&aJungle Treee"
+  jungleNo: "&4Jungle Treee"
+treee-spawned-lore:
+  acacia: "This is test line one;This is test line two;This is test line three"

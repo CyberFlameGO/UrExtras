@@ -32,6 +32,7 @@ public class Config {
     public static boolean TREEE_LIST_ACACIA;
     public static boolean TREEE_LIST_BIRCH;
     public static boolean TREEE_LIST_SPRUCE;
+    public static boolean TREEE_LIST_JUNGLE;
 
     private static void init() {
         DEBUG_MODE = getBoolean("debug-mode",false);
@@ -45,6 +46,7 @@ public class Config {
         TREEE_LIST_ACACIA = getBoolean("treee-list.acacia",true);
         TREEE_LIST_BIRCH = getBoolean("treee-list.birch",true);
         TREEE_LIST_SPRUCE = getBoolean("treee-list.spruce", true);
+        TREEE_LIST_JUNGLE = getBoolean("treee-list.jungle",true);
     }
 
 

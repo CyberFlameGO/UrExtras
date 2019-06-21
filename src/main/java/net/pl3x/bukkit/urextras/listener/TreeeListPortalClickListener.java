@@ -1,6 +1,7 @@
 package net.pl3x.bukkit.urextras.listener;
 
 import com.destroystokyo.paper.block.TargetBlockInfo;
+import com.sun.org.apache.bcel.internal.generic.LADD;
 import java.rmi.MarshalException;
 import java.util.ArrayList;
 import net.pl3x.bukkit.urextras.Logger;
@@ -137,7 +138,15 @@ public class TreeeListPortalClickListener implements Listener {
             treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             ArrayList<String> treeOneLore = new ArrayList<>();
             if (Config.TREEE_LIST_ACACIA) {
-                treeOneLore.add(Lang.colorize("&8Click to spawn your treee"));
+                if (Lang.TREEE_SPAWNED_LORE_ACACIA.contains(";")) {
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_ACACIA.replace(";", "").split(";");
+
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                        treeOneLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
+                    }
+                } else {
+                    treeOneLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
+                }
             } else {
                 treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}","&4Acacia Treee")));
             }
@@ -195,6 +204,19 @@ public class TreeeListPortalClickListener implements Listener {
              *  - Tall Birch: Tall birch tree
              *  - Chorus Plant: Large plant native to the End
              */
+            /*
+             * NOTICE: Jungle Tree
+             */
+            ItemStack treeFour = new ItemStack(Material.JUNGLE_LOG, 1);
+            ItemMeta treeFourMeta = treeFour.getItemMeta();
+            treeFourMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_JUNGLE ? Lang.TREEE_SPAWNED_JUNGLE : Lang.TREEE_SPAWNED_JUNGLENO));
+            treeFourMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeFourLore = new ArrayList<>();
+            if (Config.TREEE_LIST_JUNGLE){
+                treeFourLore.add(Lang.colorize(""));
+            } else {
+                treeFourLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLENO)));
+            }
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
