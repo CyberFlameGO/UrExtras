@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.TreeType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -330,6 +331,12 @@ public class TreeeListPortalClickListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerQuitToolInHand(PlayerQuitEvent playerQuitEventToolInHand){
         Player target = playerQuitEventToolInHand.getPlayer();
+        ItemStack itemInHand = target.getInventory().getItemInMainHand();
+
+        if(itemInHand.getType().isEmpty()){
+            Logger.debug("onPlayerQuitToolInHand | Item in hand is null, return.");
+            return;
+        }
 
         /* NOTICE: Check for a identifier (Custom Model Data) */
         if (!target.getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
