@@ -61,6 +61,8 @@ public class Lang {
     public static String TREEE_SPAWNED_JUNGLE_SMALLNO;
     public static String TREEE_SPAWNED_BIRCH_TALL;
     public static String TREEE_SPAWNED_BIRCH_TALLNO;
+    public static String TREEE_SPAWNED_COCOA;
+    public static String TREEE_SPAWNED_COCOANO;
 
     public static String TREEE_SPAWNED_LORE_ACACIA;
     public static String TREEE_SPAWNED_LORE_BIRCH;
@@ -70,6 +72,7 @@ public class Lang {
     public static String TREEE_SPAWNED_LORE_DARK_OAK;
     public static String TREEE_SPAWNED_LORE_JUNGLE_SMALL;
     public static String TREEE_SPAWNED_LORE_BIRCH_TALL;
+    public static String TREEE_SPAWNED_LORE_COCOA;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -108,8 +111,10 @@ public class Lang {
         TREEE_SPAWNED_DARK_OAKNO = getString("treee-spawned.dark-oakNo","&4Dark Oak Treee");
         TREEE_SPAWNED_JUNGLE_SMALL = getString("treee-spawned.jungleSmall","&aJungle Small Treee");
         TREEE_SPAWNED_JUNGLE_SMALLNO = getString("treee-spawned.jungleSmallNo","&4Jungle Small Treee");
-        TREEE_SPAWNED_BIRCH_TALL = getString("treee-spawned.birchTall","&aBirch Tall Tree");
-        TREEE_SPAWNED_BIRCH_TALLNO = getString("treee-spawned.birchTallNo","&4Birch Tall Tree");
+        TREEE_SPAWNED_BIRCH_TALL = getString("treee-spawned.birchTall","&aBirch Tall Treee");
+        TREEE_SPAWNED_BIRCH_TALLNO = getString("treee-spawned.birchTallNo","&4Birch Tall Treee");
+        TREEE_SPAWNED_COCOA = getString("treee-spawned.cocoa","&aCocoa Treee");
+        TREEE_SPAWNED_COCOANO = getString("treee-spawned.cocoaNo","&4Cocoa Treee");
 
         TREEE_SPAWNED_LORE_ACACIA = getString("treee-spawned-lore.acacia","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_BIRCH = getString("treee-spawned-lore.birch", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
@@ -119,6 +124,7 @@ public class Lang {
         TREEE_SPAWNED_LORE_DARK_OAK = getString("treee-spawned-lore.darkOak","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_JUNGLE_SMALL = getString("treee-spawned-lore.jungleSmall", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_BIRCH_TALL = getString("treee-spawned-lore.birchTall","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
+        TREEE_SPAWNED_LORE_COCOA = getString("treee-spawned-lore.cocoa","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################

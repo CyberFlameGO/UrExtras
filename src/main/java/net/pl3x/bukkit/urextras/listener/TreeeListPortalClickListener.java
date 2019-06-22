@@ -302,7 +302,7 @@ public class TreeeListPortalClickListener implements Listener {
              */
             ItemStack treeEight = new ItemStack(Material.STRIPPED_BIRCH_LOG);
             ItemMeta treeEightMeta = treeEight.getItemMeta();
-            treeEightMeta.setDisplayName("");
+            treeEightMeta.setDisplayName(Config.TREEE_LIST_BIRCH_TALL ? Lang.TREEE_SPAWNED_BIRCH_TALL : Lang.TREEE_SPAWNED_BIRCH_TALLNO);
             treeEightMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
             ArrayList<String> treeEightLore = new ArrayList<>();
             if (Config.TREEE_LIST_BIRCH_TALL){
@@ -320,6 +320,31 @@ public class TreeeListPortalClickListener implements Listener {
             treeEightMeta.setLore(treeEightLore);
             treeEight.setItemMeta(treeEightMeta);
             treeListInventory.setItem(7, treeEight);
+
+            /*
+             * NOTICE: Cocoa Tree
+             */
+            ItemStack treeNine = new ItemStack(Material.JUNGLE_WOOD, 1);
+            ItemMeta treeNineMeta = treeNine.getItemMeta();
+            treeNineMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_COCOA ? Lang.TREEE_SPAWNED_COCOA : Lang.TREEE_SPAWNED_COCOANO));
+            treeNineMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeNineLore = new ArrayList<>();
+            if (Config.TREEE_LIST_COCOA){
+                if (Lang.TREEE_SPAWNED_LORE_COCOA.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_COCOA.split(";");
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeNineLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeNineLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_COCOA));
+                }
+            } else {
+                treeNineLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_COCOANO)));
+            }
+            treeNineMeta.setLore(treeNineLore);
+            treeNine.setItemMeta(treeNineMeta);
+            treeListInventory.setItem(8, treeNine);
+
 
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
@@ -344,7 +369,7 @@ public class TreeeListPortalClickListener implements Listener {
         Lang.send(target, Lang.colorize(Lang.CANNOT_SPAWN_TREEE_HERE.replace("{getToolName}", target.getInventory().getItemInMainHand().getItemMeta().getDisplayName() )) );
         return;
     }
-    
+
     /**
      * Checks what was clicked inside the UrExtras Portal Inventory.
      * <p>
@@ -419,6 +444,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 6
                 || clicked.getType() == Material.STRIPPED_BIRCH_LOG
                 && inventoryClickEvent.getSlot() == 7
+                || clicked.getType() == Material.JUNGLE_WOOD
+                && inventoryClickEvent.getSlot() == 8
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -428,6 +455,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_DARK_OAK
                     || !Config.TREEE_LIST_JUNGLE_SMALL
                     || !Config.TREEE_LIST_BIRCH_TALL
+                    || !Config.TREEE_LIST_COCOA
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -441,7 +469,11 @@ public class TreeeListPortalClickListener implements Listener {
         TargetBlockInfo blockInfo = target.getTargetBlockInfo(10);
         Location relativeBlock = blockInfo.getRelativeBlock().getLocation();
 
-        /* TODO: Add oop check for clicked option */
+        /*
+         * TODO:
+         *   - Add oop check for clicked option
+         *   - Chorus Plant does not spawn on grass, add check
+         * */
         if (clicked.getType() == Material.ACACIA_LOG) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.ACACIA);
         } else if (clicked.getType() == Material.BIRCH_LOG) {
@@ -456,8 +488,10 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.DARK_OAK);
         } else if (clicked.getType() == Material.STRIPPED_JUNGLE_LOG) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.SMALL_JUNGLE);
-        } else if (clicked.getType() == Material.STRIPPED_JUNGLE_LOG) {
+        } else if (clicked.getType() == Material.STRIPPED_BIRCH_LOG) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.TALL_BIRCH);
+        } else if (clicked.getType() == Material.JUNGLE_WOOD) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.COCOA_TREE);
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;
