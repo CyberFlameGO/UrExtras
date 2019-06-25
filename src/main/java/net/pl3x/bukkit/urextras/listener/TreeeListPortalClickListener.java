@@ -2,6 +2,7 @@ package net.pl3x.bukkit.urextras.listener;
 
 import com.destroystokyo.paper.block.TargetBlockInfo;
 import com.sun.org.apache.bcel.internal.generic.LADD;
+import com.sun.org.apache.regexp.internal.RE;
 import java.rmi.MarshalException;
 import java.util.ArrayList;
 import net.pl3x.bukkit.urextras.Logger;
@@ -13,6 +14,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.TreeType;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -119,7 +121,9 @@ public class TreeeListPortalClickListener implements Listener {
                 || clickedBlock.equals(Material.COARSE_DIRT)
                 || clickedBlock.equals(Material.GRASS_PATH) /* ERROR: Does not spawn Acacia Tree */
                 || clickedBlock.equals(Material.PODZOL)
-                || clickedBlock.equals(Material.FARMLAND) /* ERROR: Does not spawn Acacia Tree */ ){
+                || clickedBlock.equals(Material.FARMLAND) /* ERROR: Does not spawn Acacia Tree */
+                || clickedBlock.equals(Material.END_STONE) /* INFO: This check is for Chorus Plant */
+            ){
 
             /* NOTICE: Create Treee List Inventory */
             Inventory treeListInventory = Bukkit.createInventory(null, InventoryType.BARREL, Lang.TREEE_LIST_INVENTORY_TITLE);
@@ -346,6 +350,30 @@ public class TreeeListPortalClickListener implements Listener {
             treeListInventory.setItem(8, treeNine);
 
 
+            /*
+             * NOTICE: Chorus Plant
+             */
+            ItemStack treeTen = new ItemStack(Material.CHORUS_FLOWER, 1);
+            ItemMeta treeTenMeta = treeTen.getItemMeta();
+            treeTenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_CHORUS_PLANT ? Lang.TREEE_SPAWNED_CHORUS_PLANT : Lang.TREEE_SPAWNED_CHORUS_PLANTNO));
+            treeTenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeTenLore = new ArrayList<>();
+            if (Config.TREEE_LIST_CHORUS_PLANT){
+                if (Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT.split(";");
+                    for (int newlineLore = 0; newlineLore < newLine.length; ++newlineLore){
+                        treeTenLore.add(Lang.colorize(newLine[newlineLore]));
+                    }
+                } else {
+                    treeTenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT));
+                }
+            } else {
+                treeTenLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_CHORUS_PLANTNO)));
+            }
+            treeTenMeta.setLore(treeTenLore);
+            treeTen.setItemMeta(treeTenMeta);
+            treeListInventory.setItem(9, treeTen);
+
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
              *  - Big Tree: regular tre, extra tall with branches
@@ -446,6 +474,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 7
                 || clicked.getType() == Material.JUNGLE_WOOD
                 && inventoryClickEvent.getSlot() == 8
+                || clicked.getType() == Material.CHORUS_FLOWER
+                && inventoryClickEvent.getSlot() == 9
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -456,6 +486,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_JUNGLE_SMALL
                     || !Config.TREEE_LIST_BIRCH_TALL
                     || !Config.TREEE_LIST_COCOA
+                    || !Config.TREEE_LIST_CHORUS_PLANT
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -492,6 +523,8 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.TALL_BIRCH);
         } else if (clicked.getType() == Material.JUNGLE_WOOD) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.COCOA_TREE);
+        } else if (clicked.getType() == Material.CHORUS_FLOWER) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.CHORUS_PLANT); // INFO: Chorus Plant can only spawn on End Stone
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;
@@ -506,7 +539,7 @@ public class TreeeListPortalClickListener implements Listener {
  * ################################################################################################################################
  * ################################################################################################################################
  * ################################################################################################################################
-  */
+ */
 
         /*
          * INFO: Adds an extra particle effect when the tree is spawned
