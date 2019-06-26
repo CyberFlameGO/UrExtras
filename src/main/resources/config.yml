@@ -1,5 +1,5 @@
 # Enable debug info in console
-debug-mode: true
+debug-mode: false
 
 # Enable colors in console output
 color-logs: true

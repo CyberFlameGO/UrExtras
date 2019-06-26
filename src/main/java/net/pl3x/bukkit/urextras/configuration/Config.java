@@ -43,7 +43,7 @@ public class Config {
     public static boolean TREEE_LIST_BIG_OAK;
 
     private static void init() {
-        DEBUG_MODE = getBoolean("debug-mode",true);
+        DEBUG_MODE = getBoolean("debug-mode",false);
         COLOR_LOGS = getBoolean("color-logs",true);
         LOGGING = getBoolean("logging", true);
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
