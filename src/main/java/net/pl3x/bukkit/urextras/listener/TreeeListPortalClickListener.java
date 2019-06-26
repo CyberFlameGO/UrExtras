@@ -1,9 +1,6 @@
 package net.pl3x.bukkit.urextras.listener;
 
 import com.destroystokyo.paper.block.TargetBlockInfo;
-import com.sun.org.apache.bcel.internal.generic.LADD;
-import com.sun.org.apache.regexp.internal.RE;
-import java.rmi.MarshalException;
 import java.util.ArrayList;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
@@ -14,7 +11,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.TreeType;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -374,6 +370,30 @@ public class TreeeListPortalClickListener implements Listener {
             treeTen.setItemMeta(treeTenMeta);
             treeListInventory.setItem(9, treeTen);
 
+            /*
+             * NOTICE: Swamp Tree
+             */
+            ItemStack treeEleven = new ItemStack(Material.VINE);
+            ItemMeta treeElevenMeta = treeEleven.getItemMeta();
+            treeElevenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_SWAMP ? Lang.TREEE_SPAWNED_SWAMP : Lang.TREEE_SPAWNED_SWAMPNO));
+            treeElevenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeElevenLore = new ArrayList<>();
+            if (Config.TREEE_LIST_SWAMP){
+                if (Lang.TREEE_SPAWNED_LORE_SWAMP.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_SWAMP.split(";");
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeElevenLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeElevenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SWAMP));
+                }
+            } else {
+                treeElevenLore.add(Lang.DISABLED.replace("{getDisalbedName}", Lang.TREEE_SPAWNED_SWAMPNO));
+            }
+            treeElevenMeta.setLore(treeElevenLore);
+            treeEleven.setItemMeta(treeElevenMeta);
+            treeListInventory.setItem(10, treeEleven);
+
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
              *  - Big Tree: regular tre, extra tall with branches
@@ -384,7 +404,6 @@ public class TreeeListPortalClickListener implements Listener {
              *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
              *  - Swamp: Swamp tree (Regular with vines on the side)
              *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
-             *  - Chorus Plant: Large plant native to the End
              */
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
@@ -476,6 +495,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 8
                 || clicked.getType() == Material.CHORUS_FLOWER
                 && inventoryClickEvent.getSlot() == 9
+                || clicked.getType() == Material.VINE
+                && inventoryClickEvent.getSlot() == 10
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -487,6 +508,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_BIRCH_TALL
                     || !Config.TREEE_LIST_COCOA
                     || !Config.TREEE_LIST_CHORUS_PLANT
+                    || !Config.TREEE_LIST_SWAMP
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -525,6 +547,8 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.COCOA_TREE);
         } else if (clicked.getType() == Material.CHORUS_FLOWER) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.CHORUS_PLANT); // INFO: Chorus Plant can only spawn on End Stone
+        } else if (clicked.getType() == Material.VINE) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.SWAMP);
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;
