@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.TreeType;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -394,15 +395,37 @@ public class TreeeListPortalClickListener implements Listener {
             treeEleven.setItemMeta(treeElevenMeta);
             treeListInventory.setItem(10, treeEleven);
 
+            /*
+             * NOTICE: Big Oak Tree (Regular Tree, extra tall with branches)
+             */
+            ItemStack treeTwelve = new ItemStack(Material.STRIPPED_OAK_LOG, 1);
+            ItemMeta treeTwelveMeta = treeTwelve.getItemMeta();
+            treeTwelveMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_BIG_OAK ? Lang.TREEE_SPAWNED_BIG_OAK : Lang.TREEE_SPAWNED_BIG_OAKNO));
+            treeTwelveMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeTwelveLore = new ArrayList<>();
+            if (Config.TREEE_LIST_BIG_OAK){
+                if (Lang.TREEE_SPAWNED_LORE_BIG_OAK.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_BIG_OAK.split(";");
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeTwelveLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeTwelveLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIG_OAK));
+                }
+            } else {
+                treeTwelveLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIG_OAKNO)));
+            }
+            treeTwelveMeta.setLore(treeTwelveLore);
+            treeTwelve.setItemMeta(treeTwelveMeta);
+            treeListInventory.setItem(11, treeTwelve);
+
             /* TODO: Add next tree
              *  - Tree: Regular tree, no branches
-             *  - Big Tree: regular tre, extra tall with branches
              *  - Tall Redwood: Just a few leaves at the top
              *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
              *  - Jungle Bush: Small bush that grow in the jungle
              *  - Red Mushroom: Big Red Mushroom; Short and fat
              *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
-             *  - Swamp: Swamp tree (Regular with vines on the side)
              *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
              */
 
@@ -497,6 +520,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 9
                 || clicked.getType() == Material.VINE
                 && inventoryClickEvent.getSlot() == 10
+                || clicked.getType() == Material.STRIPPED_OAK_LOG
+                && inventoryClickEvent.getSlot() == 11
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -509,6 +534,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_COCOA
                     || !Config.TREEE_LIST_CHORUS_PLANT
                     || !Config.TREEE_LIST_SWAMP
+                    || !Config.TREEE_LIST_BIG_OAK
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -549,6 +575,8 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.CHORUS_PLANT); // INFO: Chorus Plant can only spawn on End Stone
         } else if (clicked.getType() == Material.VINE) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.SWAMP);
+        } else if (clicked.getType() == Material.STRIPPED_OAK_LOG) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIG_TREE);
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;

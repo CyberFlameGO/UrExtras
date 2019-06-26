@@ -67,6 +67,9 @@ public class Lang {
     public static String TREEE_SPAWNED_CHORUS_PLANTNO;
     public static String TREEE_SPAWNED_SWAMP;
     public static String TREEE_SPAWNED_SWAMPNO;
+    public static String TREEE_SPAWNED_BIG_OAK;
+    public static String TREEE_SPAWNED_BIG_OAKNO;
+
 
     public static String TREEE_SPAWNED_LORE_ACACIA;
     public static String TREEE_SPAWNED_LORE_BIRCH;
@@ -79,6 +82,7 @@ public class Lang {
     public static String TREEE_SPAWNED_LORE_COCOA;
     public static String TREEE_SPAWNED_LORE_CHORUS_PLANT;
     public static String TREEE_SPAWNED_LORE_SWAMP;
+    public static String TREEE_SPAWNED_LORE_BIG_OAK;
 
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
@@ -125,6 +129,8 @@ public class Lang {
         TREEE_SPAWNED_CHORUS_PLANTNO = getString("treee-spawned.chorusPlantNo","&4Chorus Plant");
         TREEE_SPAWNED_SWAMP = getString("treee-spawned.swamp","&aSwamp Treee");
         TREEE_SPAWNED_SWAMPNO = getString("treee-spawned.swampNo","&4Swamp Treee");
+        TREEE_SPAWNED_BIG_OAK = getString("treee-spawned.bigOak","&aBig Oak Treee");
+        TREEE_SPAWNED_BIG_OAKNO = getString("treee-spawned.bigOak","&4Big Oak Treee");
 
         TREEE_SPAWNED_LORE_ACACIA = getString("treee-spawned-lore.acacia","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_BIRCH = getString("treee-spawned-lore.birch", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
@@ -137,6 +143,7 @@ public class Lang {
         TREEE_SPAWNED_LORE_COCOA = getString("treee-spawned-lore.cocoa","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_CHORUS_PLANT = getString("treee-spawned-lore.chorusPlant","&7Click here to spawn;&7the Chorus Plant.;;&7Chorus Plant can only;&7spawn on End Stone.;;&7After the plant is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_SWAMP = getString("treee-spawned-lore.swamp","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
+        TREEE_SPAWNED_LORE_BIG_OAK = getString("treee=spawned-lore.bigOak","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################

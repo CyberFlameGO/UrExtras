@@ -59,6 +59,8 @@ treee-spawned:
   chorusPlantNo: "&4Chorus Plant"
   swamp: "&aSwamp Treee"
   swampNo: "&4Swamp Treee"
+  bigOak: "&aBig Oak Treee"
+  bigOakNo: "&4Big Oak Treee"
 ##
 # Customize the description of each spawnable tree in the 'Treee List' inventory.
 ##
@@ -74,3 +76,4 @@ treee-spawned-lore:
   cocoa: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   chorusPlant: "&7Click here to spawn;&7the Chorus Plant.;;&7Chorus Plant can only;&7spawn on End Stone.;;&7After the plant is;&7spawned your effects;&7will be removed."
   swamp: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
+  bigOak: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
