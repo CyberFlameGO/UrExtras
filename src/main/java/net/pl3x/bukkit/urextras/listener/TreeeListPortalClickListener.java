@@ -388,7 +388,7 @@ public class TreeeListPortalClickListener implements Listener {
                     treeElevenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SWAMP));
                 }
             } else {
-                treeElevenLore.add(Lang.DISABLED.replace("{getDisalbedName}", Lang.TREEE_SPAWNED_SWAMPNO));
+                treeElevenLore.add(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SWAMPNO));
             }
             treeElevenMeta.setLore(treeElevenLore);
             treeEleven.setItemMeta(treeElevenMeta);
