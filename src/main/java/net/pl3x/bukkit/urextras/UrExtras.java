@@ -1,12 +1,12 @@
 package net.pl3x.bukkit.urextras;
 
-import net.pl3x.bukkit.urextras.command.CmdTester;
-import net.pl3x.bukkit.urextras.listener.TreeeListPortalClickListener;
 import net.pl3x.bukkit.urextras.command.CmdUrExtrasPortal;
+import net.pl3x.bukkit.urextras.configuration.Lang;
+import net.pl3x.bukkit.urextras.listener.TreeeListPortalClickListener;
+import net.pl3x.bukkit.urextras.listener.UrExtrasPortalClickListener;
+import net.pl3x.bukkit.urextras.command.CmdTester;
 import net.pl3x.bukkit.urextras.command.CmdReload;
 import net.pl3x.bukkit.urextras.configuration.Config;
-import net.pl3x.bukkit.urextras.configuration.Lang;
-import net.pl3x.bukkit.urextras.listener.UrExtrasPortalClickListener;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

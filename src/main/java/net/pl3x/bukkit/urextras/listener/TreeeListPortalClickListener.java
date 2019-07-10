@@ -2,16 +2,15 @@ package net.pl3x.bukkit.urextras.listener;
 
 import com.destroystokyo.paper.block.TargetBlockInfo;
 import java.util.ArrayList;
+import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
-import net.pl3x.bukkit.urextras.configuration.Lang;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.TreeType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
