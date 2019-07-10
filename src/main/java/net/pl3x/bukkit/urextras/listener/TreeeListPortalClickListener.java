@@ -31,6 +31,10 @@ import org.bukkit.scheduler.BukkitTask;
  * TODO:
  *   - Add quitEvent check and remove item from inventory
  */
+
+/**
+ * Listens to clicks inside TreeeList Portal
+ */
 public class TreeeListPortalClickListener implements Listener {
     private UrExtras plugin;
     private BukkitTask taskToCancel;

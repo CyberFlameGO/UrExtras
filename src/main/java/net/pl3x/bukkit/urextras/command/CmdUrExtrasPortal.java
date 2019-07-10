@@ -18,10 +18,11 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-/**
- * TODO: Add pumpkins
- * TODO: Add watermelon
+/*
  * TODO:
+ *   - Add check for players gamemode
+ *   - Add watermelon
+ *   - Add pumpkins
  */
 
 public class CmdUrExtrasPortal implements TabExecutor {
@@ -38,8 +39,7 @@ public class CmdUrExtrasPortal implements TabExecutor {
     }
 
     /**
-     * TODO:
-     *   - Add check for players gamemode
+     * Lets create a portal for our extra features
      *
      * @param sender
      * @param command

@@ -39,6 +39,10 @@ import org.bukkit.scheduler.BukkitTask;
  *   | Applying < will tell you when a player clicks the custom number inventory
  */
 
+/**
+ * Listens to clicks inside UrExtras Portal
+ */
+
 public class UrExtrasPortalClickListener implements Listener {
     private UrExtras plugin;
     public static BukkitTask treeeSpawnerEffects;
