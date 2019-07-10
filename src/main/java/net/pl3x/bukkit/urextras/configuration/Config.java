@@ -41,6 +41,7 @@ public class Config {
     public static boolean TREEE_LIST_CHORUS_PLANT;
     public static boolean TREEE_LIST_SWAMP;
     public static boolean TREEE_LIST_BIG_OAK;
+    public static boolean TREEE_LIST_JUNGLE_BUSH;
 
     private static void init() {
         DEBUG_MODE = getBoolean("debug-mode",false);
@@ -63,6 +64,7 @@ public class Config {
         TREEE_LIST_CHORUS_PLANT = getBoolean("treee-list.chorusPlant",true);
         TREEE_LIST_SWAMP = getBoolean("treee-list.swamp",true);
         TREEE_LIST_BIG_OAK = getBoolean("treee-list.bigOak",true);
+        TREEE_LIST_JUNGLE_BUSH = getBoolean("treee-list.jungleBush",true);
     }
 
 

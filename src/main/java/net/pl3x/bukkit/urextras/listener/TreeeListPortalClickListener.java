@@ -419,11 +419,32 @@ public class TreeeListPortalClickListener implements Listener {
             treeTwelve.setItemMeta(treeTwelveMeta);
             treeListInventory.setItem(11, treeTwelve);
 
+            /*
+             * NOTICE: Jungle Bush
+             */
+            ItemStack treeThirteen = new ItemStack(Material.TALL_GRASS, 1);
+            ItemMeta treeThirteenMeta = treeThirteen.getItemMeta();
+            treeThirteenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_JUNGLE_BUSH ? Lang.TREEE_SPAWNED_JUNGLE_BUSH : Lang.TREEE_SPAWNED_JUNGLE_BUSHNO));
+            treeThirteenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+            ArrayList<String> treeThirteenLore = new ArrayList<>();
+            if (Config.TREEE_LIST_JUNGLE_BUSH){
+                if (Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH.contains(";")){
+                    String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH.split(";");
+                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
+                        treeThirteenLore.add(Lang.colorize(newLine[newLineLore]));
+                    }
+                } else {
+                    treeThirteenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH));
+                }
+            } else {
+                treeThirteenLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_JUNGLE_BUSHNO)));
+            }
+            treeThirteenMeta.setLore(treeThirteenLore);
+            treeThirteen.setItemMeta(treeThirteenMeta);
+            treeListInventory.setItem(12, treeThirteen);
+
             /* TODO: Add next tree
-             *  - Tree: Regular tree, no branches
              *  - Tall Redwood: Just a few leaves at the top
-             *  - Cocoa Tree: Jungle tree with cocoa plants; 1 block wide
-             *  - Jungle Bush: Small bush that grow in the jungle
              *  - Red Mushroom: Big Red Mushroom; Short and fat
              *  - Brown Mushroom: Big brown mushroom; tall and unbrella-like
              *  - Mega Redwood: Mega redwood tree; 4 blocks wide and tall
@@ -522,6 +543,8 @@ public class TreeeListPortalClickListener implements Listener {
                 && inventoryClickEvent.getSlot() == 10
                 || clicked.getType() == Material.STRIPPED_OAK_LOG
                 && inventoryClickEvent.getSlot() == 11
+                || clicked.getType() == Material.TALL_GRASS
+                && inventoryClickEvent.getSlot() == 12
                 ) {
             if (!Config.TREEE_LIST_ACACIA
                     || !Config.TREEE_LIST_BIRCH
@@ -535,6 +558,7 @@ public class TreeeListPortalClickListener implements Listener {
                     || !Config.TREEE_LIST_CHORUS_PLANT
                     || !Config.TREEE_LIST_SWAMP
                     || !Config.TREEE_LIST_BIG_OAK
+                    || !Config.TREEE_LIST_JUNGLE_BUSH
                     ){
                 Logger.debug("onTreeeCreate | " + target.getDisplayName() + " tried to spawn a " + clicked.getItemMeta().getDisplayName() + " but could not since this tree type is disabled.");
                 Lang.send(target,Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", clicked.getItemMeta().getDisplayName())));
@@ -577,6 +601,8 @@ public class TreeeListPortalClickListener implements Listener {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.SWAMP);
         } else if (clicked.getType() == Material.STRIPPED_OAK_LOG) {
             hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.BIG_TREE);
+        } else if (clicked.getType() == Material.TALL_GRASS) {
+            hasTreeGenerated = target.getWorld().generateTree(relativeBlock, TreeType.JUNGLE_BUSH);
         } else {
             Logger.debug("onTreeeCreate | No Tree was clicked, returned.");
             return;

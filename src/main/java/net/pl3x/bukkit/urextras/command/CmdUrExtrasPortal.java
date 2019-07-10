@@ -45,7 +45,7 @@ public class CmdUrExtrasPortal implements TabExecutor {
      * @param command
      * @param label
      * @param args
-     * @return
+     * @return UrExtras Portal
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
