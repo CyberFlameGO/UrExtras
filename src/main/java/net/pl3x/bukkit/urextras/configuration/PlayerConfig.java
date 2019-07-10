@@ -11,9 +11,20 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+/**
+ * UrExtras Player Configuration File
+ *
+ * Creates a custom file for players
+ */
 public class PlayerConfig extends YamlConfiguration {
     private static final Map<UUID, PlayerConfig> configs = new HashMap<>();
 
+    /**
+     * Gets the players configuration file if offline
+     *
+     * @param player Get offline player configuration file
+     * @return player configuration file
+     */
     public static CompletableFuture<PlayerConfig> getConfig(OfflinePlayer player) {
         return CompletableFuture.supplyAsync(() -> {
             synchronized (configs) {
@@ -23,6 +34,11 @@ public class PlayerConfig extends YamlConfiguration {
         });
     }
 
+    /**
+     * Deletes the players configuration file
+     *
+     * @param player Remove player configuration file
+     */
     public static void removeConfig(OfflinePlayer player) {
         synchronized (configs) {
             configs.remove(player.getUniqueId());
@@ -33,6 +49,14 @@ public class PlayerConfig extends YamlConfiguration {
     private final Object saveLock = new Object();
     private final UUID uuid;
 
+    /**
+     * Player configuration file
+     *
+     * Check to see if player has configuration file
+     * If file does not exist, create new one
+     *
+     * @param uuid Get players uuid
+     */
     private PlayerConfig(UUID uuid) {
         super();
         File dir = new File(UrExtras.getInstance().getDataFolder(), "userdata");
@@ -41,14 +65,28 @@ public class PlayerConfig extends YamlConfiguration {
         load();
     }
 
+    /**
+     * Player uuid
+     *
+     * @param player Get player
+     * @return Players uuid
+     */
     public boolean isUUID(OfflinePlayer player) {
         return this.uuid == player.getUniqueId();
     }
 
+    /**
+     * Player
+     *
+     * @return Player
+     */
     public Player getPlayer() {
         return Bukkit.getPlayer(uuid);
     }
 
+    /**
+     * Load player configuration file
+     */
     private void load() {
         synchronized (saveLock) {
             try {
@@ -58,6 +96,9 @@ public class PlayerConfig extends YamlConfiguration {
         }
     }
 
+    /**
+     * Save players configuration file
+     */
     private void save() {
         synchronized (saveLock) {
             try {

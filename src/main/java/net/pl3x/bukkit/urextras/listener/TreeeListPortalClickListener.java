@@ -33,7 +33,7 @@ import org.bukkit.scheduler.BukkitTask;
  */
 
 /**
- * Listens to clicks inside TreeeList Portal
+ * Listens for player clicks inside TreeeList Portal
  */
 public class TreeeListPortalClickListener implements Listener {
     private UrExtras plugin;
@@ -46,10 +46,18 @@ public class TreeeListPortalClickListener implements Listener {
     }
 
     /**
-     * Checks whether or not the proper block was clicked.
-     * If the the block can not spawn a tree type event will cancel.
+     * Validate block clicked
      *
-     * @param clickEvent
+     * Verifies that the Tool is the 'Treee Spawner Tool'. Once the Tool is
+     * verified, it will then be placed inside the players inventory so that
+     * they may select a block to place the selected option.
+     *
+     * Once a block is clicked, event will Check whether or not the proper
+     * block was clicked. If the the block can not spawn a tree type,
+     * event will cancel. If correct block was clicked a custom inventory
+     * (Barrel) will be created with all available tree types
+     *
+     * @param clickEvent Player block click
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onTreeeBlockSlected(PlayerInteractEvent clickEvent){
@@ -115,6 +123,7 @@ public class TreeeListPortalClickListener implements Listener {
         *
         * TODO: Make clicked block configurable
         * */
+
         if (clickedBlock.equals(Material.DIRT)
                 || clickedBlock.equals(Material.GRASS_BLOCK)
                 || clickedBlock.equals(Material.GRASS)
@@ -465,11 +474,13 @@ public class TreeeListPortalClickListener implements Listener {
     }
 
     /**
-     * Checks what was clicked inside the UrExtras Portal Inventory.
+     * Treee List Portal (custom inventory)
+     *
+     * Checks what was clicked inside the Treee List Portal Inventory.
      * <p>
-     * Verifies that the Tool is the 'Treee Spawner Tool'. Once the Tool is
-     * verified, it will then be placed inside the players inventory so that
-     * they may select a block to place the selected option.
+     * Once a player clicks on the tree type they would like to spawn,
+     * custom inventory will close and the custom tool will be removed
+     * from players inventory.
      *
      * @param inventoryClickEvent get clicked inventory.
      */
@@ -684,10 +695,10 @@ public class TreeeListPortalClickListener implements Listener {
 
 
     /**
-     * This will make sure that the player does not have a custom tool inside their inventory when they rejoin.
-     * If the player rejoins with the custom tool, a few errors with output in console.
+     * If player quits server with custom Treee Spawn Tool inside their
+     * inventory, this event will remove the custom tool to avoid expliots
      *
-     * @param playerQuitEventToolInHand
+     * @param playerQuitEventToolInHand Remove custom tool
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerQuitToolInHand(PlayerQuitEvent playerQuitEventToolInHand){
@@ -730,7 +741,7 @@ public class TreeeListPortalClickListener implements Listener {
     /**
      * If a player is kicked from the server, let's make sure their custom tool is removed.
      *
-     * @param playerKickEventToolInHand
+     * @param playerKickEventToolInHand Remove custom tool
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerKickToolInHand(PlayerKickEvent playerKickEventToolInHand){
@@ -781,7 +792,7 @@ public class TreeeListPortalClickListener implements Listener {
     /**
      * Make sure players custom tool is remove if their inventory is changed from survival.
      *
-     * @param playerGameModeChangeEventToolInHand
+     * @param playerGameModeChangeEventToolInHand Remove custom tool
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerGameModeChangeToolInHand(PlayerGameModeChangeEvent playerGameModeChangeEventToolInHand){

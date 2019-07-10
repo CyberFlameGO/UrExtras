@@ -87,6 +87,11 @@ public class Lang {
     public static String TREEE_SPAWNED_LORE_BIG_OAK;
     public static String TREEE_SPAWNED_LORE_JUNGLE_BUSH;
 
+    /**
+     * UrExtras Language File
+     *
+     * Default language file (English)
+     */
     private static void init() {
         COMMAND_NO_PERMISSION = getString("command-no-permission", "&4You do not have permission for that command!");
         COMMAND_NO_PERMISSION_PORTAL = getString("command-no-permission-portal", "&cYou do not have permission to use the&4 {getClicked}&c!");
@@ -193,6 +198,13 @@ public class Lang {
         }
     }
 
+    /**
+     * Gets the string path
+     *
+     * @param path String path
+     * @param def Path message
+     * @return Path and message
+     */
     private static String getString(String path, String def) {
         config.addDefault(path, def);
         return config.getString(path, config.getString(path));

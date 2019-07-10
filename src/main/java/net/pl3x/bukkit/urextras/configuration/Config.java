@@ -10,6 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 
+/**
+ * UrExtras Configuration File
+ *
+ * Applied custom header comment for additional information
+ */
 public class Config {
     private static final String HEADER = "This is the main configuration file for UrExtras.\n"
             + "As you can see, there's tons to configure. Some options may impact gameplay, so use\n"
@@ -43,6 +48,9 @@ public class Config {
     public static boolean TREEE_LIST_BIG_OAK;
     public static boolean TREEE_LIST_JUNGLE_BUSH;
 
+    /**
+     * Apply configuration options
+     */
     private static void init() {
         DEBUG_MODE = getBoolean("debug-mode",false);
         COLOR_LOGS = getBoolean("color-logs",true);

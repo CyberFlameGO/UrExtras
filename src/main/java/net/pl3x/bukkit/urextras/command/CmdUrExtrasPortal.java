@@ -25,6 +25,13 @@ import org.bukkit.inventory.meta.ItemMeta;
  *   - Add pumpkins
  */
 
+/**
+ * UrExtras Portal
+ *
+ * Creates a custom inventory (Barrel)
+ * Inside this custom inventory will have custom tools & weapons
+ */
+
 public class CmdUrExtrasPortal implements TabExecutor {
 
     private UrExtras plugin;
@@ -39,13 +46,18 @@ public class CmdUrExtrasPortal implements TabExecutor {
     }
 
     /**
-     * Lets create a portal for our extra features
+     * Creates a portal (custom inventory) for our extra features
+     * <p>
+     * This will hold all the features available for players to select from
+     * Once a player clicks an item inside the UrExtras Portal (gui) depending on
+     * the feature a new portal (custom inventory) will appear or an item will be placed inside
+     * their inventory
      *
-     * @param sender
-     * @param command
-     * @param label
-     * @param args
-     * @return UrExtras Portal
+     * @param sender Checks for Player
+     * @param command Create custom inventory(Barrel)
+     * @param label Check for command name or aliases
+     * @param args Cancel if args is present
+     * @return UrExtras Portal (custom inventory)
      */
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -56,6 +68,11 @@ public class CmdUrExtrasPortal implements TabExecutor {
 
         if (!sender.hasPermission("command.urextras.portal")){
             Lang.send(sender, Lang.COMMAND_NO_PERMISSION);
+            return true;
+        }
+
+        if (args.length >= 0){
+            Lang.send(sender, command.getDescription() + "\n" + command.getUsage());
             return true;
         }
 

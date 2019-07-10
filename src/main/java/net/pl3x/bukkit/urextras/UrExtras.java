@@ -12,6 +12,13 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * UrExtras Plugin
+ *
+ * Plugin author: DwDMadMac
+ *
+ * This will give players the option to have custom tools or weapons
+ */
 public class UrExtras extends JavaPlugin {
     private static UrExtras instance;
 

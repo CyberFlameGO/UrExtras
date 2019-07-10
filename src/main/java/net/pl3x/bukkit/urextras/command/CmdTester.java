@@ -13,7 +13,7 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
-/**
+/*
  * Created by madmac on 9/19/15.
  *
  * float offsetX: The amount of blocks that the effect can stray in X
@@ -26,6 +26,12 @@ import org.bukkit.scheduler.BukkitTask;
  *
  * ParticleEffect.HEART.display(float offsetX, float offsetY, float offsetZ, float speed, int amount, Location center, double range);
  *
+ */
+
+/**
+ * Particle test command
+ * <p>
+ * Use this to test the particle before applying to features
  */
 
 public class CmdTester implements TabExecutor {
@@ -42,12 +48,24 @@ public class CmdTester implements TabExecutor {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
         return null;
     }
 
+    /**
+     * Particle test command
+     *
+     * Custom particle will appear for X seconds
+     * Test out particle design/display
+     *
+     * @param sender Player Applies particle effect around player
+     * @param command Create custom particle
+     * @param label Check for command name or aliases
+     * @param args Sets time length for particle display
+     * @return Custom particle effect
+     */
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)){
             Lang.send(sender, Lang.PLAYER_COMMAND);
             return true;
@@ -59,7 +77,6 @@ public class CmdTester implements TabExecutor {
         }
 
         Player target;
-
 
         if(args.length < 2){
             target = (Player) sender;
@@ -190,6 +207,13 @@ public class CmdTester implements TabExecutor {
         return true;
     }
 
+    /**
+     * Create cooldown
+     *
+     * Cooldown is created as a BukkitTask
+     *
+     * @param player Applies cooldown to player that activated the test command
+     */
     public void runCoolDown(Player player){
         final Player target = player;
 

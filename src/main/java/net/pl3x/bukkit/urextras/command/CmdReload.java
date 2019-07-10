@@ -10,6 +10,11 @@ import org.bukkit.command.TabExecutor;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * UrExtras Reload command
+ * <p>
+ * Allows player to reload the UrExtras plugin for file configuration edits
+ */
 public class CmdReload implements TabExecutor {
     private final UrExtras plugin;
 

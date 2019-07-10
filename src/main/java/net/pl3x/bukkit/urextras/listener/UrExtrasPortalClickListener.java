@@ -47,18 +47,20 @@ public class UrExtrasPortalClickListener implements Listener {
     private UrExtras plugin;
     public static BukkitTask treeeSpawnerEffects;
 
-    /**
-     *
-     * @param plugin
-     */
     public UrExtrasPortalClickListener(UrExtras plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Checks what was clicked inside the UrExtras Portal Inventory
+     * Checks what was clicked inside the UrExtras Portal Inventory (custom inventory)
      *
-     * @param inventoryClickEvent get clicked inventory.
+     * Once a custom tool/weapon is clicked, the custom inventory will close with the
+     * custom tool/weapon placed inside their inventory.
+     *
+     * A custom particle effect will be added to each custom tool & weapon which will
+     * be removed after the weapon/tool is finished being used.
+     *
+     * @param inventoryClickEvent Get clicked inventory
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onUrExtrasPortalInventoryClick(InventoryClickEvent inventoryClickEvent) {
