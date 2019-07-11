@@ -53,10 +53,10 @@ public class UrExtrasPortalClickListener implements Listener {
 
     /**
      * Checks what was clicked inside the UrExtras Portal Inventory (custom inventory)
-     *
+     * <p>
      * Once a custom tool/weapon is clicked, the custom inventory will close with the
      * custom tool/weapon placed inside their inventory.
-     *
+     * <p>
      * A custom particle effect will be added to each custom tool & weapon which will
      * be removed after the weapon/tool is finished being used.
      *

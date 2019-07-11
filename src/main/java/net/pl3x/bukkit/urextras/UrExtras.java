@@ -14,9 +14,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * UrExtras Plugin
- *
+ * <p>
  * Plugin author: DwDMadMac
- *
+ * <p>
  * This will give players the option to have custom tools or weapons
  */
 public class UrExtras extends JavaPlugin {

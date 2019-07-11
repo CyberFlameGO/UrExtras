@@ -6,7 +6,7 @@ import org.bukkit.ChatColor;
 
 /**
  * UrExtras Logger
- *
+ * <p>
  * Varies utilities to make life easier!
  */
 public class Logger {
@@ -25,7 +25,7 @@ public class Logger {
 
     /**
      * Debugging messages
-     *
+     * <p>
      * Will only display with Debug mode is set to true
      *
      * @param msg Send Message

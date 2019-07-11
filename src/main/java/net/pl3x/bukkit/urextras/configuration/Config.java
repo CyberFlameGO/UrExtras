@@ -12,7 +12,7 @@ import java.util.logging.Level;
 
 /**
  * UrExtras Configuration File
- *
+ * <p>
  * Applied custom header comment for additional information
  */
 public class Config {

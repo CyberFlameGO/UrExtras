@@ -27,7 +27,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * UrExtras Portal
- *
+ * <p>
  * Creates a custom inventory (Barrel)
  * Inside this custom inventory will have custom tools & weapons
  */

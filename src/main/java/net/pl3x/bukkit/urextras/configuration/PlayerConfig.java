@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 
 /**
  * UrExtras Player Configuration File
- *
+ * <p>
  * Creates a custom file for players
  */
 public class PlayerConfig extends YamlConfiguration {
@@ -51,7 +51,7 @@ public class PlayerConfig extends YamlConfiguration {
 
     /**
      * Player configuration file
-     *
+     * <p>
      * Check to see if player has configuration file
      * If file does not exist, create new one
      *

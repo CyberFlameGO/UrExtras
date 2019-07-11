@@ -89,7 +89,7 @@ public class Lang {
 
     /**
      * UrExtras Language File
-     *
+     * <p>
      * Default language file (English)
      */
     private static void init() {
