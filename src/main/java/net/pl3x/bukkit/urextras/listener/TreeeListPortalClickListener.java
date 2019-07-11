@@ -315,7 +315,7 @@ public class TreeeListPortalClickListener implements Listener {
              */
             ItemStack treeEight = new ItemStack(Material.STRIPPED_BIRCH_LOG);
             ItemMeta treeEightMeta = treeEight.getItemMeta();
-            treeEightMeta.setDisplayName(Config.TREEE_LIST_BIRCH_TALL ? Lang.TREEE_SPAWNED_BIRCH_TALL : Lang.TREEE_SPAWNED_BIRCH_TALLNO);
+            treeEightMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_BIRCH_TALL ? Lang.TREEE_SPAWNED_BIRCH_TALL : Lang.TREEE_SPAWNED_BIRCH_TALLNO));
             treeEightMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
             ArrayList<String> treeEightLore = new ArrayList<>();
             if (Config.TREEE_LIST_BIRCH_TALL){

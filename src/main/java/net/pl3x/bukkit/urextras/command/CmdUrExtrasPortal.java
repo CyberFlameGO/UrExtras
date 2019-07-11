@@ -71,12 +71,6 @@ public class CmdUrExtrasPortal implements TabExecutor {
             return true;
         }
 
-        /*
-        if (args.length >= 1){
-            Lang.send(sender, command.getDescription() + "\n" + command.getUsage());
-            return true;
-        }*/
-
         Player target = (Player) sender;
 
         /* NOTICE: Make UrExtras Portal Inventory */
