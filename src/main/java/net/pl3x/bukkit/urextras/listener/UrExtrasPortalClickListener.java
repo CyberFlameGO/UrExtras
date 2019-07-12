@@ -1,11 +1,14 @@
 package net.pl3x.bukkit.urextras.listener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -17,7 +20,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scheduler.BukkitRunnable;
 
 /*
  *
@@ -45,7 +48,7 @@ import org.bukkit.scheduler.BukkitTask;
 
 public class UrExtrasPortalClickListener implements Listener {
     private UrExtras plugin;
-    public static BukkitTask treeeSpawnerEffects;
+    public static Map<UUID, TreeSpawnerEffects> treeeSpawnerEffects = new HashMap<>();
 
     public UrExtrasPortalClickListener(UrExtras plugin) {
         this.plugin = plugin;
@@ -177,29 +180,9 @@ public class UrExtrasPortalClickListener implements Listener {
              *   - Add check for cooldown
              *   - Add cooldown
              */
-            treeeSpawnerEffects = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
-                        for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-                            double radius = Math.sin(i);
-                            double y = Math.cos(i);
-                            for (double a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-                                double x = Math.cos(a) * radius;
-                                double z = Math.sin(a) * radius;
-                                Location playerLoc = target.getLocation().add(x, y, z);
-                                //target.spawnParticle(Particle.FIREWORKS_SPARK, playerLoc.add(0, 1, 0), 1); // TODO: Apply this to the tree bottom log when spawned
-                                //target.spawnParticle(Particle.NOTE, playerLoc.add(0, 1, 0), 1); // INFO: 'forloop' setting 4 applies circle around player
-                                //target.spawnParticle(Particle.DAMAGE_INDICATOR, playerLoc.add(0, 1, 0), 1); // INFO: Dark Red Hearts spitting up from feet
-                                //target.spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1); // INFO: Need to change 'forloop' back to 60  NOTICE: This one is the one
-                                target.getWorld().spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1);
-                                //target.spawnParticle(Particle.FLASH, playerLoc.add(0, 1, 0), 1); // INFO: To bright, cant see anything
-                                //target.spawnParticle(Particle.SPIT, playerLoc.add(0, 1, 0), 1); // INFO: Very Laggy!
-                                //target.spawnParticle(Particle.FLAME, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design
-                                //target.spawnParticle(Particle.BUBBLE_POP, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design
-                                //target.spawnParticle(Particle.DOLPHIN, playerLoc.add(0, 1, 0), 1); // INFO: Applies sphere effect around player ||| INFO: God mode protection sphere effect | Maybe?
-                                //target.spawnParticle(Particle.LAVA, playerLoc.add(0,1,0),1); // ERROR: Can only be applied once, still laggy towards end.
-                                target.getLocation().subtract(x, y, z);
-                            }
-                        }
-                    },0L,2L);
+            TreeSpawnerEffects task = new TreeSpawnerEffects(target);
+            task.runTaskTimer(plugin, 0L, 2L);
+            treeeSpawnerEffects.put(target.getUniqueId(), task);
 
             target.closeInventory();
             return;
@@ -211,6 +194,38 @@ public class UrExtrasPortalClickListener implements Listener {
 
         target.closeInventory();
         return;
+    }
+
+    public class TreeSpawnerEffects extends BukkitRunnable {
+        private final Player target;
+
+        public TreeSpawnerEffects(Player player) {
+            this.target = player;
+        }
+
+        public void run() {
+            for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                double radius = Math.sin(i);
+                double y = Math.cos(i);
+                for (double a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                    double x = Math.cos(a) * radius;
+                    double z = Math.sin(a) * radius;
+                    Location playerLoc = target.getLocation().add(x, y, z);
+                    //target.spawnParticle(Particle.FIREWORKS_SPARK, playerLoc.add(0, 1, 0), 1); // TODO: Apply this to the tree bottom log when spawned
+                    //target.spawnParticle(Particle.NOTE, playerLoc.add(0, 1, 0), 1); // INFO: 'forloop' setting 4 applies circle around player
+                    //target.spawnParticle(Particle.DAMAGE_INDICATOR, playerLoc.add(0, 1, 0), 1); // INFO: Dark Red Hearts spitting up from feet
+                    //target.spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1); // INFO: Need to change 'forloop' back to 60  NOTICE: This one is the one
+                    target.getWorld().spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1);
+                    //target.spawnParticle(Particle.FLASH, playerLoc.add(0, 1, 0), 1); // INFO: To bright, cant see anything
+                    //target.spawnParticle(Particle.SPIT, playerLoc.add(0, 1, 0), 1); // INFO: Very Laggy!
+                    //target.spawnParticle(Particle.FLAME, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design
+                    //target.spawnParticle(Particle.BUBBLE_POP, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design
+                    //target.spawnParticle(Particle.DOLPHIN, playerLoc.add(0, 1, 0), 1); // INFO: Applies sphere effect around player ||| INFO: God mode protection sphere effect | Maybe?
+                    //target.spawnParticle(Particle.LAVA, playerLoc.add(0,1,0),1); // ERROR: Can only be applied once, still laggy towards end.
+                    target.getLocation().subtract(x, y, z);
+                }
+            }
+        }
     }
 }
 

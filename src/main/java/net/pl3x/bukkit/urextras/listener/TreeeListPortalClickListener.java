@@ -682,7 +682,10 @@ public class TreeeListPortalClickListener implements Listener {
             }
 
             if (!target.isOnline() || !isRunning){
-                UrExtrasPortalClickListener.treeeSpawnerEffects.cancel();
+                UrExtrasPortalClickListener.TreeSpawnerEffects task = UrExtrasPortalClickListener.treeeSpawnerEffects.get(target.getUniqueId());
+                if (task != null && !task.isCancelled()) {
+                    task.cancel();
+                }
                 Logger.debug("onTreeeCreate | Removed Treee Spawner Particle.");
                 isRunning = false;
                 // TODO: Add cooldown here
