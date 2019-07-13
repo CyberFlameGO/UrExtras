@@ -846,4 +846,44 @@ public class TreeeListPortalClickListener implements Listener {
         return;
 
     }
+
+    /**
+     *
+     * @param inventoryClickEvent
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerInventoryClickWithToolInHand(InventoryClickEvent inventoryClickEvent){
+        InventoryType inventoryType = inventoryClickEvent.getInventory().getType();
+
+        if (!inventoryType.equals(InventoryType.CRAFTING)){
+            Logger.debug("onPlayerInventoryClickWithToolInHand | Clicked inventory is not a players inventory.");
+            return;
+        }
+
+        ItemStack clickedItem = inventoryClickEvent.getCurrentItem();
+
+        if (!clickedItem.hasItemMeta()){
+            Logger.debug("onPlayerInventoryClickWithToolInHand | Clicked item does not have itemMeta, event cancelled.");
+            return;
+        }
+
+        if (!clickedItem.getItemMeta().hasCustomModelData()){
+            Logger.debug("onPlayerInventoryClickWithToolInHand | Clicked item does not have custom model data");
+            return;
+        }
+
+        Float clickedItemModelData = Float.valueOf(clickedItem.getItemMeta().getCustomModelData());
+
+        if (!clickedItemModelData.equals(069001F)){
+            Logger.debug("onPlayerInventoryClickWithToolInHand | Clicked Item does not equal to Treee Spawner Tool Custom Model Data.");
+            return;
+        }
+
+        inventoryClickEvent.setCancelled(true);
+        Logger.debug("onPlayerInventoryClickWithToolInHand | Player tried to move the Treee Spawner Tool, Event cancelled.");
+        Player target = (Player) inventoryClickEvent.getWhoClicked();
+        Lang.send(target, Lang.TOOL_MOVE_ATTEMPT
+                .replace("{getToolName}", clickedItem.getItemMeta().getDisplayName()));
+        return;
+    }
 }

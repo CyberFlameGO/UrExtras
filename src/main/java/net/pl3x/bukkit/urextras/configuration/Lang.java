@@ -38,6 +38,7 @@ public class Lang {
     public static String HAND_NOT_EMPTY;
     public static String GIVE_TOOL;
     public static String TOOL_DROP_ATTEMPT;
+    public static String TOOL_MOVE_ATTEMPT;
 
     public static String NO_TREEE_SPAWNER_TOOL;
     public static String TREEE_SPAWNER_TOOL;
@@ -103,7 +104,8 @@ public class Lang {
         UREXTRAS_PORTAL_INVENTORY_CLOSED = getString("urextras-portal-inventory-closed","&7You closed &4{getInventoryName}&7.");
         HAND_NOT_EMPTY = getString("hand-not-empty","&dPlease empty your hand before clicking the &7{getClicked}&d again.");
         GIVE_TOOL = getString("give-tool","&7You received a &2{getToolName}&7.");
-        TOOL_DROP_ATTEMPT = getString("tool-drop-attempt","&4You cannot drop the &r{getToolName} &4out of your inventory.");
+        TOOL_DROP_ATTEMPT = getString("tool-drop-attempt","&cYou cannot drop the &r{getToolName} &cout of your inventory.");
+        TOOL_MOVE_ATTEMPT  = getString("tool-move-attempt","&cYou cannot move the &r(getToolName}&c.");
 
         NO_TREEE_SPAWNER_TOOL = getString("no-treee-spawner-tool","&4Treee Spawner Tool");
         TREEE_SPAWNER_TOOL = getString("treee-spawner-tool","&2Treee Spawner Tool");

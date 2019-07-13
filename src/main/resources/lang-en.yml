@@ -13,7 +13,8 @@ urextras-portal-inventory-title: "UrExtras Portal"
 urextras-portal-inventory-closed: "&7You closed &4{getInventoryName}&7."
 hand-not-empty: "&dPlease empty your hand before clicking the &7{getClicked}&d again."
 give-tool: "&7You received a &2{getToolName}&7."
-tool-drop-attempt: "&4You cannot drop the &r{getToolName} &4out of your inventory."
+tool-drop-attempt: "&cYou cannot drop the &r{getToolName} &cout of your inventory."
+tool-move-attempt: "&cYou cannot move the &r(getToolName}&c."
 
 ######
 #### UrExtras Portal Tools & Weapons Lang
