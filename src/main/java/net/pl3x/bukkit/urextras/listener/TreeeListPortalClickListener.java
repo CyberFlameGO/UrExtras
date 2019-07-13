@@ -848,8 +848,8 @@ public class TreeeListPortalClickListener implements Listener {
     }
 
     /**
-     *
-     * @param inventoryClickEvent
+     * Stops player from moving the Treee Spawner Tool around inside their inventory
+     * @param inventoryClickEvent Cancel event when player tries to move Tool
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onPlayerInventoryClickWithToolInHand(InventoryClickEvent inventoryClickEvent){
@@ -886,4 +886,6 @@ public class TreeeListPortalClickListener implements Listener {
                 .replace("{getToolName}", clickedItem.getItemMeta().getDisplayName()));
         return;
     }
+
+
 }
