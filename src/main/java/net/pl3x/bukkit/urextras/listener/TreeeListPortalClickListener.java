@@ -17,6 +17,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerKickEvent;
@@ -47,11 +48,11 @@ public class TreeeListPortalClickListener implements Listener {
 
     /**
      * Validate block clicked
-     *
+     * <p>
      * Verifies that the Tool is the 'Treee Spawner Tool'. Once the Tool is
      * verified, it will then be placed inside the players inventory so that
      * they may select a block to place the selected option.
-     *
+     * <p>
      * Once a block is clicked, event will Check whether or not the proper
      * block was clicked. If the the block can not spawn a tree type,
      * event will cancel. If correct block was clicked a custom inventory
@@ -475,7 +476,7 @@ public class TreeeListPortalClickListener implements Listener {
 
     /**
      * Treee List Portal (custom inventory)
-     *
+     * <p>
      * Checks what was clicked inside the Treee List Portal Inventory.
      * <p>
      * Once a player clicks on the tree type they would like to spawn,
@@ -803,5 +804,46 @@ public class TreeeListPortalClickListener implements Listener {
          * TODO:
          *   - Remove Tool if players gamemode is changed from survival
          */
+    }
+
+    /**
+     * Stops players from dropping the Treee Spawner Tool from their inventory
+     *
+     * @param playerDropItemEvent Stop Treee Spawner Tool for dropping out of hand
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerDropItem(PlayerDropItemEvent playerDropItemEvent){
+        ItemStack droppedItem = playerDropItemEvent.getItemDrop().getItemStack();
+
+        if (droppedItem == null){
+            Logger.debug( "onPlayerDropItem | dropped item is null");
+            return;
+        }
+
+        if (!droppedItem.hasItemMeta()) {
+            Logger.debug("onPlayerDropItem | dropped item does not have itemmeta.");
+            return;
+        }
+
+        if (!droppedItem.getItemMeta().hasCustomModelData()){
+            Logger.debug("onPlayerDropItem | Dropped Item does not have custom model data");
+            return;
+        }
+
+        Float droppedItemCustomModeldata = Float.valueOf(droppedItem.getItemMeta().getCustomModelData());
+
+        if (!droppedItemCustomModeldata.equals(069001F)){
+            Logger.debug("onPlayerDropItem | Dropped Item does not equal to Treee Spawner Tool Custom Model Data.");
+            return;
+        }
+
+        playerDropItemEvent.setCancelled(true);
+        Logger.debug("onPlayerDropItem | Player attempted to drop their Treee Spawner Tool.");
+
+        Player target = playerDropItemEvent.getPlayer();
+        Lang.send(target, Lang.colorize(Lang.TOOL_DROP_ATTEMPT)
+                    .replace("{getToolName}", droppedItem.getItemMeta().getDisplayName()));
+        return;
+
     }
 }

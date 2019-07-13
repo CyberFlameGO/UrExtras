@@ -196,13 +196,24 @@ public class UrExtrasPortalClickListener implements Listener {
         return;
     }
 
+    /**
+     * Create particle effect as a BukkitRunnable
+     */
     public class TreeSpawnerEffects extends BukkitRunnable {
         private final Player target;
 
+        /**
+         * Gets the player that enabled the particle
+         *
+         * @param player Player who enabled particle
+         */
         public TreeSpawnerEffects(Player player) {
             this.target = player;
         }
 
+        /**
+         * Run particle effect
+         */
         public void run() {
             for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
                 double radius = Math.sin(i);
