@@ -18,6 +18,12 @@ language-file: lang-en.yml
 cooldown:
   global: 300
 
+# Type of particle to create for visuals
+# Some particles do not support colors and some look bad
+# List of particles: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+# Default is PORTAL
+particle-type: PORTAL
+
 # Enables/Disabled Treee Spawner Tool
 treee-spawner-tool-click: true
 

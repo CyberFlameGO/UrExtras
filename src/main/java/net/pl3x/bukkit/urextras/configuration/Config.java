@@ -32,6 +32,7 @@ public class Config {
     public static String LANGUAGE_FILE;
 
     public static int GLOBAL_COOLDOWN;
+    public static String PARTICLE_TYPE;
 
     public static boolean TREEE_SPAWNER_TOOL_CLICK;
     public static boolean TREEE_LIST_ACACIA;
@@ -58,6 +59,7 @@ public class Config {
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
 
         GLOBAL_COOLDOWN = getInt("cooldown.global", 300);
+        PARTICLE_TYPE = getString("particle-type","PORTAL");
 
         TREEE_SPAWNER_TOOL_CLICK = getBoolean("treee-spawner-tool-click", true);
         TREEE_LIST_ACACIA = getBoolean("treee-list.acacia",true);

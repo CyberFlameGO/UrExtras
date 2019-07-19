@@ -9,6 +9,7 @@ import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
+import net.pl3x.bukkit.urextras.util.Particles;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -48,7 +49,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class UrExtrasPortalClickListener implements Listener {
     private UrExtras plugin;
-    public static Map<UUID, TreeSpawnerEffects> treeeSpawnerEffects = new HashMap<>();
+    public static Map<UUID, Particles> particlesHashMap = new HashMap<>();
+    public Particles treeeSpawnerTask;
 
     public UrExtrasPortalClickListener(UrExtras plugin) {
         this.plugin = plugin;
@@ -179,10 +181,11 @@ public class UrExtrasPortalClickListener implements Listener {
              * TODO:
              *   - Add check for cooldown
              *   - Add cooldown
-             */
-            TreeSpawnerEffects task = new TreeSpawnerEffects(target);
-            task.runTaskTimer(plugin, 0L, 2L);
-            treeeSpawnerEffects.put(target.getUniqueId(), task);
+            */
+
+            treeeSpawnerTask = new Particles(target);
+            treeeSpawnerTask.runTaskTimer(plugin,0L,2L);
+            particlesHashMap.put(target.getUniqueId(), treeeSpawnerTask);
 
             target.closeInventory();
             return;

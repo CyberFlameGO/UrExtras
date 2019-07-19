@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -103,7 +104,8 @@ public class PlayerConfig extends YamlConfiguration {
         synchronized (saveLock) {
             try {
                 save(file);
-            } catch (Exception ignore) {
+            } catch (Exception e) {
+                Logger.error("Unable to save player data: " + uuid.toString() + ": " + getPlayer());
             }
         }
     }

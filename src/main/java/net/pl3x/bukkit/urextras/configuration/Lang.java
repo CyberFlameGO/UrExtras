@@ -32,6 +32,7 @@ public class Lang {
     public static String COMMAND_NO_PERMISSION_PORTAL;
     public static String PLAYER_COMMAND;
     public static String DISABLED;
+    public static String ON_PLAYER_DEATH;
 
     public static String UREXTRAS_PORTAL_INVENTORY_TITLE;
     public static String UREXTRAS_PORTAL_INVENTORY_CLOSED;
@@ -99,6 +100,7 @@ public class Lang {
         COMMAND_NO_PERMISSION_PORTAL = getString("command-no-permission-portal", "&cYou do not have permission to use the&4 {getClicked}&c!");
         PLAYER_COMMAND = getString("player-command", "&4This command is only available to players!");
         DISABLED = getString("disabled","&cThe {getDisabledName} &cis disabled.");
+        ON_PLAYER_DEATH = getString("on-player-death","&7Your &2{getToolName}&7 was removed since you died.");
 
         UREXTRAS_PORTAL_INVENTORY_TITLE = getString("urextras-portal-inventory-title", "UrExtras Portal");
         UREXTRAS_PORTAL_INVENTORY_CLOSED = getString("urextras-portal-inventory-closed","&7You closed &4{getInventoryName}&7.");
@@ -112,12 +114,12 @@ public class Lang {
         SET_TREEE_SPAWNER_TOOL_INFO = getString("set-treee-spawner-tool-info","&7Spawn Any treee.");
 
         TREEE_LIST_INVENTORY_TITLE = getString("treee-list-inventory-title","Treee List");
-        CANNOT_SPAWN_TREEE_HERE = getString("cannot-spawn-treee-here","&5=====================================================\n" +
+        CANNOT_SPAWN_TREEE_HERE = getString("cannot-spawn-treee-here","\n\n&5=====================================================\n" +
                                                                                     "&7You cannot use the &4{getToolName} &7here.\n" +
                                                                                     "\n" +
                                                                                     "&7Please click on one of the following materials:\n" +
                                                                                     "  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6." +
-                                                                                    "\n&5=====================================================\n");
+                                                                                    "\n&5=====================================================\n\n");
         TREEE_SPAWNED_PLAYERMSG = getString("treee-spawned.playerMsg","&7You spawned a {getSpawnedName}&7.");
         TREEE_SPAWNED_ACACIA = getString("treee-spawned.acacia","&aAcacia Treee");
         TREEE_SPAWNED_ACACIANO = getString("treee-spawned.acaciaNo","&4Acacia Treee");

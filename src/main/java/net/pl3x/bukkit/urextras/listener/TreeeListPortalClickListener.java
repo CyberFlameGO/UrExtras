@@ -2,10 +2,12 @@ package net.pl3x.bukkit.urextras.listener;
 
 import com.destroystokyo.paper.block.TargetBlockInfo;
 import java.util.ArrayList;
+import java.util.Iterator;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
+import net.pl3x.bukkit.urextras.util.Particles;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -15,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -634,31 +637,6 @@ public class TreeeListPortalClickListener implements Listener {
  * ################################################################################################################################
  */
 
-        /*
-         * INFO: Adds an extra particle effect when the tree is spawned
-         *
-         * TODO:
-         *   - Make apply to all selection, instead of applying it to all selections
-         */
-        TREEE_SPAWNED_PARTICLE:
-            for (int particleSpawnTimer = 0; particleSpawnTimer < 4 ; particleSpawnTimer++) {
-                for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-                    double radius = Math.sin(i);
-                    double y = Math.cos(i);
-                    for (double a = 0; a < Math.PI * 2; a += Math.PI / 2) {
-                        double x = Math.cos(a) * radius;
-                        double z = Math.sin(a) * radius;
-                        Location playerLoc = target.getLocation().add(x, y, z);
-                        target.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, playerLoc, 1);
-                        target.getLocation().subtract(x, y, z);
-                        if (particleSpawnTimer >= 4) {
-                            Logger.debug("onTreeeCreate | Tree Spawned Particle 'ForLoop' removed");
-                            break TREEE_SPAWNED_PARTICLE;
-                        }
-                    }
-                }
-            }
-
         target.closeInventory();
 
         if (!hasTreeGenerated){
@@ -667,36 +645,62 @@ public class TreeeListPortalClickListener implements Listener {
             return;
         }
 
-        Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
-        Lang.send(target,Lang.TREEE_SPAWNED_PLAYERMSG.replace("{getSpawnedName}", clicked.getItemMeta().getDisplayName()));
+        /*
+         * INFO: Adds an extra particle effect when the tree is spawned
+         *
+         * TODO:
+         *   - Make apply to all selection, instead of applying it to all selections
+         */
+        TREEE_SPAWNED_PARTICLE:
+        for (int particleSpawnTimer = 0; particleSpawnTimer < 4 ; particleSpawnTimer++) {
+            for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                double radius = Math.sin(i);
+                double y = Math.cos(i);
+                for (double a = 0; a < Math.PI * 2; a += Math.PI / 2) {
+                    double x = Math.cos(a) * radius;
+                    double z = Math.sin(a) * radius;
+                    Location playerLoc = target.getLocation().add(x, y, z);
+                    target.getWorld().spawnParticle(Particle.FIREWORKS_SPARK, playerLoc, 1);
+                    target.getLocation().subtract(x, y, z);
+                    if (particleSpawnTimer >= 4) {
+                        Logger.debug("onTreeeCreate | Tree Spawned Particle 'ForLoop' removed");
+                        break TREEE_SPAWNED_PARTICLE;
+                    }
+                }
+            }
+        }
 
         /* NOTICE: Remove Treee Spawner Tool from inventory */
         target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
         /* NOTICE: Remove particle */
-        taskToCancel = Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+        if (hasTreeGenerated == true){
+            isRunning = false;
+        } else {
+            isRunning = true;
+        }
 
-            if (hasTreeGenerated == true){
-                isRunning = false;
-            } else {
-                isRunning = true;
-            }
+        if (!target.isOnline() || !isRunning){
+            Particles taskRunning = UrExtrasPortalClickListener.particlesHashMap.get(target.getUniqueId());
 
-            if (!target.isOnline() || !isRunning){
-                UrExtrasPortalClickListener.TreeSpawnerEffects task = UrExtrasPortalClickListener.treeeSpawnerEffects.get(target.getUniqueId());
-                if (task != null && !task.isCancelled()) {
-                    task.cancel();
-                }
-                Logger.debug("onTreeeCreate | Removed Treee Spawner Particle.");
-                isRunning = false;
-                // TODO: Add cooldown here
-                taskToCancel.cancel();
+            if (taskRunning != null && !taskRunning.isCancelled()) {
+                taskRunning.cancel();
             }
-        }, 0L, 20L);
+            Logger.debug("onTreeeCreate | Removed Treee Spawner Particle.");
+            isRunning = false;
+            // TODO: Add cooldown here
+            if (taskToCancel == null){
+                Logger.debug("onTreeeCreate | No particles were spawned for the tool, cancel removing particles");
+                return;
+            }
+            taskToCancel.cancel();
+        }
+
+        Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
+        Lang.send(target,Lang.TREEE_SPAWNED_PLAYERMSG.replace("{getSpawnedName}", clicked.getItemMeta().getDisplayName()));
 
         return; // INFO: This, Removes particle for any selection
     }
-
 
     /**
      * If player quits server with custom Treee Spawn Tool inside their
@@ -849,6 +853,7 @@ public class TreeeListPortalClickListener implements Listener {
 
     /**
      * Stops player from moving the Treee Spawner Tool around inside their inventory
+     *
      * @param inventoryClickEvent Cancel event when player tries to move Tool
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
@@ -887,5 +892,65 @@ public class TreeeListPortalClickListener implements Listener {
         return;
     }
 
+    /**
+     * Removes Tree spawner tool when player dies
+     *
+     * @param playerDeathEvent Remove tool on death
+     */
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onPlayerDeath(PlayerDeathEvent playerDeathEvent){
+        Iterator<ItemStack> iterator = playerDeathEvent.getDrops().iterator();
+        Player target = playerDeathEvent.getEntity();
 
+        while (iterator.hasNext()){
+            if (getCustomModelData(iterator.next()).equals((int) 069001F)){
+                Lang.send(target, Lang.colorize(Lang.ON_PLAYER_DEATH
+                        .replace("{getToolName}", target.getInventory().getItemInMainHand().getItemMeta().getDisplayName())));
+                iterator.remove();
+                Logger.debug("onPlayerDeath | Player died, removed treee spawner tool");
+            }
+        }
+
+        Particles taskRunning = UrExtrasPortalClickListener.particlesHashMap.get(target.getUniqueId());
+
+        if (taskRunning != null && !taskRunning.isCancelled()) {
+            taskRunning.cancel();
+        }
+        Logger.debug("onTreeeCreate | Removed Treee Spawner Particle.");
+
+        isRunning = false;
+
+        if (taskToCancel == null){
+            Logger.debug("onTreeeCreate | No particles were spawned for the tool, cancel removing particles");
+            return;
+        }
+        taskToCancel.cancel();
+
+        return;
+    }
+
+    /**
+     * Gets the ItemStack Custom Model Data
+     *
+     * @param itemStack Gets ItemStack
+     * @return ItemStack Custom Model Data
+     */
+    public Integer getCustomModelData(ItemStack itemStack){
+        Integer itemModelData = null;
+
+        if (itemStack.hasItemMeta()){
+            ItemMeta itemMeta = itemStack.getItemMeta();
+
+            if (itemMeta.hasCustomModelData()){
+                Integer itemCustomModelData = itemMeta.getCustomModelData();
+                itemModelData = itemCustomModelData;
+            }
+        }
+
+        if (itemModelData == null){
+            itemModelData = 0;
+        }
+
+        return itemModelData;
+    }
 }

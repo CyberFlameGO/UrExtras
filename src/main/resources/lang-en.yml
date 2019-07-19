@@ -5,6 +5,7 @@ command-no-permission: "&4You do not have permission for that command!"
 command-no-permission-portal: "&4You do not have permission to use the&c {getClicked}&4!"
 player-command: "&4This command is only available to players!"
 disabled: "&cThe {getDisabledNamed} &cis disabled."
+on-player-death: "&7Your &2{getToolName}&7 was removed since you died."
 
 ######
 #### UrExtras Portal Lang
@@ -33,7 +34,7 @@ set-treee-spawner-tool-info: "&7Spawn Any treee."
 #### Treee Spawner Tool Lang
 ######
 treee-list-inventory-title: "Treee List"
-cannot-spawn-treee-here: "&5=====================================================\n&7You cannot use the &4{getToolName} &7here.\n\n&7Please click on one of the following materials:\n  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6.\n&5=====================================================\n"
+cannot-spawn-treee-here: "\n\n&5=====================================================\n&7You cannot use the &4{getToolName} &7here.\n\n&7Please click on one of the following materials:\n  &ddirt&6, &dCoarse Dirt&6, &dGrass Block&6, &dPodzol&6.\n&5=====================================================\n\n"
 ##
 # Customize the Title of each spawnable tree in the 'Treee List' inventory.
 ##
