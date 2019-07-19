@@ -688,7 +688,6 @@ public class TreeeListPortalClickListener implements Listener {
             }
             Logger.debug("onTreeeCreate | Removed Treee Spawner Particle.");
             isRunning = false;
-            // TODO: Add cooldown here
             if (taskToCancel == null){
                 Logger.debug("onTreeeCreate | No particles were spawned for the tool, cancel removing particles");
                 return;
@@ -698,6 +697,8 @@ public class TreeeListPortalClickListener implements Listener {
 
         Logger.debug("onTreeeCreate | Target clicked and spawned a " + clicked.getItemMeta().getDisplayName() + ".");
         Lang.send(target,Lang.TREEE_SPAWNED_PLAYERMSG.replace("{getSpawnedName}", clicked.getItemMeta().getDisplayName()));
+
+        // TODO: Add cooldown here
 
         return; // INFO: This, Removes particle for any selection
     }
