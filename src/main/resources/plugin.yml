@@ -10,12 +10,14 @@ softdepend: []
 commands:
   urextras:
     description: Reload configs.
+    permission: command.urextras.reload
     usage: /<command> (reload)
     aliases:
       - ure
       - ue
   urextrasportal:
     description: Opens custom inventory with custom tool and weapons.
+    permission: command.urextras.portal
     usage: /<command>
     aliases:
       - uep
@@ -25,6 +27,7 @@ commands:
       - extrasportal
   tester:
     description: Testing command.
+    permission: command.urextras.tester
     usage: /<command> [time] (player)
     aliases:
       - test
