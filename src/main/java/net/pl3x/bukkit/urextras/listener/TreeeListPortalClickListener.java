@@ -865,6 +865,11 @@ public class TreeeListPortalClickListener implements Listener {
             return;
         }
 
+        if (inventoryClickEvent.getCurrentItem() == null){
+            Logger.debug("onPlayerInventoryClickWithToolInHand | Player did not click an item, cancel event");
+            return;
+        }
+
         ItemStack clickedItem = inventoryClickEvent.getCurrentItem();
 
         if (!clickedItem.hasItemMeta()){

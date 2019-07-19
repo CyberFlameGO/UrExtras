@@ -179,7 +179,6 @@ public class UrExtrasPortalClickListener implements Listener {
              *   - Add check for cooldown
              *   - Add cooldown
             */
-
             treeeSpawnerTask = new Particles(target);
             treeeSpawnerTask.runTaskTimer(plugin,0L,2L);
             particlesHashMap.put(target.getUniqueId(), treeeSpawnerTask);
