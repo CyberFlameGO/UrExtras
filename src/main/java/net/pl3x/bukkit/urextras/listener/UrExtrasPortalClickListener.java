@@ -10,9 +10,7 @@ import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
 import net.pl3x.bukkit.urextras.util.Particles;
-import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.Particle;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -21,7 +19,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.scheduler.BukkitRunnable;
 
 /*
  *
@@ -197,49 +194,6 @@ public class UrExtrasPortalClickListener implements Listener {
 
         target.closeInventory();
         return;
-    }
-
-    /**
-     * Create particle effect as a BukkitRunnable
-     */
-    public class TreeSpawnerEffects extends BukkitRunnable {
-        private final Player target;
-
-        /**
-         * Gets the player that enabled the particle
-         *
-         * @param player Player who enabled particle
-         */
-        public TreeSpawnerEffects(Player player) {
-            this.target = player;
-        }
-
-        /**
-         * Run particle effect
-         */
-        public void run() {
-            for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-                double radius = Math.sin(i);
-                double y = Math.cos(i);
-                for (double a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-                    double x = Math.cos(a) * radius;
-                    double z = Math.sin(a) * radius;
-                    Location playerLoc = target.getLocation().add(x, y, z);
-                    //target.spawnParticle(Particle.FIREWORKS_SPARK, playerLoc.add(0, 1, 0), 1); // TODO: Apply this to the tree bottom log when spawned
-                    //target.spawnParticle(Particle.NOTE, playerLoc.add(0, 1, 0), 1); // INFO: 'forloop' setting 4 applies circle around player
-                    //target.spawnParticle(Particle.DAMAGE_INDICATOR, playerLoc.add(0, 1, 0), 1); // INFO: Dark Red Hearts spitting up from feet
-                    //target.spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1); // INFO: Need to change 'forloop' back to 60  NOTICE: This one is the one
-                    target.getWorld().spawnParticle(Particle.PORTAL, playerLoc.add(0, 1, 0), 1);
-                    //target.spawnParticle(Particle.FLASH, playerLoc.add(0, 1, 0), 1); // INFO: To bright, cant see anything
-                    //target.spawnParticle(Particle.SPIT, playerLoc.add(0, 1, 0), 1); // INFO: Very Laggy!
-                    //target.spawnParticle(Particle.FLAME, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design
-                    //target.spawnParticle(Particle.BUBBLE_POP, playerLoc.add(0, 1, 0), 1); // INFO: Not a great effect for the sphere design
-                    //target.spawnParticle(Particle.DOLPHIN, playerLoc.add(0, 1, 0), 1); // INFO: Applies sphere effect around player ||| INFO: God mode protection sphere effect | Maybe?
-                    //target.spawnParticle(Particle.LAVA, playerLoc.add(0,1,0),1); // ERROR: Can only be applied once, still laggy towards end.
-                    target.getLocation().subtract(x, y, z);
-                }
-            }
-        }
     }
 }
 

@@ -8,7 +8,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 /**
- *
+ * Particles
+ * <p>
+ * Create particle effect as a BukkitRunnable
  */
 public class Particles extends BukkitRunnable {
     private final Player player;
@@ -16,8 +18,10 @@ public class Particles extends BukkitRunnable {
     private boolean cancel;
 
     /**
+     * Gets the player that enabled the particle and set the particle
+     * that is configured inside config file
      *
-     * @param player
+     * @param player Player who enabled particle
      */
     public Particles(Player player) {
         this.player = player;
@@ -34,40 +38,45 @@ public class Particles extends BukkitRunnable {
     }
 
     /**
+     * Get the Particle Type
      *
-     * @return
+     * @return Particle Type
      */
     public Particle getParticle(){
         return particle;
     }
 
     /**
+     * Set the Particle Type
      *
-     * @param particle
+     * @param particle Particle Type
      */
     public void setParticle(Particle particle){
         this.particle = particle;
     }
 
     /**
+     * Check if particle is cancelled
      *
-     * @return
+     * @return true if cancelled
      */
     public boolean isCancelled(){
         return cancel;
     }
 
     /**
+     * Set to cancel particle
      *
-     * @param cancel
+     * @param cancel set cancel
      */
     public void setCancel(boolean cancel){
         this.cancel = cancel;
     }
 
     /**
+     * Check for Particle Types that will crash the client
      *
-     * @return
+     * @return Particle Type
      */
     public boolean stopClientCrash(){
         switch (getParticle()){
@@ -81,7 +90,7 @@ public class Particles extends BukkitRunnable {
     }
 
     /**
-     *
+     * Make cancel true
      */
     @Override
     public void cancel() {
@@ -90,7 +99,7 @@ public class Particles extends BukkitRunnable {
     }
 
     /**
-     *
+     *Rune particle effect
      */
     @Override
     public void run() {
