@@ -207,7 +207,6 @@ public class CustomInventories implements Listener {
         private String inventoryName;
         private boolean inventoryClose;
         private boolean destroy;
-        //private ItemStack itemStack; // Maybe not needed
 
         /**
          * Event set
