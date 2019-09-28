@@ -3,12 +3,13 @@ package net.pl3x.bukkit.urextras.listener;
 import com.destroystokyo.paper.block.TargetBlockInfo;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
+import net.pl3x.bukkit.urextras.util.inventories.CustomInventories;
 import net.pl3x.bukkit.urextras.util.Particles;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
@@ -25,8 +26,6 @@ import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
@@ -44,6 +43,7 @@ public class TreeeListPortalClickListener implements Listener {
     private BukkitTask taskToCancel;
     private boolean isRunning;
     private boolean hasTreeGenerated;
+    private Player target;
 
     public TreeeListPortalClickListener(UrExtras plugin) {
         this.plugin = plugin;
@@ -65,34 +65,32 @@ public class TreeeListPortalClickListener implements Listener {
      */
     @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
     public void onTreeeBlockSlected(PlayerInteractEvent clickEvent){
-        /* NOTICE: Check for Diamond Axe */
+        // INFO: Check for Diamond Axe
         if (clickEvent.getPlayer().getInventory().getItemInMainHand().getType() != Material.DIAMOND_AXE){
             Logger.debug("onTreeeBlockSelect | No Diamond Axe is hand, clickEvent cancelled");
             return;
         }
 
-        /* NOTICE: Check for a identifier (Custom Model Data) */
+        // INFO: Check for a identifier (Custom Model Data)
         if (!clickEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta().hasCustomModelData()){
             Logger.debug("onTreeeBlockSelect | Item does not have custom model data, clickEvent cancelled");
             return;
         }
 
-        /* NOTICE: Get the Identified (Custom Model Data) */
+        // INFO: Get the Identified (Custom Model Data)
         Integer itemInHandCustomModelData = clickEvent.getPlayer().getInventory().getItemInMainHand().getItemMeta().getCustomModelData();
 
-        /* NOTICE: Check for correct Custom Model Data */
+        // INFO: Check for correct Custom Model Data
         if (!itemInHandCustomModelData.equals((int) 069001F)){
             Logger.debug("onTreeeBlockSelect | Item in hand does not equal to Tree Tool Custom Data");
             Logger.debug("onTreeeBlockSelect | Diamond Axe is has no lore which is in main hand, clickEvent cancelled");
             return;
         }
 
-        /*
-         * NOTICE: Cancel Player Interact Event
-         */
+        // INFO: Cancel Player Interact Event
         clickEvent.setCancelled(true);
 
-        Player target = clickEvent.getPlayer();
+        target = clickEvent.getPlayer();
         ItemStack itemInHand = target.getInventory().getItemInMainHand();
 
         if (!Config.TREEE_SPAWNER_TOOL_CLICK){
@@ -101,13 +99,13 @@ public class TreeeListPortalClickListener implements Listener {
             return;
         }
 
-        /* NOTICE: Check for null */
+        // INFO: Check for null
         if (clickEvent == null){
             Logger.debug("onTreeeBlockSelect | click event is null");
             return;
         }
 
-        /* NOTICE: Only spawn on blocks */
+        // INFO: Only spawn on blocks
         if (!clickEvent.getClickedBlock().getType().isBlock()){
             Logger.debug("onTreeeBlockSelect | clicked block is not a block");
             return;
@@ -119,11 +117,9 @@ public class TreeeListPortalClickListener implements Listener {
             Logger.debug("onTreeeBlockSelect | Clicked block is null");
             return;
         }
-        /* NOTICE: End of null check */
-
 
         /*
-        * NOTICE: Approve only certain blocks to spawn on
+        * INFO: Approve only certain blocks to spawn on
         *
         * TODO: Make clicked block configurable
         * */
@@ -138,326 +134,17 @@ public class TreeeListPortalClickListener implements Listener {
                 || clickedBlock.equals(Material.END_STONE) /* INFO: This check is for Chorus Plant */
             ){
 
-            /* NOTICE: Create Treee List Inventory */
-            Inventory treeListInventory = Bukkit.createInventory(null, InventoryType.BARREL, Lang.TREEE_LIST_INVENTORY_TITLE);
-
             /*
-             * NOTICE: Acacia Tree
+             * INFO: Acacia Tree
              *
              * TODO:
              *   - Make tree meta oop
              *   - Add permissions for each tree type
              *   - Make Lang variable for each tree type
              */
-            ItemStack treeOne = new ItemStack(Material.ACACIA_LOG, 1);
-            ItemMeta treeOneMeta = treeOne.getItemMeta();
-            treeOneMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_ACACIA ? Lang.TREEE_SPAWNED_ACACIA : Lang.TREEE_SPAWNED_ACACIANO));
-            treeOneMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeOneLore = new ArrayList<>();
-            if (Config.TREEE_LIST_ACACIA) {
-                if (Lang.TREEE_SPAWNED_LORE_ACACIA.contains(";")) {
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_ACACIA.split(";") ;
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
-                        treeOneLore.add(Lang.colorize(newLine[newLineLore]) );
-                    }
-                } else {
-                    treeOneLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
-                }
-            } else {
-                treeOneLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_ACACIANO)));
-            }
-            treeOneMeta.setLore(treeOneLore);
-            treeOne.setItemMeta(treeOneMeta);
-            treeListInventory.setItem(0, treeOne);
 
-            /*
-             * NOTICE: Birch Tree
-             */
-            ItemStack treeTwo = new ItemStack(Material.BIRCH_LOG, 1);
-            ItemMeta treeTwoMeta = treeTwo.getItemMeta();
-            treeTwoMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_BIRCH ? Lang.TREEE_SPAWNED_BIRCH : Lang.TREEE_SPAWNED_BIRCHNO));
-            treeTwoMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeTwoLore = new ArrayList<>();
-            if (Config.TREEE_LIST_BIRCH){
-                if (Lang.TREEE_SPAWNED_LORE_BIRCH.contains(";")) {
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_BIRCH.split(";") ;
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
-                        treeTwoLore.add(Lang.colorize(newLine[newLineLore]) );
-                    }
-                } else {
-                    treeTwoLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIRCH));
-                }
-            } else {
-                treeTwoLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_BIRCHNO)));
-            }
-            treeTwoMeta.setLore(treeTwoLore);
-            treeTwo.setItemMeta(treeTwoMeta);
-            treeListInventory.setItem(1, treeTwo);
-
-            /*
-             * NOTICE: RedWood Tree (Spruce Tree)
-             */
-            ItemStack treeThree = new ItemStack(Material.SPRUCE_LOG, 1);
-            ItemMeta treeThreeMeta = treeThree.getItemMeta();
-            treeThreeMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_SPRUCE ? Lang.TREEE_SPAWNED_SPRUCE : Lang.TREEE_SPAWNED_SPRUCENO));
-            treeThreeMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeThreeLore = new ArrayList<>();
-            if (Config.TREEE_LIST_SPRUCE){
-                if (Lang.TREEE_SPAWNED_LORE_SPRUCE.contains(";")) {
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_SPRUCE.split(";") ;
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
-                        treeThreeLore.add(Lang.colorize(newLine[newLineLore]) );
-                    }
-                } else {
-                    treeThreeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SPRUCE));
-                }
-            } else {
-                treeThreeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SPRUCENO)));
-            }
-            treeThreeMeta.setLore(treeThreeLore);
-            treeThree.setItemMeta(treeThreeMeta);
-            treeListInventory.setItem(2, treeThree);
-
-            /*
-             * NOTICE: Jungle Tree
-             */
-            ItemStack treeFour = new ItemStack(Material.JUNGLE_LOG, 1);
-            ItemMeta treeFourMeta = treeFour.getItemMeta();
-            treeFourMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_JUNGLE ? Lang.TREEE_SPAWNED_JUNGLE : Lang.TREEE_SPAWNED_JUNGLENO));
-            treeFourMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeFourLore = new ArrayList<>();
-            if (Config.TREEE_LIST_JUNGLE){
-                if (Lang.TREEE_SPAWNED_LORE_JUNGLE.contains(";")) {
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE.split(";") ;
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
-                        treeFourLore.add(Lang.colorize(newLine[newLineLore]) );
-                    }
-                } else {
-                    treeFourLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE));
-                }
-            } else {
-                treeFourLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLENO)));
-            }
-            treeFourMeta.setLore(treeFourLore);
-            treeFour.setItemMeta(treeFourMeta);
-            treeListInventory.setItem(3, treeFour);
-
-            /*
-             * NOTICE: Oak Tree
-             */
-            ItemStack treeFive = new ItemStack(Material.OAK_LOG);
-            ItemMeta treeFiveMeta = treeFive.getItemMeta();
-            treeFiveMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_OAK ? Lang.TREEE_SPAWNED_OAK : Lang.TREEE_SPAWNED_OAKNO));
-            treeFiveMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeFiveLore = new ArrayList<>();
-            if (Config.TREEE_LIST_OAK){
-                if (Lang.TREEE_SPAWNED_LORE_OAK.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_OAK.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeFiveLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeFiveLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_OAK));
-                }
-            } else {
-                treeFiveLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_OAKNO)));
-            }
-            treeFiveMeta.setLore(treeFiveLore);
-            treeFive.setItemMeta(treeFiveMeta);
-            treeListInventory.setItem(4, treeFive);
-
-            /*
-             * NOTICE: Dark Oak Tree
-             */
-            ItemStack treeSix = new ItemStack(Material.DARK_OAK_LOG, 1);
-            ItemMeta treeSixMeta = treeSix.getItemMeta();
-            treeSixMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_DARK_OAK ? Lang.TREEE_SPAWNED_DARK_OAK : Lang.TREEE_SPAWNED_DARK_OAKNO));
-            treeSixMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeSixLore = new ArrayList<>();
-            if (Config.TREEE_LIST_DARK_OAK){
-                if (Lang.TREEE_SPAWNED_LORE_DARK_OAK.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_DARK_OAK.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeSixLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeSixLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_DARK_OAK));
-                }
-            } else {
-                treeSixLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_DARK_OAKNO)));
-            }
-            treeSixMeta.setLore(treeSixLore);
-            treeSix.setItemMeta(treeSixMeta);
-            treeListInventory.setItem(5, treeSix);
-
-            /*
-             * NOTICE: Jungle Small Tree
-             */
-            ItemStack treeSeven = new ItemStack(Material.STRIPPED_JUNGLE_LOG, 1);
-            ItemMeta treeSevenMeta = treeSeven.getItemMeta();
-            treeSevenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_JUNGLE_SMALL ? Lang.TREEE_SPAWNED_JUNGLE_SMALL : Lang.TREEE_SPAWNED_JUNGLE_SMALLNO));
-            treeSevenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeSevenLore = new ArrayList<>();
-            if (Config.TREEE_LIST_JUNGLE_SMALL){
-                if (Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeSevenLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeSevenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL));
-                }
-            } else {
-                treeSevenLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLE_SMALLNO)));
-            }
-            treeSevenMeta.setLore(treeSevenLore);
-            treeSeven.setItemMeta(treeSevenMeta);
-            treeListInventory.setItem(6, treeSeven);
-
-            /*
-             * NOTICE: Birch Tall Tree
-             */
-            ItemStack treeEight = new ItemStack(Material.STRIPPED_BIRCH_LOG);
-            ItemMeta treeEightMeta = treeEight.getItemMeta();
-            treeEightMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_BIRCH_TALL ? Lang.TREEE_SPAWNED_BIRCH_TALL : Lang.TREEE_SPAWNED_BIRCH_TALLNO));
-            treeEightMeta.addItemFlags(ItemFlag.HIDE_DESTROYS);
-            ArrayList<String> treeEightLore = new ArrayList<>();
-            if (Config.TREEE_LIST_BIRCH_TALL){
-                if (Lang.TREEE_SPAWNED_LORE_BIRCH_TALL.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_BIRCH_TALL.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeEightLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeEightLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIRCH_TALL));
-                }
-            } else {
-                treeEightLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIRCH_TALLNO)));
-            }
-            treeEightMeta.setLore(treeEightLore);
-            treeEight.setItemMeta(treeEightMeta);
-            treeListInventory.setItem(7, treeEight);
-
-            /*
-             * NOTICE: Cocoa Tree
-             */
-            ItemStack treeNine = new ItemStack(Material.JUNGLE_WOOD, 1);
-            ItemMeta treeNineMeta = treeNine.getItemMeta();
-            treeNineMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_COCOA ? Lang.TREEE_SPAWNED_COCOA : Lang.TREEE_SPAWNED_COCOANO));
-            treeNineMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeNineLore = new ArrayList<>();
-            if (Config.TREEE_LIST_COCOA){
-                if (Lang.TREEE_SPAWNED_LORE_COCOA.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_COCOA.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeNineLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeNineLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_COCOA));
-                }
-            } else {
-                treeNineLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_COCOANO)));
-            }
-            treeNineMeta.setLore(treeNineLore);
-            treeNine.setItemMeta(treeNineMeta);
-            treeListInventory.setItem(8, treeNine);
-
-
-            /*
-             * NOTICE: Chorus Plant
-             */
-            ItemStack treeTen = new ItemStack(Material.CHORUS_FLOWER, 1);
-            ItemMeta treeTenMeta = treeTen.getItemMeta();
-            treeTenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_CHORUS_PLANT ? Lang.TREEE_SPAWNED_CHORUS_PLANT : Lang.TREEE_SPAWNED_CHORUS_PLANTNO));
-            treeTenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeTenLore = new ArrayList<>();
-            if (Config.TREEE_LIST_CHORUS_PLANT){
-                if (Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT.split(";");
-                    for (int newlineLore = 0; newlineLore < newLine.length; ++newlineLore){
-                        treeTenLore.add(Lang.colorize(newLine[newlineLore]));
-                    }
-                } else {
-                    treeTenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT));
-                }
-            } else {
-                treeTenLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_CHORUS_PLANTNO)));
-            }
-            treeTenMeta.setLore(treeTenLore);
-            treeTen.setItemMeta(treeTenMeta);
-            treeListInventory.setItem(9, treeTen);
-
-            /*
-             * NOTICE: Swamp Tree
-             */
-            ItemStack treeEleven = new ItemStack(Material.VINE);
-            ItemMeta treeElevenMeta = treeEleven.getItemMeta();
-            treeElevenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_SWAMP ? Lang.TREEE_SPAWNED_SWAMP : Lang.TREEE_SPAWNED_SWAMPNO));
-            treeElevenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeElevenLore = new ArrayList<>();
-            if (Config.TREEE_LIST_SWAMP){
-                if (Lang.TREEE_SPAWNED_LORE_SWAMP.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_SWAMP.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeElevenLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeElevenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SWAMP));
-                }
-            } else {
-                treeElevenLore.add(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SWAMPNO));
-            }
-            treeElevenMeta.setLore(treeElevenLore);
-            treeEleven.setItemMeta(treeElevenMeta);
-            treeListInventory.setItem(10, treeEleven);
-
-            /*
-             * NOTICE: Big Oak Tree (Regular Tree, extra tall with branches)
-             */
-            ItemStack treeTwelve = new ItemStack(Material.STRIPPED_OAK_LOG, 1);
-            ItemMeta treeTwelveMeta = treeTwelve.getItemMeta();
-            treeTwelveMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_BIG_OAK ? Lang.TREEE_SPAWNED_BIG_OAK : Lang.TREEE_SPAWNED_BIG_OAKNO));
-            treeTwelveMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeTwelveLore = new ArrayList<>();
-            if (Config.TREEE_LIST_BIG_OAK){
-                if (Lang.TREEE_SPAWNED_LORE_BIG_OAK.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_BIG_OAK.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeTwelveLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeTwelveLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIG_OAK));
-                }
-            } else {
-                treeTwelveLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIG_OAKNO)));
-            }
-            treeTwelveMeta.setLore(treeTwelveLore);
-            treeTwelve.setItemMeta(treeTwelveMeta);
-            treeListInventory.setItem(11, treeTwelve);
-
-            /*
-             * NOTICE: Jungle Bush
-             */
-            ItemStack treeThirteen = new ItemStack(Material.TALL_GRASS, 1);
-            ItemMeta treeThirteenMeta = treeThirteen.getItemMeta();
-            treeThirteenMeta.setDisplayName(Lang.colorize(Config.TREEE_LIST_JUNGLE_BUSH ? Lang.TREEE_SPAWNED_JUNGLE_BUSH : Lang.TREEE_SPAWNED_JUNGLE_BUSHNO));
-            treeThirteenMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-            ArrayList<String> treeThirteenLore = new ArrayList<>();
-            if (Config.TREEE_LIST_JUNGLE_BUSH){
-                if (Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH.contains(";")){
-                    String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH.split(";");
-                    for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore){
-                        treeThirteenLore.add(Lang.colorize(newLine[newLineLore]));
-                    }
-                } else {
-                    treeThirteenLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH));
-                }
-            } else {
-                treeThirteenLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}",Lang.TREEE_SPAWNED_JUNGLE_BUSHNO)));
-            }
-            treeThirteenMeta.setLore(treeThirteenLore);
-            treeThirteen.setItemMeta(treeThirteenMeta);
-            treeListInventory.setItem(12, treeThirteen);
+            String[] treeTypeList = {"Acacia", "Birch", "RedWoodSpruce", "Jungle", "Oak", "DarkOak", "JungleSmall", "BirchTall", "CoCoa", "ChorusPlant", "Swamp", "BigOak", "JungleBush"};
+            setTreeType(treeTypeList, target);
 
             /* TODO: Add next tree
              *  - Tall Redwood: Just a few leaves at the top
@@ -468,13 +155,282 @@ public class TreeeListPortalClickListener implements Listener {
 
             Logger.debug("onTreeeBlockSelect | " + target.getDisplayName() + " clicked a applicable block with a " + itemInHand.getItemMeta().getDisplayName());
 
-            target.openInventory(treeListInventory);
+            //target.openInventory(treeListInventory);
             return;
         }
 
         Logger.debug("onTreeeBlockSelect | clickEvent was cancelled, you cannot spawn a tree there");
         Lang.send(target, Lang.colorize(Lang.CANNOT_SPAWN_TREEE_HERE.replace("{getToolName}", target.getInventory().getItemInMainHand().getItemMeta().getDisplayName() )) );
         return;
+    }
+
+    private void setTreeType(String[] treeTypeName, Player player){
+        ItemStack treeType;
+        String treeTypeTitle;
+        List<String> treeTypeLore;
+        int invSlot;
+
+
+        // INFO: Create Treee List Inventory
+        CustomInventories treeListInventory = new CustomInventories(Lang.TREEE_LIST_INVENTORY_TITLE, 18, event -> {
+            // NOTICE: Do nothing
+        }, plugin);
+
+
+            for (String gettingTreeType : treeTypeName) {
+                switch (gettingTreeType) {
+                    case "Acacia":
+                        invSlot = 0;
+                        treeType = new ItemStack(Material.ACACIA_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_ACACIA ? Lang.TREEE_SPAWNED_ACACIA : Lang.TREEE_SPAWNED_ACACIANO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_ACACIA) {
+                            if (Lang.TREEE_SPAWNED_LORE_ACACIA.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_ACACIA.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_ACACIA));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_ACACIANO)));
+                        }
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "Birch":
+                        invSlot = 1;
+                        treeType = new ItemStack(Material.BIRCH_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_BIRCH ? Lang.TREEE_SPAWNED_BIRCH : Lang.TREEE_SPAWNED_BIRCHNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_BIRCH) {
+                            if (Lang.TREEE_SPAWNED_LORE_BIRCH.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_BIRCH.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIRCH));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIRCHNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "RedWoodSpruce":
+                        invSlot = 2;
+                        treeType = new ItemStack(Material.SPRUCE_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_SPRUCE ? Lang.TREEE_SPAWNED_SPRUCE : Lang.TREEE_SPAWNED_SPRUCENO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_SPRUCE) {
+                            if (Lang.TREEE_SPAWNED_LORE_SPRUCE.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_SPRUCE.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SPRUCE));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SPRUCENO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "Jungle":
+                        invSlot = 3;
+                        treeType = new ItemStack(Material.JUNGLE_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_JUNGLE ? Lang.TREEE_SPAWNED_JUNGLE : Lang.TREEE_SPAWNED_JUNGLENO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_JUNGLE) {
+                            if (Lang.TREEE_SPAWNED_LORE_JUNGLE.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLENO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "Oak":
+                        invSlot = 4;
+                        treeType = new ItemStack(Material.OAK_LOG);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_OAK ? Lang.TREEE_SPAWNED_OAK : Lang.TREEE_SPAWNED_OAKNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_OAK) {
+                            if (Lang.TREEE_SPAWNED_LORE_OAK.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_OAK.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_OAK));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_OAKNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "DarkOak":
+                        invSlot = 5;
+                        treeType = new ItemStack(Material.DARK_OAK_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_DARK_OAK ? Lang.TREEE_SPAWNED_DARK_OAK : Lang.TREEE_SPAWNED_DARK_OAKNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_DARK_OAK) {
+                            if (Lang.TREEE_SPAWNED_LORE_DARK_OAK.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_DARK_OAK.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_DARK_OAK));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_DARK_OAKNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "JungleSmall":
+                        invSlot = 6;
+                        treeType = new ItemStack(Material.STRIPPED_JUNGLE_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_JUNGLE_SMALL ? Lang.TREEE_SPAWNED_JUNGLE_SMALL : Lang.TREEE_SPAWNED_JUNGLE_SMALLNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_JUNGLE_SMALL) {
+                            if (Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE_SMALL));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLE_SMALLNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "BirchTall":
+                        invSlot = 7;
+                        treeType = new ItemStack(Material.STRIPPED_BIRCH_LOG);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_BIRCH_TALL ? Lang.TREEE_SPAWNED_BIRCH_TALL : Lang.TREEE_SPAWNED_BIRCH_TALLNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_BIRCH_TALL) {
+                            if (Lang.TREEE_SPAWNED_LORE_BIRCH_TALL.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_BIRCH_TALL.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIRCH_TALL));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIRCH_TALLNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "CoCoa":
+                        invSlot = 8;
+                        treeType = new ItemStack(Material.JUNGLE_WOOD, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_COCOA ? Lang.TREEE_SPAWNED_COCOA : Lang.TREEE_SPAWNED_COCOANO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_COCOA) {
+                            if (Lang.TREEE_SPAWNED_LORE_COCOA.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_COCOA.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_COCOA));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_COCOANO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "ChorusPlant":
+                        invSlot = 9;
+                        treeType = new ItemStack(Material.CHORUS_FLOWER, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_CHORUS_PLANT ? Lang.TREEE_SPAWNED_CHORUS_PLANT : Lang.TREEE_SPAWNED_CHORUS_PLANTNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_CHORUS_PLANT) {
+                            if (Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT.split(";");
+                                for (int newlineLore = 0; newlineLore < newLine.length; ++newlineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newlineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_CHORUS_PLANT));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_CHORUS_PLANTNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "Swamp":
+                        invSlot = 10;
+                        treeType = new ItemStack(Material.VINE);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_SWAMP ? Lang.TREEE_SPAWNED_SWAMP : Lang.TREEE_SPAWNED_SWAMPNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_SWAMP) {
+                            if (Lang.TREEE_SPAWNED_LORE_SWAMP.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_SWAMP.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_SWAMP));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_SWAMPNO));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "BigOak":
+                        invSlot = 11;
+                        treeType = new ItemStack(Material.STRIPPED_OAK_LOG, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_BIG_OAK ? Lang.TREEE_SPAWNED_BIG_OAK : Lang.TREEE_SPAWNED_BIG_OAKNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_BIG_OAK) {
+                            if (Lang.TREEE_SPAWNED_LORE_BIG_OAK.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_BIG_OAK.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_BIG_OAK));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_BIG_OAKNO)));
+                        }
+                        //break;
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                    case "JungleBush":
+                        invSlot = 12;
+                        treeType = new ItemStack(Material.TALL_GRASS, 1);
+                        treeTypeTitle = Lang.colorize(Config.TREEE_LIST_JUNGLE_BUSH ? Lang.TREEE_SPAWNED_JUNGLE_BUSH : Lang.TREEE_SPAWNED_JUNGLE_BUSHNO);
+                        treeTypeLore = new ArrayList<>();
+                        if (Config.TREEE_LIST_JUNGLE_BUSH) {
+                            if (Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH.contains(";")) {
+                                String[] newLine = Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH.split(";");
+                                for (int newLineLore = 0; newLineLore < newLine.length; ++newLineLore) {
+                                    treeTypeLore.add(Lang.colorize(newLine[newLineLore]));
+                                }
+                            } else {
+                                treeTypeLore.add(Lang.colorize(Lang.TREEE_SPAWNED_LORE_JUNGLE_BUSH));
+                            }
+                        } else {
+                            treeTypeLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.TREEE_SPAWNED_JUNGLE_BUSHNO)));
+                        }
+                        treeListInventory.setToolOrWeapon(invSlot, treeType, treeTypeTitle, treeTypeLore);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            treeListInventory.openInventory(player);
     }
 
     /**

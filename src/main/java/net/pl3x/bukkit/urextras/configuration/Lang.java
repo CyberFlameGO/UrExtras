@@ -130,7 +130,8 @@ public class Lang {
         TREEE_SPAWNED_JUNGLE = getString("treee-spawned.jungle","&aJungle Treee");
         TREEE_SPAWNED_JUNGLENO = getString("treee-spawned.jungleNo","&4Jungle Treee");
         TREEE_SPAWNED_OAK = getString("treee-spawned.oak","&aOak Treee");
-        TREEE_SPAWNED_OAKNO = getString("treee-spawned.oakNo","&4Oak Treee");
+        TREEE_SPAWNED_OAKNO = getString("treee-spawn" +
+                "ed.oakNo","&4Oak Treee");
         TREEE_SPAWNED_DARK_OAK = getString("treee-spawned.dark-oak","&aDark Oak Treee");
         TREEE_SPAWNED_DARK_OAKNO = getString("treee-spawned.dark-oakNo","&4Dark Oak Treee");
         TREEE_SPAWNED_JUNGLE_SMALL = getString("treee-spawned.jungleSmall","&aJungle Small Treee");
@@ -144,9 +145,9 @@ public class Lang {
         TREEE_SPAWNED_SWAMP = getString("treee-spawned.swamp","&aSwamp Treee");
         TREEE_SPAWNED_SWAMPNO = getString("treee-spawned.swampNo","&4Swamp Treee");
         TREEE_SPAWNED_BIG_OAK = getString("treee-spawned.bigOak","&aBig Oak Treee");
-        TREEE_SPAWNED_BIG_OAKNO = getString("treee-spawned.bigOak","&4Big Oak Treee");
+        TREEE_SPAWNED_BIG_OAKNO = getString("treee-spawned.bigOakNo","&4Big Oak Treee");
         TREEE_SPAWNED_JUNGLE_BUSH = getString("treee-spawned.jungleBush","&aJungle Bush");
-        TREEE_SPAWNED_JUNGLE_BUSHNO = getString("treee-spawned.jungleBush","&4Jungle Bush");
+        TREEE_SPAWNED_JUNGLE_BUSHNO = getString("treee-spawned.jungleBushNo","&4Jungle Bush");
 
         TREEE_SPAWNED_LORE_ACACIA = getString("treee-spawned-lore.acacia","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_BIRCH = getString("treee-spawned-lore.birch", "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
@@ -249,13 +250,13 @@ public class Lang {
      * @return Colorized String
      */
     public static String colorize(String str) {
-        if (str == null) {
-            return "";
-        }
-        str = ChatColor.translateAlternateColorCodes('&', str);
-        if (ChatColor.stripColor(str).isEmpty()) {
-            return "";
-        }
+            if (str == null) {
+                return "";
+            }
+            str = ChatColor.translateAlternateColorCodes('&', str);
+            if (ChatColor.stripColor(str).isEmpty()) {
+                return "";
+            }
         return str;
     }
 }
