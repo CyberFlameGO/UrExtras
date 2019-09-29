@@ -1,4 +1,4 @@
-package net.pl3x.bukkit.urextras.util.inventories;
+package net.pl3x.bukkit.urextras.util;
 
 import java.util.List;
 import net.pl3x.bukkit.urextras.Logger;

@@ -8,7 +8,7 @@ import net.pl3x.bukkit.urextras.configuration.Lang;
 import net.pl3x.bukkit.urextras.Logger;
 import net.pl3x.bukkit.urextras.UrExtras;
 import net.pl3x.bukkit.urextras.configuration.Config;
-import net.pl3x.bukkit.urextras.util.inventories.CustomInventories;
+import net.pl3x.bukkit.urextras.util.CustomInventories;
 import net.pl3x.bukkit.urextras.util.Particles;
 import org.bukkit.Location;
 import org.bukkit.Material;
