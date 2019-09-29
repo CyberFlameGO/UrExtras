@@ -7,6 +7,7 @@ import net.pl3x.bukkit.urextras.listener.UrExtrasPortalClickListener;
 import net.pl3x.bukkit.urextras.command.CmdTester;
 import net.pl3x.bukkit.urextras.command.CmdReload;
 import net.pl3x.bukkit.urextras.configuration.Config;
+import net.pl3x.bukkit.urextras.util.Metrics;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -39,8 +40,8 @@ public class UrExtras extends JavaPlugin {
         getCommand("urextrasportal").setExecutor(new CmdUrExtrasPortal(this));
         getCommand("tester").setExecutor(new CmdTester(this));
 
-        //Metrics metrics = new Metrics(this);
-        //metrics.addCustomChart(new Metrics.SimplePie("simple_pie_chart", () -> "Simple Pie Chart"));
+        Metrics metrics = new Metrics(this);
+        metrics.addCustomChart(new Metrics.SimplePie("simple_pie_chart", () -> "Simple Pie Chart"));
         Logger.info(getName() + " v" + UrExtras.getInstance().getDescription().getVersion() + " enabled!");
     }
 
