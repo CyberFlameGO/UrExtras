@@ -167,8 +167,8 @@ public class CmdTester implements TabExecutor {
                             double x = Math.cos(a) * radius;
                             double z = Math.sin(a) * radius;
                             Location playerLoc = target.getLocation().add(x, y, z);
-                            //target.spawnParticle(Particle.DOLPHIN, playerLoc.add(0,1,0),1); // cool bool effect
-                            target.spawnParticle(Particle.LAVA, playerLoc.add(0,1,0),1); //
+                            target.spawnParticle(Particle.DOLPHIN, playerLoc.add(0,1,0),1); // cool bool effect
+                            //target.spawnParticle(Particle.LAVA, playerLoc.add(0,1,0),1); //
                             target.getLocation().subtract(x, y, z);
                         }
                     }

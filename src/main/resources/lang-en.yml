@@ -26,6 +26,9 @@ tool-move-attempt: "&cYou cannot move the &r(getToolName}&c."
 no-treee-spawner-tool: "&4Treee Spawner Tool"
 treee-spawner-tool: "&2Treee Spawner Tool"
 set-treee-spawner-tool-info: "&7Spawn Any treee."
+
+force-field-weapon: "&2Force Field Weapon"
+no-force-field-weapon: "&4Force Field Weapon"
 ##
 #### More Tools & Weapons Coming Soon! ####
 ##
@@ -83,3 +86,14 @@ treee-spawned-lore:
   swamp: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   bigOak: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
   JungleBush: "&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed."
+
+force-field-extra-inventory-title: "Force Field Extras"
+force-field-extra-selected:
+  standard: "&aForce Field standard"
+  standardNo: "&4Force Field standard"
+  knockback: "&aForce Field Knockback"
+  knockbackNo: "&4Force Field Knockback"
+
+force-field-extra-lore:
+  standard: "&7Click here to spawn;&7a force field that;&7will protect you from;&7attacks."
+  knockback: "&7Click here to spawn;&7a force field that;will knock back any;&7entities within radius."

@@ -32,7 +32,9 @@ public class Config {
     public static String LANGUAGE_FILE;
 
     public static int GLOBAL_COOLDOWN;
-    public static String PARTICLE_TYPE;
+    public static String PARTICLE_TYPE_TREEE_SPAWNER_TOOL;
+    public static String PARTICLE_TYPE_FORCE_FIELD_STANDARD;
+    public static String PARTICLE_TYPE_FORCE_FIELD_KNOCKBACK;
 
     public static boolean TREEE_SPAWNER_TOOL_CLICK;
     public static boolean TREEE_LIST_ACACIA;
@@ -49,6 +51,11 @@ public class Config {
     public static boolean TREEE_LIST_BIG_OAK;
     public static boolean TREEE_LIST_JUNGLE_BUSH;
 
+    public static boolean FORCE_FIELD_WEAPON_CLICK;
+    public static int FORCE_FIELD_WEAPON_TIMER;
+    public static boolean FORCE_FIELD_EXTRA_LIST_STANDARD;
+    public static boolean FORCE_FIELD_EXTRA_LIST_KNOCKBACK;
+
     /**
      * Apply configuration options
      */
@@ -59,7 +66,9 @@ public class Config {
         LANGUAGE_FILE = getString("language-file", "lang-en.yml");
 
         GLOBAL_COOLDOWN = getInt("cooldown.global", 300);
-        PARTICLE_TYPE = getString("particle-type","PORTAL");
+        PARTICLE_TYPE_TREEE_SPAWNER_TOOL = getString("particle-type.treee-spawner-tool","PORTAL");
+        PARTICLE_TYPE_FORCE_FIELD_STANDARD = getString("particle-type.force-field.standard","DOLPHIN");
+        PARTICLE_TYPE_FORCE_FIELD_KNOCKBACK = getString("particle-type.force-field.knockback","DOLPHIN");
 
         TREEE_SPAWNER_TOOL_CLICK = getBoolean("treee-spawner-tool-click", true);
         TREEE_LIST_ACACIA = getBoolean("treee-list.acacia",true);
@@ -75,6 +84,11 @@ public class Config {
         TREEE_LIST_SWAMP = getBoolean("treee-list.swamp",true);
         TREEE_LIST_BIG_OAK = getBoolean("treee-list.bigOak",true);
         TREEE_LIST_JUNGLE_BUSH = getBoolean("treee-list.jungleBush",true);
+
+        FORCE_FIELD_WEAPON_CLICK = getBoolean("force-field-weapon.click", true);
+        FORCE_FIELD_WEAPON_TIMER = getInt("force-field-weapon.timer", 5);
+        FORCE_FIELD_EXTRA_LIST_STANDARD = getBoolean("force-field-extra-list.standard", true);
+        FORCE_FIELD_EXTRA_LIST_KNOCKBACK = getBoolean("force-field-extra-list.knockback", true);
     }
 
 

@@ -26,12 +26,12 @@ public class CustomInventories implements Listener {
     private ItemStack[] itemStacks;
 
     /**
-     * create custom inventory
+     * Creates a custom inventory
      *
-     * @param inventoryName Set inventory name
-     * @param inventorySlots set inventory slot amount
-     * @param handler Custom inventory event
-     * @param plugin Register listener
+     * @param inventoryName Set custom inventory name
+     * @param inventorySlots set custom inventory slot amount
+     * @param handler The custom inventory event handler
+     * @param plugin Register events for custom event handler
      */
     public CustomInventories (String inventoryName, int inventorySlots, OptionClickEventHandler handler, Plugin plugin){
         this.inventoryName = inventoryName;
@@ -44,13 +44,13 @@ public class CustomInventories implements Listener {
     }
 
     /**
-     * Set the tool/weapon inside custom inventory
+     * Set the itemstack inside a custom inventory
      *
-     * @param itemStackSlot Set slot position
-     * @param itemStack Set item
-     * @param itemStackNames Set item name
-     * @param itemStackLore Set item lore
-     * @return Item with custom data
+     * @param itemStackSlot Set itemstack slot position
+     * @param itemStack Set itemstack
+     * @param itemStackNames Set itemstack custom name
+     * @param itemStackLore Set itemstack custom lore
+     * @return Custom itemstack with given metadata
      */
     public CustomInventories setToolOrWeapon(int itemStackSlot, ItemStack itemStack, String itemStackNames, List<String> itemStackLore){
         itemStackName[itemStackSlot] = itemStackNames;
@@ -70,7 +70,7 @@ public class CustomInventories implements Listener {
     /**
      * Check if the player is specific
      *
-     * @return Specific player
+     * @return True if player is not null
      */
     public boolean isPlayer(){
         return player != null;
@@ -83,7 +83,7 @@ public class CustomInventories implements Listener {
      * @param itemName Set the item name
      * @param itemLore Set the item lore
      *
-     * @return all data from item
+     * @return The inputted metadata and applies it to the itemstack
      */
     public ItemStack setItem(ItemStack itemStack, String itemName, List<String> itemLore){
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -101,7 +101,7 @@ public class CustomInventories implements Listener {
      * @param itemName Set the item name
      * @param modelData set a custom Model Data
      * @param itemLore Set the item lore
-     * @return all data from item
+     * @return All of the metadata from the given itemstack
      */
     public ItemStack createItem(ItemStack itemStack, String itemName, int modelData, List<String> itemLore){
         ItemStack itemStackCreated = itemStack;
@@ -118,7 +118,7 @@ public class CustomInventories implements Listener {
      * Gets custom inventory
      *
      * @param player Gets player looking at custom inventory
-     * @return Get custom inventory
+     * @return The Custom Inventory
      */
     private Inventory getInventory(Player player){
         Inventory inventory = Bukkit.createInventory(player, inventorySlots, inventoryName);
@@ -146,10 +146,10 @@ public class CustomInventories implements Listener {
     }
 
     /**
-     * Closes the custom inventory player is looking at
+     * Closeds the custom inventory player is looking at
      *
      * @param player Gets player looking at custom inventory
-     * @return close custom inventory
+     * @return Custom Inventory getting closed
      */
     public CustomInventories close(Player player){
         if (player.getOpenInventory().getTitle().equals(inventoryName)){
@@ -158,7 +158,7 @@ public class CustomInventories implements Listener {
         return this;
     }
 
-    public void destroy(){
+    public void close(){
         HandlerList.unregisterAll(this);
         handler = null;
         plugin = null;
@@ -166,6 +166,11 @@ public class CustomInventories implements Listener {
         itemStacks = null;
     }
 
+    /**
+     * Checks for custom inventory and click events
+     *
+     * @param inventoryClickEvent Inventory Click event
+     */
     @EventHandler(priority = EventPriority.MONITOR)
     void onInventoryClick(InventoryClickEvent inventoryClickEvent){
         if (inventoryClickEvent.getInventory().getType().name().equals(inventoryName)){
@@ -180,12 +185,12 @@ public class CustomInventories implements Listener {
                 OptionClickEvent event = new OptionClickEvent( (Player) inventoryClickEvent.getWhoClicked(), invSlot, itemStackName[invSlot]);
                 handler.onOptionClick(event);
                 ((Player) inventoryClickEvent.getWhoClicked()).updateInventory();
-                if (event.isInventoryClose()){
+                if (event.isInventoryClosed()){
                     final Player player = (Player) inventoryClickEvent.getWhoClicked();
                     Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> player.closeInventory());
                 }
-                if (event.isDestroy()){
-                    destroy();
+                if (event.isInventoryClosed()){
+                    close();
                 }
             }
         }
@@ -193,20 +198,22 @@ public class CustomInventories implements Listener {
 
     /**
      * Custom Event Handler Interface
+     * <p>
+     * Checks for click events inside an custom inventory
      */
     public interface OptionClickEventHandler{
         public void onOptionClick(OptionClickEvent event);
     }
 
     /**
-     * Custom Event
+     * Custom Click Event
      */
     public class OptionClickEvent {
         private Player player;
         private int inventorySlot;
         private String inventoryName;
-        private boolean inventoryClose;
-        private boolean destroy;
+        private boolean inventoryClosed;
+        //private boolean close;
 
         /**
          * Event set
@@ -220,15 +227,15 @@ public class CustomInventories implements Listener {
             this.player = player;
             this.inventorySlot = inventorySlot;
             this.inventoryName = inventoryName;
-            this.inventoryClose = true;
-            this.destroy = false;
+            this.inventoryClosed = true;
+            //this.close = false;
             //this.itemStack = itemStack;
         }
 
         /**
          * Get Player
          *
-         * @return Player
+         * @return The player
          */
         public Player getPlayer(){
             return player;
@@ -237,7 +244,7 @@ public class CustomInventories implements Listener {
         /**
          * get Inventory Slot
          *
-         * @return Inventory Slot
+         * @return Inventory Slot Number
          */
         public int getInventorySlot(){
             return inventorySlot;
@@ -246,7 +253,7 @@ public class CustomInventories implements Listener {
         /**
          * Get Inventory Name
          *
-         * @return Inventory Name
+         * @return Custom Inventory Name
          */
         public String getInventoryName(){
             return inventoryName;
@@ -265,38 +272,38 @@ public class CustomInventories implements Listener {
         /**
          * Check if Inventory is Closed
          *
-         * @return Inventory Closed
+         * @return True if the inventory is closed
          */
-        public boolean isInventoryClose(){
-            return inventoryClose;
+        public boolean isInventoryClosed(){
+            return inventoryClosed;
         }
 
-        /**
-         * Check if Destroyed
-         *
-         * @return Destroyed
-         */
-        public boolean isDestroy(){
-            return destroy;
-        }
+        ///**
+        // * Check if custom inventory was closed
+        // *
+        // * @return Inventory was closed
+        // */
+        //public boolean isClosed(){
+        //    return close;
+        //}
 
         /**
-         * Set Inventory Close. This will exit out of the custom inventory the player is looking at.
+         * Set Inventory Closed. This will exit out of the custom inventory the player is looking at.
          *
-         * @param inventoryClose Set Inventory Close
+         * @param inventoryClosed Set Inventory Closed
          */
-        public void setInventoryClose(boolean inventoryClose){
-            this.inventoryClose = inventoryClose;
+        public void setInventoryClosed(boolean inventoryClosed){
+            this.inventoryClosed = inventoryClosed;
         }
 
         /**
          * This will kill allow you to redefine the custom inventory and not duplicate the instance,
-         * which would result in the event being fired twice or more.e or more.
+         * which would result in the event being fired twice or more.
          *
-         * @param destroy Kills the custom inventory
+         * @param closed Kills the custom inventory
          */
-        public void setDestroy(boolean destroy){
-            this.destroy = destroy;
+        public void setClosed(boolean closed){
+            this.inventoryClosed = closed;
         }
     }
 }

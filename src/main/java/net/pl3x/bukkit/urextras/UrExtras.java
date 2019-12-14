@@ -2,6 +2,7 @@ package net.pl3x.bukkit.urextras;
 
 import net.pl3x.bukkit.urextras.command.CmdUrExtrasPortal;
 import net.pl3x.bukkit.urextras.configuration.Lang;
+import net.pl3x.bukkit.urextras.listener.ForceFieldPortalClickListener;
 import net.pl3x.bukkit.urextras.listener.TreeeListPortalClickListener;
 import net.pl3x.bukkit.urextras.listener.UrExtrasPortalClickListener;
 import net.pl3x.bukkit.urextras.command.CmdTester;
@@ -35,13 +36,14 @@ public class UrExtras extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CmdUrExtrasPortal(this),this);
         getServer().getPluginManager().registerEvents(new UrExtrasPortalClickListener(this), this);
         getServer().getPluginManager().registerEvents(new TreeeListPortalClickListener(this),this);
+        getServer().getPluginManager().registerEvents(new ForceFieldPortalClickListener(this),this);
 
         getCommand("urextras").setExecutor(new CmdReload(this));
         getCommand("urextrasportal").setExecutor(new CmdUrExtrasPortal(this));
         getCommand("tester").setExecutor(new CmdTester(this));
 
-        Metrics metrics = new Metrics(this);
-        metrics.addCustomChart(new Metrics.SimplePie("simple_pie_chart", () -> "Simple Pie Chart"));
+        //Metrics metrics = new Metrics(this);
+        //metrics.addCustomChart(new Metrics.SimplePie("simple_pie_chart", () -> "Simple Pie Chart"));
         Logger.info(getName() + " v" + UrExtras.getInstance().getDescription().getVersion() + " enabled!");
     }
 

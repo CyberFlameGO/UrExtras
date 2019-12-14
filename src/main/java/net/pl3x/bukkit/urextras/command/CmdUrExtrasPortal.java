@@ -26,7 +26,7 @@ import org.bukkit.inventory.ItemStack;
  * UrExtras Portal
  * <p>
  * Creates a custom inventory (Barrel)
- * Inside this custom inventory will have custom tools & weapons
+ * Inside this custom inventory will have custom tools and weapons
  */
 
 public class CmdUrExtrasPortal implements TabExecutor, Listener {
@@ -70,7 +70,7 @@ public class CmdUrExtrasPortal implements TabExecutor, Listener {
         Player target = (Player) sender;
 
         // INFO: Create Ur Extras Portal with items
-        String[] urExtrasTypeList = {"Apple", "DiamondAxe"};
+        String[] urExtrasTypeList = {"Apple", "DiamondAxe", "ForceFieldWeapon"}; // TODO: Make more tools/weapons
         setItemStack(urExtrasTypeList, target);
         /** ==== EFFECTS INVENTORY END ==== **/
         return true;
@@ -78,7 +78,7 @@ public class CmdUrExtrasPortal implements TabExecutor, Listener {
 
     /**
      * Creates UrExtras Portal Inventory and adds the following
-     * tools and weapons to their respectivily position
+     * tools and weapons to their respectively position
      *
      * @param itemStackName tool/weapon title
      * @param target player opening the inventory
@@ -95,7 +95,7 @@ public class CmdUrExtrasPortal implements TabExecutor, Listener {
             // NOTICE: Do nothing yet
         }, plugin);
 
-
+        // TODO: Make more tools/weapons
         for (String gettingItemStackType : itemStackName){
             switch (gettingItemStackType){
                 case "Apple":
@@ -109,7 +109,7 @@ public class CmdUrExtrasPortal implements TabExecutor, Listener {
                 case "DiamondAxe":
                     itemStackSlot = 19;
                     itemStackType = new ItemStack(Material.DIAMOND_AXE, 1);
-                    itemStackTitle = Config.TREEE_SPAWNER_TOOL_CLICK ? !target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.colorize(Lang.NO_TREEE_SPAWNER_TOOL) : Lang.TREEE_SPAWNER_TOOL : Lang.NO_TREEE_SPAWNER_TOOL;
+                    itemStackTitle = Lang.colorize(Config.TREEE_SPAWNER_TOOL_CLICK ? (!target.hasPermission("command.urextras.portal.treeespawnertool") ? Lang.NO_TREEE_SPAWNER_TOOL : Lang.TREEE_SPAWNER_TOOL)  : Lang.NO_TREEE_SPAWNER_TOOL);
                     itemStackLore = new ArrayList<>();
                     itemStackLore.add(Lang.colorize("&8Click to receive your Tool."));
                     itemStackLore.add(Lang.colorize(""));
@@ -119,7 +119,6 @@ public class CmdUrExtrasPortal implements TabExecutor, Listener {
                             itemStackLore.add(Lang.colorize("&cuse this feature."));
                             itemStackLore.add(Lang.colorize(""));
                             itemStackLore.add(Lang.colorize("&7More information coming soon."));
-                            Logger.debug("onCommand | No permission to treepawnertool, returned");
                         } else {
                             itemStackLore.add(Lang.colorize("&7When you click on a block with"));
                             itemStackLore.add(Lang.colorize("&7the tool given, a custom tree list"));
@@ -128,10 +127,25 @@ public class CmdUrExtrasPortal implements TabExecutor, Listener {
                             itemStackLore.add(Lang.colorize("&7Once you select/click a treee of"));
                             itemStackLore.add(Lang.colorize("&7choice, it will then spawn on the"));
                             itemStackLore.add(Lang.colorize("&7block you just clicked."));
-                            Logger.debug("onCommand | Target was given a Tree Spawner Tool.");
                         }
                     } else {
                         itemStackLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.NO_TREEE_SPAWNER_TOOL)));
+                    }
+                    urExtrasInventory.setToolOrWeapon(itemStackSlot, itemStackType, itemStackTitle, itemStackLore);
+                case "ForceFieldWeapon":
+                    itemStackSlot = 21;
+                    itemStackType = new ItemStack(Material.ARROW, 1);
+                    itemStackTitle = Lang.colorize( Config.FORCE_FIELD_WEAPON_CLICK ? (!target.hasPermission("command.urextras.portal.forcefieldweapon") ? Lang.NO_FORCE_FIELD_WEAPON : Lang.FORCE_FIELD_WEAPON) : Lang.NO_FORCE_FIELD_WEAPON );
+                    itemStackLore = new ArrayList<>();
+                    itemStackLore.add(Lang.colorize("&8Click to receive your Weapon."));
+                    if (Config.FORCE_FIELD_WEAPON_CLICK){
+                        if (!target.hasPermission("command.urextras.portal.forcefieldweapon")){
+                            itemStackLore.add(Lang.colorize(Lang.COMMAND_NO_PERMISSION_PORTAL.replace("{getClicked}", itemStackTitle)));
+                        } else {
+                            // TODO
+                        }
+                    } else {
+                        itemStackLore.add(Lang.colorize(Lang.DISABLED.replace("{getDisabledName}", Lang.NO_FORCE_FIELD_WEAPON)));
                     }
                     urExtrasInventory.setToolOrWeapon(itemStackSlot, itemStackType, itemStackTitle, itemStackLore);
                     break;

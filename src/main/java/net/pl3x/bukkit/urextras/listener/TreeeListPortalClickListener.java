@@ -40,6 +40,7 @@ import org.bukkit.scheduler.BukkitTask;
  */
 public class TreeeListPortalClickListener implements Listener {
     private UrExtras plugin;
+    private Particles taskRunning;
     private BukkitTask taskToCancel;
     private boolean isRunning;
     private boolean hasTreeGenerated;
@@ -83,12 +84,8 @@ public class TreeeListPortalClickListener implements Listener {
         // INFO: Check for correct Custom Model Data
         if (!itemInHandCustomModelData.equals((int) 069001F)){
             Logger.debug("onTreeeBlockSelect | Item in hand does not equal to Tree Tool Custom Data");
-            Logger.debug("onTreeeBlockSelect | Diamond Axe is has no lore which is in main hand, clickEvent cancelled");
             return;
         }
-
-        // INFO: Cancel Player Interact Event
-        clickEvent.setCancelled(true);
 
         target = clickEvent.getPlayer();
         ItemStack itemInHand = target.getInventory().getItemInMainHand();
@@ -134,15 +131,10 @@ public class TreeeListPortalClickListener implements Listener {
                 || clickedBlock.equals(Material.END_STONE) /* INFO: This check is for Chorus Plant */
             ){
 
-            /*
-             * INFO: Acacia Tree
-             *
-             * TODO:
-             *   - Make tree meta oop
-             *   - Add permissions for each tree type
-             *   - Make Lang variable for each tree type
-             */
+            // INFO: Cancel Player Interact Event
+            clickEvent.setCancelled(true);
 
+            // Create Treee List Inventory Options
             String[] treeTypeList = {"Acacia", "Birch", "RedWoodSpruce", "Jungle", "Oak", "DarkOak", "JungleSmall", "BirchTall", "CoCoa", "ChorusPlant", "Swamp", "BigOak", "JungleBush"};
             setTreeType(treeTypeList, target);
 
@@ -173,7 +165,7 @@ public class TreeeListPortalClickListener implements Listener {
 
         // INFO: Create Treee List Inventory
         CustomInventories treeListInventory = new CustomInventories(Lang.TREEE_LIST_INVENTORY_TITLE, 18, event -> {
-            // NOTICE: Do nothing
+            // NOTICE: Do nothing. yet
         }, plugin);
 
 
@@ -630,14 +622,14 @@ public class TreeeListPortalClickListener implements Listener {
         target.getInventory().getItemInMainHand().setAmount(target.getInventory().getItemInMainHand().getAmount() - 1);
 
         /* NOTICE: Remove particle */
-        if (hasTreeGenerated == true){
+        if (hasTreeGenerated){
             isRunning = false;
         } else {
             isRunning = true;
         }
 
         if (!target.isOnline() || !isRunning){
-            Particles taskRunning = UrExtrasPortalClickListener.particlesHashMap.get(target.getUniqueId());
+            taskRunning = UrExtrasPortalClickListener.treeeSpawnerParticlesHashMap.get(target.getUniqueId());
 
             if (taskRunning != null && !taskRunning.isCancelled()) {
                 taskRunning.cancel();
@@ -839,9 +831,10 @@ public class TreeeListPortalClickListener implements Listener {
             return;
         }
 
-        Float clickedItemModelData = Float.valueOf(clickedItem.getItemMeta().getCustomModelData());
+        //Float clickedItemModelData = (float) clickedItem.getItemMeta().getCustomModelData();
 
-        if (!clickedItemModelData.equals(069001F)){
+        //if (!clickedItemModelData.equals(069001F)){
+        if (!getCustomModelData(clickedItem).equals(069001F)){
             Logger.debug("onPlayerInventoryClickWithToolInHand | Clicked Item does not equal to Treee Spawner Tool Custom Model Data.");
             return;
         }
@@ -873,7 +866,7 @@ public class TreeeListPortalClickListener implements Listener {
             }
         }
 
-        Particles taskRunning = UrExtrasPortalClickListener.particlesHashMap.get(target.getUniqueId());
+        taskRunning = UrExtrasPortalClickListener.treeeSpawnerParticlesHashMap.get(target.getUniqueId());
 
         if (taskRunning != null && !taskRunning.isCancelled()) {
             taskRunning.cancel();

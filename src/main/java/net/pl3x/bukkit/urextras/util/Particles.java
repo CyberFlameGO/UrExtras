@@ -1,7 +1,6 @@
 package net.pl3x.bukkit.urextras.util;
 
 import net.pl3x.bukkit.urextras.Logger;
-import net.pl3x.bukkit.urextras.configuration.Config;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
@@ -22,14 +21,16 @@ public class Particles extends BukkitRunnable {
      * that is configured inside config file
      *
      * @param player Player who enabled particle
+     * @param particle Spawning particle
      */
-    public Particles(Player player) {
+    public Particles(Player player, Particle particle) {
         this.player = player;
 
         Particle particleType = null;
 
         try {
-            particleType = Particle.valueOf(Config.PARTICLE_TYPE.toUpperCase());
+            //particleType = Particle.valueOf(Config.PARTICLE_TYPE_DEFAULT.toUpperCase());
+            particleType = particle;
         } catch (IllegalArgumentException ex2){
             Logger.error("Particle type invalid. Cancelling particle task.");
             setCancel(true);
@@ -110,16 +111,52 @@ public class Particles extends BukkitRunnable {
             return;
         }
 
-        for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-            double radius = Math.sin(i);
-            double y = Math.cos(i);
-            for (double a = 0; a < Math.PI * 2; a += Math.PI / 4) {
-                double x = Math.cos(a) * radius;
-                double z = Math.sin(a) * radius;
-                Location playerLoc = player.getLocation().add(x, y, z);
-                player.getWorld().spawnParticle(getParticle(), playerLoc.add(0, 1, 0), 1);
+        if (particle.equals(Particle.PORTAL)){
+            for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                double radius = Math.sin(i);
+                double y = Math.cos(i);
+                for (double a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+                    double x = Math.cos(a) * radius;
+                    double z = Math.sin(a) * radius;
+                    Location playerLoc = player.getLocation().add(x, y, z);
+                    player.getWorld().spawnParticle(getParticle(), playerLoc.add(0, 1, 0), 1);
+                }
             }
+        } else if (particle.equals(Particle.DOLPHIN)){
+            for (double i = 0; i <= Math.PI; i += Math.PI / 10){
+                double radius = Math.sin(i);
+                double y = Math.cos(i);
+                for (double a = 0; a < Math.PI * 2; a += Math.PI / 60) {
+                    double x = Math.cos(a) * radius;
+                    double z = Math.sin(a) * radius;
+                    Location playerLoc = player.getLocation().add(x, y, z);
+                    player.spawnParticle(getParticle(), playerLoc.add(0, 1, 0), 1);
+                    player.getLocation().subtract(x, y, z);
+                }
+
+            }
+
+            /*
+            FORCE_FIELD_PARTICLE:
+            for (int particleSpawnerTimer = 0; particleSpawnerTimer < Config.FORCE_FIELD_WEAPON_TIMER; particleSpawnerTimer++) {
+                for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
+                    double radius = Math.sin(i);
+                    double y = Math.cos(i);
+                    for (double a = 0; a < Math.PI * 2; a += Math.PI / 60) {
+                        double x = Math.cos(a) * radius;
+                        double z = Math.sin(a) * radius;
+                        Location playerLoc = player.getLocation().add(x, y, z);
+                        player.spawnParticle(getParticle(), playerLoc.add(0, 1, 0), 1);
+                        player.getLocation().subtract(x, y, z);
+                        if (particleSpawnerTimer >= Config.FORCE_FIELD_WEAPON_TIMER){
+                            Logger.debug("onsetForceFieldExtra | Force field particle 'ForLoop' removed");
+                            player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - 1);
+                            break FORCE_FIELD_PARTICLE;
+                        }
+                    }
+                }
+            }*/
+            // NOTICE: if/else statement end
         }
     }
-
 }

@@ -45,6 +45,9 @@ public class Lang {
     public static String TREEE_SPAWNER_TOOL;
     public static String SET_TREEE_SPAWNER_TOOL_INFO;
 
+    public static String FORCE_FIELD_WEAPON;
+    public static String NO_FORCE_FIELD_WEAPON;
+
     public static String TREEE_LIST_INVENTORY_TITLE;
     public static String CANNOT_SPAWN_TREEE_HERE;
     public static String TREEE_SPAWNED_PLAYERMSG;
@@ -75,7 +78,6 @@ public class Lang {
     public static String TREEE_SPAWNED_JUNGLE_BUSH;
     public static String TREEE_SPAWNED_JUNGLE_BUSHNO;
 
-
     public static String TREEE_SPAWNED_LORE_ACACIA;
     public static String TREEE_SPAWNED_LORE_BIRCH;
     public static String TREEE_SPAWNED_LORE_SPRUCE;
@@ -89,6 +91,15 @@ public class Lang {
     public static String TREEE_SPAWNED_LORE_SWAMP;
     public static String TREEE_SPAWNED_LORE_BIG_OAK;
     public static String TREEE_SPAWNED_LORE_JUNGLE_BUSH;
+
+    public static String FORCE_FIELD_EXTRA_INVENTORY_TITLE;
+    public static String FORCE_FIELD_EXTRA_SELECTED_STANDARD;
+    public static String FORCE_FIELD_EXTRA_SELECTED_STANDARDNO;
+    public static String FORCE_FIELD_EXTRA_SELECTED_KNOCKBACK;
+    public static String FORCE_FIELD_EXTRA_SELECTED_KNOCKBACKNO;
+
+    public static String FORCE_FIELD_EXTRA_LORE_STANDARD;
+    public static String FORCE_FIELD_EXTRA_LORE_KNOCKBACK;
 
     /**
      * UrExtras Language File
@@ -112,6 +123,8 @@ public class Lang {
         NO_TREEE_SPAWNER_TOOL = getString("no-treee-spawner-tool","&4Treee Spawner Tool");
         TREEE_SPAWNER_TOOL = getString("treee-spawner-tool","&2Treee Spawner Tool");
         SET_TREEE_SPAWNER_TOOL_INFO = getString("set-treee-spawner-tool-info","&7Spawn Any treee.");
+        FORCE_FIELD_WEAPON = getString("force-field-weapon", "&2Force Field Weapon");
+        NO_FORCE_FIELD_WEAPON = getString("no-force-field-weapon", "&4Force Field Weapon");
 
         TREEE_LIST_INVENTORY_TITLE = getString("treee-list-inventory-title","Treee List");
         CANNOT_SPAWN_TREEE_HERE = getString("cannot-spawn-treee-here","\n\n&5=====================================================\n" +
@@ -162,6 +175,15 @@ public class Lang {
         TREEE_SPAWNED_LORE_SWAMP = getString("treee-spawned-lore.swamp","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_BIG_OAK = getString("treee=spawned-lore.bigOak","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
         TREEE_SPAWNED_LORE_JUNGLE_BUSH = getString("treee-spawned-lore.jungleBush","&7Click here to spawn;&7the tree type.;;&7After the tree is;&7spawned your effects;&7will be removed.");
+
+        FORCE_FIELD_EXTRA_INVENTORY_TITLE = getString("force-field-extra-inventory-title", "Force Field Extras");
+        FORCE_FIELD_EXTRA_SELECTED_STANDARD = getString("force-field-extra-selected.standard", "&aForce Field Standard");
+        FORCE_FIELD_EXTRA_SELECTED_STANDARDNO = getString("force-field-extra-selected.standardNo", "&4Force Field Standard");
+        FORCE_FIELD_EXTRA_SELECTED_KNOCKBACK = getString("force-field-extra-selected.knockback", "&aForce Field Knockback");
+        FORCE_FIELD_EXTRA_SELECTED_KNOCKBACKNO = getString("force-field-extra-selected.knockbackNo", "&4Force Field Knockback");
+
+        FORCE_FIELD_EXTRA_LORE_STANDARD = getString("force-field-extra-lore.standard", "&7Click here to spawn;&7a force field that;&7will protect you from;&7attacks.");
+        FORCE_FIELD_EXTRA_LORE_KNOCKBACK = getString("force-field-extra-lore.knockback","&7Click here to spawn;&7a force field that;&7will knock back any;&7entities within radius.");
     }
 
     // ############################  DO NOT EDIT BELOW THIS LINE  ############################

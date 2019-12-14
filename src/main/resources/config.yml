@@ -21,8 +21,11 @@ cooldown:
 # Type of particle to create for visuals
 # Some particles do not support colors and some look bad
 # List of particles: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
-# Default is PORTAL
-particle-type: PORTAL
+particle-type:
+  treee-spawner-tool: PORTAL
+  force-field:
+    standard: DOLPHIN
+    knockback: DOLPHIN
 
 # Enables/Disabled Treee Spawner Tool
 treee-spawner-tool-click: true
@@ -42,3 +45,13 @@ treee-list:
   swamp: true
   bigOak: true
   jungleBush: true
+
+# Force Field Weapon Settings
+force-field-weapon:
+  click: true
+  timer: 5
+
+# Force Field Extras
+force-field-extra-list:
+  standard: true
+  knockback: true
